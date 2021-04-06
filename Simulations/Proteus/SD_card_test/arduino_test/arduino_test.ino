@@ -1,36 +1,36 @@
-/*
-  SD card read/write
+#include "Headers.h"
+#include "pin_Config.h"
+int pot_Read;
+char mode= '0';
+int count = 0;
+/* mode = 0 for record
+ *  mode = 1 for display values
+ *  mode = 2 for delete all files
+ *  mode = 8 for pause state
+  */
+ 
+File test_File;
 
-  This example shows how to read and write data to and from an SD card file
-  The circuit:
-   SD card attached to SPI bus as follows:
- ** MOSI - pin 11
- ** MISO - pin 12
- ** CLK - pin 13
- ** CS - pin 4 (for MKRZero SD: SDCARD_SS_PIN)
+//setting up the keypad
+ const byte r = 4;
+  const byte c = 3;
+  char keys[r][c]={
+    {'1','2','3'},
+    {'4','5','6'},
+    {'7','8','9'},
+    {'*','0','#'}
+    };
 
-  created   Nov 2010
-  by David A. Mellis
-  modified 9 Apr 2012
-  by Tom Igoe
+    byte rPins[r] = {3,5,6,7};
+    byte cPins[c] = {8,9,10};
 
-  This example code is in the public domain.
-
-*/
-
-#include <SPI.h>
-#include <SD.h>
-
-File myFile;
-
+    Keypad keypad = Keypad(makeKeymap(keys),rPins,cPins,r,c);
 void setup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-
-
   Serial.print("Initializing SD card...");
 
   if (!SD.begin(4)) {
@@ -39,39 +39,48 @@ void setup() {
   }
   Serial.println("initialization done.");
 
-  // open the file. note that only one file can be open at a time,
-  // so you have to close this one before opening another.
-  myFile = SD.open("test.txt", FILE_WRITE);
 
-  // if the file opened okay, write to it:
-  if (myFile) {
-    Serial.print("Writing to test.txt...");
-    myFile.println("testing 1, 2, 3.");
-    // close the file:
-    myFile.close();
-    Serial.println("done.");
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening test.txt");
-  }
 
-  // re-open the file for reading:
-  myFile = SD.open("test.txt");
-  if (myFile) {
-    Serial.println("test.txt:");
-
-    // read from the file until there's nothing else in it:
-    while (myFile.available()) {
-      Serial.write(myFile.read());
-    }
-    // close the file:
-    myFile.close();
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening test.txt");
-  }
+  setKeyPad();
 }
 
 void loop() {
-  // nothing happens after setup
+  char k = keypad.getKey();
+
+ if (k){mode = k;}
+  if (mode == '0'){
+    pot_Read = analogRead(pot);
+    test_File.println(pot_Read);
+    if (count == 0){
+        // open the file.
+        test_File = SD.open("test.txt", FILE_WRITE);
+      
+        // if the file opened okay, write to it:
+        if (!test_File) {
+          Serial.println("error opening file");
+        }
+      Serial.println("Recording");
+    }else{
+      Serial.print(".");
+    }
+    delay(1000);
+    
+    count ++;
+    if (count==10){
+      count = 0;
+      mode = '8';
+      Serial.println("\n Data recorded.");
+      test_File.close();
+    }
+  }
+  if (mode == '1'){
+    Serial.println("\n\n Read Mode !!!");
+    readFromFile("test.txt");
+    mode= '8';
+  }
+   if (mode == '2'){
+    SD.remove("test.txt");
+    Serial.println("\n\nContent deleted from text file !!!");
+    mode = '8';
+  }
 }
