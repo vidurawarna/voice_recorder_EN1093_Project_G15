@@ -1,0 +1,6 @@
+*.IMA
+Backup Of*.pdsbak
+Last Loaded*.pdsbak
+*.workspace
+*.mmc
+*.hex
