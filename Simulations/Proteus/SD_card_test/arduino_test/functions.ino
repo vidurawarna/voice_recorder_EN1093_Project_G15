@@ -15,18 +15,31 @@ void readFromFile(String filename)
   }
 }
 
-Keypad setKeyPad(){
-  const byte r = 4;
-  const byte c = 3;
-  char keys[r][c]={
-    {'1','2','3'},
-    {'4','5','6'},
-    {'7','8','9'},
-    {'*','0','#'}
-    };
+int record(int count,int reading){
+  if (count == 0) {
+      // open the file.
+      test_File = SD.open(file_name, FILE_WRITE);
 
-    byte rPins[r] = {3,5,6,7};
-    byte cPins[c] = {8,9,10};
+      // if the file opened okay, write to it:
+      if (!test_File) {
+        Serial.println("error opening file");
+      }
+      Serial.println("Recording");
+    } else {
+      Serial.print(".");
+    }
+    
+    test_File.println(reading);
+    count ++;
 
-    Keypad keypad = Keypad(makeKeymap(keys),rPins,cPins,r,c);
+    delay(1000);
+    
+    if (count == 10) {
+      count = 0;
+      mode = '8';
+      Serial.println("\n Data recorded.");
+      test_File.close();
+    }
+
+    return count;
 }
