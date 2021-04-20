@@ -1,29 +1,18 @@
-close all;
-%Define number of samples to take
-fs = 8000;
-f = 400; %Hz
-%Define signal
-t = 0:1/fs:1-1/fs;
-signal1 = sin(2*pi*f*t);
-signal2 = sin(pi*f*t);
-%Plot to illustrate that it is a sine wave
-%plot(t, signal);
-%title('Time-Domain signal');
-%Take fourier transform
-fftSignal1 = fft(signal1);
-fftSignal2 = fft(signal2);
-%apply fftshift to put it in the form we are used to (see documentation)
-%fftSignal1 = fftshift(fftSignal1);
-%fftSignal2 = fftshift(fftSignal2);
-%Next, calculate the frequency axis, which is defined by the sampling rate
-f = (fs/2)*linspace(-1,1,fs);
-%Since the signal is complex, we need to plot the magnitude to get it to
-%look right, so we use abs (absolute value)
-figure;
-%plot(t,signal);
-plot(f, abs(fftSignal1));
-hold on
-plot(f, abs(fftSignal2));
-title('magnitude FFT of sine');
-xlabel('Frequency (Hz)');
-ylabel('magnitude');
+[Signal,Fs] = audioread('sound.wav');
+t = [0:1/Fs:(length(Signal)-1)/Fs];
+
+subplot(4, 1, 1);
+plot(t, Signal)%time domain plot of original signal
+subplot(4, 1, 2);
+show_fre(Signal, length(Signal), Fs, "Original Signal Frequency Spectrum");%frequency domain plot of original signal
+
+a = input("Enter Scaling Coefficient: ");
+at = linspace(0, (length(Signal)-1)/(a*Fs), length(Signal));
+fft_coef = abs(fft(Signal))/abs(a);
+f_a = linspace(-length(Signal)/(2*abs(a)),length(Signal)/(2*abs(a))-1,length(Signal));
+
+subplot(4, 1, 3);
+plot(at, Signal);%time domain plot of scaled signal
+subplot(4, 1, 4);
+plot(f_a, fftshift(fft_coef));%frequency domain plot of scaled signal
+%soundsc(
