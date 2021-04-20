@@ -15,31 +15,70 @@ void readFromFile(String filename)
   }
 }
 
-int record(int count,int reading){
+int record(int count, int reading) {
   if (count == 0) {
-      // open the file.
-      test_File = SD.open(file_name, FILE_WRITE);
+    // open the file.
+    File root = SD.open("/");
+    file_name = String(countFiles(root) + 1) + ".txt";
+    root.close();
+    test_File = SD.open(file_name, FILE_WRITE);
 
-      // if the file opened okay, write to it:
-      if (!test_File) {
-        Serial.println("error opening file");
-      }
-      Serial.println("Recording");
-    } else {
-      Serial.print(".");
+    // if the file opened okay, write to it:
+    if (!test_File) {
+      Serial.println("error opening file");
     }
-    
-    test_File.println(reading);
-    count ++;
+    Serial.println("Recording");
+  } else {
+    Serial.print(".");
+  }
 
-    delay(1000);
-    
-    if (count == 10) {
-      count = 0;
-      mode = '8';
-      Serial.println("\n Data recorded.");
-      test_File.close();
+  test_File.println(reading);
+  count ++;
+
+  delay(1000);
+
+  if (count == 10) {
+    count = 0;
+    mode = '8';
+    Serial.println("Data recorded.");
+    test_File.close();
+  }
+  return count;
+}
+
+int countFiles(File r) {
+  int c = 0;
+  while (true) {
+    File dir = r.openNextFile();
+    if (!dir) {
+      break;
     }
+    c++;
+    //Serial.println(entry.name());
+    dir.close();
+  }
+  return c;
+}
 
-    return count;
+void deleteAll(File r) {
+  while (true) {
+    File dir = r.openNextFile();
+    if (!dir) {
+      break;
+    }
+    SD.remove(dir.name());
+  }
+}
+
+void deleteFile(File r, int n ) {
+  while (true) {
+    File dir = r.openNextFile();
+    if (!dir) {
+      Serial.println("No such file.");
+      break;
+    } else if (String(dir.name()) == (String(n) + ".txt")) {
+      SD.remove(dir.name());
+      break;
+    }
+  }
 }

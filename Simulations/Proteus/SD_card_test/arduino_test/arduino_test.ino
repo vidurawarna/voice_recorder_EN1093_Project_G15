@@ -37,10 +37,10 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-  Serial.print("Initializing SD card...");
+  Serial.print("Initializing...");
 
   if (!SD.begin(4)) {
-    Serial.println("initialization failed!");
+    Serial.println("SD card Error!");
     while (1);
   }
   Serial.println("initialization done.");
@@ -57,19 +57,41 @@ void loop() {
   if (mode == '1') {
     
     pot_Read = analogRead(pot);
-    count = record(count,pot_Read);
-    
+    count = record(count,pot_Read);   
   }
   
   if (mode == '2') {
-    Serial.println("\n\n Read Mode !!!");
-    readFromFile(file_name);
+    Serial.println("Read Mode !!!");
+    readFromFile("2.txt");
     mode = '8';
   }
   
   if (mode == '3') {
     SD.remove(file_name);
-    Serial.println("\n\nContent deleted from text file !!!");
+    Serial.println("Content deleted from text file !!!");
+    mode = '8';
+  }
+
+  if (mode == '*') {
+    File root = SD.open("/");
+    deleteAll(root);
+    root.close();
+    Serial.println("All files deleted !!!");
+    mode = '8';
+  }
+
+  if (mode == '#') {
+    File root = SD.open("/");
+    Serial.print("Number of files : ");
+    Serial.println(countFiles(root));
+    root.close();
+    mode = '8';
+  }
+
+  if (mode == '0') {
+    File root = SD.open("/");
+    deleteFile(root,12);
+    root.close();
     mode = '8';
   }
 }
