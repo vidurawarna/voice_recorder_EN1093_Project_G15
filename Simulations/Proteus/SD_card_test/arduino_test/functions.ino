@@ -1,5 +1,6 @@
 void readFromFile()
 {
+  /*This function reads data from the specified file and display*/
   test_File = SD.open(getKeyInput());
   if (test_File) {
     Serial.println("Content : ");
@@ -18,12 +19,13 @@ void readFromFile()
 
 
 int record(int count, int reading) {
+  /*Used to record the data got from input into a file*/
   if (count == 0) {
     // open the file.
     File root = SD.open("/");
     int fcount = countFiles(root);    
     root.close();
-    test_File = SD.open(checkDuplicates(fcount), FILE_WRITE);
+    test_File = SD.open(checkDuplicates(fcount), FILE_WRITE);//this function is used to check duplicates when new files are created
 
     // if the file opened okay, write to it:
     if (!test_File) {
@@ -48,8 +50,12 @@ int record(int count, int reading) {
   return count;
 }
 
+/*From here the functions countFiles, deleteAll,getTrackList and 
+deleteFile use the same itteration method to handle file operations*/
 
 int countFiles(File r) {
+  /*This loop checks for next file to open and 
+  when there are no fles it stops counting, then return the count*/
   int c = 0;
   while (true) {
     File dir = r.openNextFile();
@@ -57,7 +63,6 @@ int countFiles(File r) {
       break;
     }
     c++;
-    //Serial.println(dir.name());
     dir.close();
   }
   return c;
@@ -73,7 +78,6 @@ void deleteAll(File r) {
     }
     SD.remove(dir.name());
   }
- 
 }
 
 
@@ -93,6 +97,7 @@ void deleteFile(File r) {
 }
 
 String getKeyInput() {
+  //used to get the user inputs from the keypad
   String res = ""; 
   while (true) {
     char key_input = keypad.getKey();
@@ -102,7 +107,6 @@ String getKeyInput() {
     else if (key_input) {
       Serial.print(key_input);
       res += String(key_input);
-
     }
   }
   Serial.println("");
@@ -120,6 +124,9 @@ void getTrackList(File r){
     dir.close();
   }
 }
+
+/*This function checks if the new file to be made is existing, 
+if does it generates a new name for the file*/
 
 String checkDuplicates(int count){
   String fname_temp =String(count + 1) + ".txt";

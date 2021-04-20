@@ -2,18 +2,16 @@
 #include "pin_Config.h"
 
 int pot_Read;
-
 int count = 0;
-
+File test_File;
 char mode = '8';
-/* mode = 1 for record
+/*  mode = 1 for record
     mode = 2 for display values
-    mode = 3 for delete all files
+    mode = * for delete all files
+    mode = 0 for delete a specific file
+    mode = # for display files
     mode = 8 for pause state
 */
-
-File test_File;
-String file_name = "test.txt";
 
 //setting up the keypad
 const byte r = 4;
@@ -29,6 +27,7 @@ byte rPins[r] = {3, 5, 6, 7};
 byte cPins[c] = {8, 9, 10};
 
 Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
+
 
 //Initializing things
 void setup() {
