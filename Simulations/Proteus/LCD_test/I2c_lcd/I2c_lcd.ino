@@ -1,11 +1,10 @@
-#include <LiquidCrystal.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x20,16,2);
 #include <Keypad.h>
 
 const int ROW_NUM = 4; //four rows
 const int COLUMN_NUM = 3; //three columns
-
-const int rs=2,e=1,d4=13,d5=12,d6=11,d7=10;
-LiquidCrystal lcd(rs,e,d4,d5,d6,d7);
 
 char keys[ROW_NUM][COLUMN_NUM] = {
   {'1','2','3'},
@@ -19,9 +18,9 @@ byte pin_column[COLUMN_NUM] = {5, 4, 3}; //connect to the column pin
 
 Keypad keypad = Keypad( makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM );
 
+
 void setup() {
   lcd.begin(16,2);
-  
   lcd.setCursor(5,0);
   lcd.print("Welcome");
   delay(1000);
@@ -30,6 +29,7 @@ void setup() {
   delay(1000);
   lcd.clear();
   play_list();
+  // put your setup code here, to run once:
 }
 
 String playList[10]={"Audio 1","Audio 2","Audio 3","Audio 4","Audio 5","Audio 6","Audio 7","Audio 8","Audio 9","Audio 10"};
@@ -46,7 +46,6 @@ void play_list(){
     lcd.clear();
   }
 } 
-
 void play_audio(){
   int key = keypad.getKey();
   while (key ==0){
@@ -62,8 +61,10 @@ void play_audio(){
   }
 }
 
-void loop(){
-  lcd.print("Select one to play!");
+void loop() {
+  lcd.print("Select one ");
+  lcd.setCursor(0,2);
+  lcd.print("to play!");
   delay(1000);
   lcd.clear();
   play_audio();
