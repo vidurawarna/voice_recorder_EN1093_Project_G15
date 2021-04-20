@@ -1,19 +1,23 @@
 void readFromFile()
 {
   /*This function reads data from the specified file and display*/
+  
   test_File = SD.open(getKeyInput());
   if (test_File) {
-    Serial.println("Content : ");
+    clrDisplay("Content : ");
 
     while (test_File.available()) {
-      Serial.write(test_File.read());
+      secondLine(String(test_File.read()));
+      delay(100);
     }
     // close the file:
-    Serial.println("End of play :)");
+    secondLine("End of play");
+    delay(1000);
     test_File.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println("No such file");
+    secondLine("No such file");
+    delay(1000);
   }
 }
 
@@ -25,18 +29,19 @@ int record(int count, int reading) {
     File root = SD.open("/");
     int fcount = countFiles(root);    
     root.close();
-    test_File = SD.open(checkDuplicates(fcount), FILE_WRITE);//this function is used to check duplicates when new files are created
+    test_File2 = SD.open(checkDuplicates(fcount), FILE_WRITE);//this function is used to check duplicates when new files are created
 
     // if the file opened okay, write to it:
-    if (!test_File) {
-      Serial.println("error opening file");
+    if (!test_File2) {
+      clrDisplay("error !!");
+      delay(1000);
     }
-    Serial.println("Recording");
+    
   } else {
-    Serial.print(".");
+    clrDisplay("Recording....");  
   }
 
-  test_File.println(reading);
+  test_File2.println(reading);
   count ++;
 
   delay(1000);
@@ -44,8 +49,9 @@ int record(int count, int reading) {
   if (count == 10) {
     count = 0;
     mode = '8';
-    Serial.println("Data recorded.");
-    test_File.close();
+    clrDisplay("Data recorded.");
+    delay(1000);
+    test_File2.close();
   }
   return count;
 }
@@ -60,6 +66,7 @@ int countFiles(File r) {
   while (true) {
     File dir = r.openNextFile();
     if (!dir) {
+      dir.close();
       break;
     }
     c++;
@@ -74,9 +81,11 @@ void deleteAll(File r) {
   while (true) {
     File dir = r.openNextFile();
     if (!dir) {
+      dir.close();
       break;
     }
     SD.remove(dir.name());
+    dir.close();
   }
 }
 
@@ -86,13 +95,18 @@ void deleteFile(File r) {
   while (true) {
     File dir = r.openNextFile();
     if (!dir) {
-      Serial.println("No such file.");
+      dir.close();
+      clrDisplay("No such file.");
+      delay(1000);
       break;
     } else if (String(dir.name()) == n) {
       SD.remove(dir.name());
-      Serial.println("File removed");
+      dir.close();
+      clrDisplay("File removed");
+      delay(1000);
       break;
     }
+    dir.close();
   }
 }
 
@@ -105,11 +119,10 @@ String getKeyInput() {
       break;
     }
     else if (key_input) {
-      Serial.print(key_input);
+      clrDisplay(String(key_input));
       res += String(key_input);
     }
   }
-  Serial.println("");
   return res + ".TXT";
 }
 
@@ -117,10 +130,14 @@ void getTrackList(File r){
   while (true) {
     File dir = r.openNextFile();
     if (!dir) {
+      dir.close();
+      clrDisplay("End of files !!");
+      delay(1000);
       break;
     }
     
-    Serial.println(dir.name());
+    secondLine(dir.name());
+    delay(1000);
     dir.close();
   }
 }
@@ -136,4 +153,19 @@ String checkDuplicates(int count){
     else{
       return fname_temp;
     }
+}
+
+void firstLine(String msg){
+  lcd.setCursor(0,0);
+  lcd.print(msg);
+}
+
+void clrDisplay(String msg){
+  lcd.clear();
+  firstLine(msg);
+}
+
+void secondLine(String msg){
+  lcd.setCursor(0,1);
+  lcd.print(msg);
 }

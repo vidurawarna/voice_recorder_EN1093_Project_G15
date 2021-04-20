@@ -3,7 +3,7 @@
 
 int pot_Read;
 int count = 0;
-File test_File;
+File test_File,test_File2;
 char mode = '8';
 /*  mode = 1 for record
     mode = 2 for display values
@@ -27,22 +27,21 @@ byte rPins[r] = {3, 5, 6, 7};
 byte cPins[c] = {8, 9, 10};
 
 Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
-
+LiquidCrystal_I2C lcd(0x20,16,2);
 
 //Initializing things
 void setup() {
-  // Open serial communications and wait for port to open:
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  Serial.print("Initializing...");
+  lcd.begin();
+  firstLine("Initializing...");
+  delay(1000);
 
+  
   if (!SD.begin(4)) {
-    Serial.println("SD card Error!");
+    clrDisplay("SD card Error!");
     while (1);
   }
-  Serial.println("initialization done.");
+  secondLine("initialized");
+  delay(1000);
 }
 
 //Repeating part
@@ -60,32 +59,31 @@ void loop() {
   }
 
   if (mode == '2') {
-    Serial.println("Play Mode !!!");
-    Serial.print("Enter file number: ");
+    clrDisplay("Play Mode >");
+    secondLine("File number: ");
     readFromFile();
     mode = '8';
   }
 
   if (mode == '*') {
     File root = SD.open("/");
-    Serial.println("Want to delete all files ? ");
-    Serial.println("\tYes - 1");
-    Serial.println("\tNo - 2");
-    Serial.print("Choice: ");
+    clrDisplay("Delete all files ? ");
+    secondLine("Yes-1 No-2 ");
 
     if (getKeyInput() == "1.TXT") {
       deleteAll(root);
       root.close();
-      Serial.println("All files deleted !!!");
+      clrDisplay("Files deleted !!");
+      delay(1000);
     }
-    Serial.println("Leaving delete mode...");
+    
     mode = '8';
 
   }
 
   if (mode == '#') {
     File root = SD.open("/");
-    Serial.println("files : ");
+    clrDisplay("files : ");
     getTrackList(root);
     root.close();
     mode = '8';
@@ -93,11 +91,17 @@ void loop() {
 
   if (mode == '0') {
     File root = SD.open("/");
-    Serial.println("Delete mode !!!");
-    Serial.print("Enter file number to delete: ");
+    clrDisplay("Delete mode X");
+    secondLine("File to delete:");
     deleteFile(root);
     root.close();
-    Serial.println("Leaving delete mode...");
+    clrDisplay("Leaving...");
+    delay(1000);
     mode = '8';
+  }
+
+  if(mode == '8'){
+    lcd.clear();
+    
   }
 }
