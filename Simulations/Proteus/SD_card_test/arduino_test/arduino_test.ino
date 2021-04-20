@@ -53,45 +53,52 @@ void loop() {
   if (key_input) {
     mode = key_input;
   }
-  
+
   if (mode == '1') {
-    
+
     pot_Read = analogRead(pot);
-    count = record(count,pot_Read);   
+    count = record(count, pot_Read);
   }
-  
+
   if (mode == '2') {
-    Serial.println("Read Mode !!!");
-    readFromFile("2.txt");
-    mode = '8';
-  }
-  
-  if (mode == '3') {
-    SD.remove(file_name);
-    Serial.println("Content deleted from text file !!!");
+    Serial.println("Play Mode !!!");
+    Serial.print("Enter file number: ");
+    readFromFile();
     mode = '8';
   }
 
   if (mode == '*') {
     File root = SD.open("/");
-    deleteAll(root);
-    root.close();
-    Serial.println("All files deleted !!!");
+    Serial.println("Want to delete all files ? ");
+    Serial.println("\tYes - 1");
+    Serial.println("\tNo - 2");
+    Serial.print("Choice: ");
+
+    if (getKeyInput() == "1.TXT") {
+      deleteAll(root);
+      root.close();
+      Serial.println("All files deleted !!!");
+    }
+    Serial.println("Leaving delete mode...");
     mode = '8';
+
   }
 
   if (mode == '#') {
     File root = SD.open("/");
-    Serial.print("Number of files : ");
-    Serial.println(countFiles(root));
+    Serial.println("files : ");
+    getTrackList(root);
     root.close();
     mode = '8';
   }
 
   if (mode == '0') {
     File root = SD.open("/");
-    deleteFile(root,12);
+    Serial.println("Delete mode !!!");
+    Serial.print("Enter file number to delete: ");
+    deleteFile(root);
     root.close();
+    Serial.println("Leaving delete mode...");
     mode = '8';
   }
 }
