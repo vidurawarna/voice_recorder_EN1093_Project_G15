@@ -7,3 +7,4 @@
  ** CS - pin 4 (for MKRZero SD: SDCARD_SS_PIN)
 */
 #define pot A0
+#define fs 8000

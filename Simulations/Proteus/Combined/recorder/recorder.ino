@@ -32,7 +32,7 @@ LiquidCrystal_I2C lcd(0x20,16,2);
 //Initializing things
 void setup() {
   lcd.begin();
-  firstLine("Initializing...");
+  firstLine("Starting...");
   delay(1000);
 
   
@@ -40,7 +40,7 @@ void setup() {
     clrDisplay("SD card Error!");
     while (1);
   }
-  secondLine("initialized");
+  secondLine("Welcome !!");
   delay(1000);
 }
 
@@ -76,6 +76,11 @@ void loop() {
       clrDisplay("Files deleted !!");
       delay(1000);
     }
+    else{
+      clrDisplay("Leaving...");
+      delay(1000);
+    }
+    root.close();
     
     mode = '8';
 
@@ -83,7 +88,7 @@ void loop() {
 
   if (mode == '#') {
     File root = SD.open("/");
-    clrDisplay("files : ");
+    clrDisplay("Tracks : ");
     getTrackList(root);
     root.close();
     mode = '8';
@@ -101,7 +106,7 @@ void loop() {
   }
 
   if(mode == '8'){
-    lcd.clear();
+    clrDisplay("Voice Recorder");
     
   }
 }

@@ -1,14 +1,15 @@
 void readFromFile()
 {
   /*This function reads data from the specified file and display*/
-  
-  test_File = SD.open(getKeyInput());
+  String f = getKeyInput();
+  test_File = SD.open(f);
   if (test_File) {
-    clrDisplay("Content : ");
+    clrDisplay("Playing Track "+String(f[0]));
 
     while (test_File.available()) {
+      secondLine("         ");
       secondLine(String(test_File.read()));
-      delay(100);
+      delay(1/fs);
     }
     // close the file:
     secondLine("End of play");
@@ -44,9 +45,10 @@ int record(int count, int reading) {
   test_File2.println(reading);
   count ++;
 
-  delay(1000);
+  delay(1/fs);
+  char key = keypad.getKey();
 
-  if (count == 10) {
+  if (key && key == '*') {
     count = 0;
     mode = '8';
     clrDisplay("Data recorded.");
@@ -136,7 +138,7 @@ void getTrackList(File r){
       break;
     }
     
-    secondLine(dir.name());
+    secondLine("Track "+String(dir.name()[0]));
     delay(1000);
     dir.close();
   }
