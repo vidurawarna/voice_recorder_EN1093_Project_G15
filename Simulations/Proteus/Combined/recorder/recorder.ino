@@ -31,7 +31,7 @@ LiquidCrystal_I2C lcd(0x20,16,2);
 
 //Initializing things
 void setup() {
-  lcd.begin();
+  lcd.begin(16,2);
   firstLine("Starting...");
   delay(1000);
 
