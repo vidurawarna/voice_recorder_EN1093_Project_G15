@@ -20,6 +20,7 @@
 */
 
 #define pot A0
+#define speaker A1
 #define fs 8000
 # define r1 3
 # define r2 5

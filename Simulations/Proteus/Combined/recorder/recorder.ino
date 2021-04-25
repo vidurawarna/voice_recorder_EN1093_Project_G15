@@ -1,19 +1,20 @@
 #include "LibsANDdefs.h"
 
+unsigned long st, t;
 int pot_Read;
-int count = 0;
-File test_File,test_File2;
+
+File test_File, test_File2;
 char mode = '8';
 /*  mode = 1 for record
-      * press '*' to stop recording
+        press '*' to stop recording
     mode = 2 for display values
-      * enter track number and press '*'
-      * enter '*' to stop playing
+        enter track number and press '*'
+        enter '*' to stop playing
     mode = * for delete all files
-      * enter the response and press '*'
+        enter the response and press '*'
     mode = 0 for delete a specific file
-      * enter track number and press '*'
-      * enter '*' to delete track
+        enter track number and press '*'
+        enter '*' to delete track
     mode = # for display files
     mode = 8 for pause state
 */
@@ -28,20 +29,22 @@ char keys[r][c] = {
   {'*', '0', '#'}
 };
 
-char rPins[r] = {r1,r2,r3,r4};
-char cPins[c] = {c1,c2,c3};
+char rPins[r] = {r1, r2, r3, r4};
+char cPins[c] = {c1, c2, c3};
 //
 //Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
-LCDScreen lcd(0x20,16,2);
+LCDScreen lcd(0x20, 16, 2);
 
 //Initializing things
 void setup() {
+
+  Serial.begin(9600);
   lcd.begin();
   firstLine("Starting...");
   setupKeyPad();
   delay(1000);
-  
-  
+
+
   if (!SD.begin(4)) {
     clrDisplay("SD card Error!");
     while (1);
@@ -54,14 +57,13 @@ void setup() {
 void loop() {
   //char key_input = keypad.getKey();
   char key_input = keyInput();
+
   if (key_input) {
     mode = key_input;
   }
 
   if (mode == '1') {
-
-    pot_Read = analogRead(pot);
-    count = record(count, pot_Read);
+    record();
   }
 
   if (mode == '2') {
@@ -82,12 +84,12 @@ void loop() {
       clrDisplay("Files deleted !!");
       delay(1000);
     }
-    else{
+    else {
       clrDisplay("Leaving...");
       delay(1000);
     }
     root.close();
-    
+
     mode = '8';
 
   }
@@ -111,8 +113,14 @@ void loop() {
     mode = '8';
   }
 
-  if(mode == '8'){
-    clrDisplay("Voice Recorder");
-    
+  if (mode == '8') {
+    clrDisplay("Voice Recorder");   
+    while (true) {
+      char key_input = keyInput();
+      if (key_input) {
+        mode = key_input;
+        break;
+      }
+    }
   }
 }
