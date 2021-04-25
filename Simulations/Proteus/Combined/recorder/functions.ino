@@ -1,3 +1,9 @@
+/*
+ * WROTE BY : VIDURA MUNASINGHE
+ * https://github.com/vidurawarna
+ * Definitions and implimentations all the functions used in recorder
+*/
+
 void setupKeyPad(){
   /*
    * This function is used to initialize the keypad

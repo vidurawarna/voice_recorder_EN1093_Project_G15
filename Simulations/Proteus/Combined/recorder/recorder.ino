@@ -1,5 +1,4 @@
-#include "Headers.h"
-#include "pin_Config.h"
+#include "LibsANDdefs.h"
 
 int pot_Read;
 int count = 0;
