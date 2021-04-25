@@ -1,4 +1,7 @@
 void setupKeyPad(){
+  /*
+   * This function is used to initialize the keypad
+  */
   for(char r_ = 0; r_ < r; r_++){
          pinMode(rPins[r_], INPUT);    //set the row pins as input
          digitalWrite(rPins[r_], HIGH);    //turn on the pullups
@@ -9,6 +12,10 @@ void setupKeyPad(){
    }
 }
 char keyInput(){
+  /*
+   * This function detects a keypress and return the corrosponding 
+  
+  */
       char k = 0;
       
       for(char c_ = 0; c_ < c; c_++){
@@ -34,6 +41,11 @@ void readFromFile()
     clrDisplay("Playing Track "+String(f[0]));
 
     while (test_File.available()) {
+
+      char key = keyInput();
+      if (key && key == '*'){
+        break; 
+      }
       secondLine("         ");
       secondLine(String(test_File.read()));
       delay(1/fs);
@@ -186,16 +198,19 @@ String checkDuplicates(int count){
 }
 
 void firstLine(String msg){
+  //Prints the string passed in the first line of the LCD display
   lcd.setCursor(0,0);
   lcd.print(msg);
 }
 
 void clrDisplay(String msg){
+  //Clears the LCD and displays the msg in first line
   lcd.clear();
   firstLine(msg);
 }
 
 void secondLine(String msg){
+  //Prints the string passed in the second line of the LCD display
   lcd.setCursor(0,1);
   lcd.print(msg);
 }

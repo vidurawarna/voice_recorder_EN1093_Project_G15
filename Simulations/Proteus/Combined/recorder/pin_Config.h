@@ -8,3 +8,10 @@
 */
 #define pot A0
 #define fs 8000
+# define r1 3
+# define r2 5
+# define r3 6
+# define r4 7
+# define c1 8
+# define c2 9
+# define c3 10
