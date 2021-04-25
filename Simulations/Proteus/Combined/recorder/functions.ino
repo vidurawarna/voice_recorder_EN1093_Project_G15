@@ -1,3 +1,30 @@
+void setupKeyPad(){
+  for(char r_ = 0; r_ < r; r_++){
+         pinMode(rPins[r_], INPUT);    //set the row pins as input
+         digitalWrite(rPins[r_], HIGH);    //turn on the pullups
+   }
+   
+   for(char c_ = 0; c_ < c; c_++){
+         pinMode(cPins[c_], OUTPUT);   //set the column pins as output
+   }
+}
+char keyInput(){
+      char k = 0;
+      
+      for(char c_ = 0; c_ < c; c_++){
+        digitalWrite(cPins[c_], LOW);
+         for(char r_ = 0; r_ < r; r_++){
+            if(digitalRead(rPins[r_]) == LOW){
+            delay(20);    //20ms debounce time
+            while(digitalRead(rPins[r_])== LOW);
+            k = keys[r_][c_];
+            }
+         }
+   digitalWrite(cPins[c_], HIGH); 
+      }
+      return k;
+}
+
 void readFromFile()
 {
   /*This function reads data from the specified file and display*/
@@ -46,8 +73,8 @@ int record(int count, int reading) {
   count ++;
 
   delay(1/fs);
-  char key = keypad.getKey();
-
+  //char key = keypad.getKey();
+  char key = keyInput();
   if (key && key == '*') {
     count = 0;
     mode = '8';
@@ -116,7 +143,8 @@ String getKeyInput() {
   //used to get the user inputs from the keypad
   String res = ""; 
   while (true) {
-    char key_input = keypad.getKey();
+    //char key_input = keypad.getKey();
+    char key_input = keyInput();
     if (key_input == '*') {
       break;
     }

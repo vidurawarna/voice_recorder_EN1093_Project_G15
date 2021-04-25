@@ -14,8 +14,8 @@ char mode = '8';
 */
 
 //setting up the keypad
-const byte r = 4;
-const byte c = 3;
+const char r = 4;
+const char c = 3;
 char keys[r][c] = {
   {'1', '2', '3'},
   {'4', '5', '6'},
@@ -23,18 +23,19 @@ char keys[r][c] = {
   {'*', '0', '#'}
 };
 
-byte rPins[r] = {3, 5, 6, 7};
-byte cPins[c] = {8, 9, 10};
-
-Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
+char rPins[r] = {3, 5, 6, 7};
+char cPins[c] = {8, 9, 10};
+//
+//Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
 LiquidCrystal_I2C lcd(0x20,16,2);
 
 //Initializing things
 void setup() {
-  lcd.begin(16,2);
+  lcd.begin();
   firstLine("Starting...");
+  setupKeyPad();
   delay(1000);
-
+  
   
   if (!SD.begin(4)) {
     clrDisplay("SD card Error!");
@@ -46,8 +47,8 @@ void setup() {
 
 //Repeating part
 void loop() {
-  char key_input = keypad.getKey();
-
+  //char key_input = keypad.getKey();
+  char key_input = keyInput();
   if (key_input) {
     mode = key_input;
   }
