@@ -21,7 +21,13 @@
 
 #define pot A0
 #define speaker A1
-#define fs 8000
+#define keypadPin A3
+#define fs 2000
+#define fsDelay 500 //microseconds
+/*latest code takes 428microsec to read a single data
+ * takes 450microsec to read and output one data
+ * (Updated 2021/4/26)
+*/
 # define r1 3
 # define r2 5
 # define r3 6

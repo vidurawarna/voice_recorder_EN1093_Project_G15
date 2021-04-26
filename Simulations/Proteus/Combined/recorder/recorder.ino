@@ -20,17 +20,19 @@ char mode = '8';
 */
 
 //setting up the keypad
-const char r = 4;
-const char c = 3;
-char keys[r][c] = {
-  {'1', '2', '3'},
-  {'4', '5', '6'},
-  {'7', '8', '9'},
-  {'*', '0', '#'}
-};
-
-char rPins[r] = {r1, r2, r3, r4};
-char cPins[c] = {c1, c2, c3};
+int realVals[12] = {186, 102, 0, 359, 308, 248, 473, 439, 399, 554, 529, 501};
+char keys[12] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'};
+//const char r = 4;
+//const char c = 3;
+//char keys[r][c] = {
+//  {'1', '2', '3'},
+//  {'4', '5', '6'},
+//  {'7', '8', '9'},
+//  {'*', '0', '#'}
+//};
+//
+//char rPins[r] = {r1, r2, r3, r4};
+//char cPins[c] = {c1, c2, c3};
 //
 //Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
 LCDScreen lcd(0x20, 16, 2);
@@ -38,10 +40,13 @@ LCDScreen lcd(0x20, 16, 2);
 //Initializing things
 void setup() {
 
+pinMode(pot,INPUT);
+pinMode(keypadPin,INPUT);
+pinMode(speaker,OUTPUT);
   Serial.begin(9600);
   lcd.begin();
   firstLine("Starting...");
-  setupKeyPad();
+  //setupKeyPad();
   delay(1000);
 
 
@@ -114,7 +119,7 @@ void loop() {
   }
 
   if (mode == '8') {
-    clrDisplay("Voice Recorder");   
+    clrDisplay("Voice Recorder");  
     while (true) {
       char key_input = keyInput();
       if (key_input) {

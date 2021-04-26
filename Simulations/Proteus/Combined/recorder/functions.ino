@@ -4,36 +4,54 @@
    Definitions and implimentations all the functions used in recorder
 */
 
-void setupKeyPad() {
-  /*
-     This function is used to initialize the keypad
-  */
-  for (char r_ = 0; r_ < r; r_++) {
-    pinMode(rPins[r_], INPUT);    //set the row pins as input
-    digitalWrite(rPins[r_], HIGH);    //turn on the pullups
-  }
+//void setupKeyPad() {
+//  /*
+//     This function is used to initialize the keypad
+//  */
+//  for (char r_ = 0; r_ < r; r_++) {
+//    pinMode(rPins[r_], INPUT);    //set the row pins as input
+//    digitalWrite(rPins[r_], HIGH);    //turn on the pullups
+//  }
+//
+//  for (char c_ = 0; c_ < c; c_++) {
+//    pinMode(cPins[c_], OUTPUT);   //set the column pins as output
+//  }
+//}
+//char keyInput() {
+//  /*
+//     This function detects a keypress and return the corrosponding
+//
+//  */
+//  char k = 0;
+//
+//  for (char c_ = 0; c_ < c; c_++) {
+//    digitalWrite(cPins[c_], LOW);
+//    for (char r_ = 0; r_ < r; r_++) {
+//      if (digitalRead(rPins[r_]) == LOW) {
+//        delay(20);    //20ms debounce time
+//        while (digitalRead(rPins[r_]) == LOW);
+//        k = keys[r_][c_];
+//      }
+//    }
+//    digitalWrite(cPins[c_], HIGH);
+//  }
+//  return k;
+//}
 
-  for (char c_ = 0; c_ < c; c_++) {
-    pinMode(cPins[c_], OUTPUT);   //set the column pins as output
-  }
-}
 char keyInput() {
   /*
-     This function detects a keypress and return the corrosponding
-
+    This function detects a keypress and return the corrosponding
   */
   char k = 0;
-
-  for (char c_ = 0; c_ < c; c_++) {
-    digitalWrite(cPins[c_], LOW);
-    for (char r_ = 0; r_ < r; r_++) {
-      if (digitalRead(rPins[r_]) == LOW) {
-        delay(20);    //20ms debounce time
-        while (digitalRead(rPins[r_]) == LOW);
-        k = keys[r_][c_];
+  //int PinVal = analogRead(keypadPin);
+  //Serial.println(PinVal);
+  if (analogRead(keypadPin)<1023){
+    for (char i = 0; i < 16; i++) {
+      if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
+        k = keys[i];        
+        while (analogRead(keypadPin) < 1000);
       }
     }
-    digitalWrite(cPins[c_], HIGH);
   }
   return k;
 }
@@ -54,15 +72,17 @@ void readFromFile()
         break;
       }
       line = test_File.readStringUntil('\n');
+      analogWrite(speaker, line.toInt());
       //secondLine(line);
+      if(micros() - st<500){delayMicroseconds(500+st-micros());}
       Serial.println(micros() - st);
     }
-    
+
     // close the file:
     secondLine("End of play");
     delay(1000);
     test_File.close();
-    
+
   } else {
     // if the file didn't open, print an error:
     secondLine("No such file");
@@ -110,6 +130,7 @@ void record() {
 
     //delay(1/fs);
     //char key = keypad.getKey();
+    if(micros() - st<500){delayMicroseconds(500+st-micros());}
     Serial.println(micros() - st);
   }
 
