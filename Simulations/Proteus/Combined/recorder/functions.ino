@@ -72,10 +72,11 @@ void readFromFile()
         break;
       }
       line = test_File.readStringUntil('\n');
-      analogWrite(speaker, line.toInt());
+      PORTD = line.toInt();
+      //analogWrite(speaker, line.toInt());
       //secondLine(line);
       if(micros() - st<500){delayMicroseconds(500+st-micros());}
-      Serial.println(micros() - st);
+      //Serial.println(micros() - st);
     }
 
     // close the file:
@@ -131,7 +132,7 @@ void record() {
     //delay(1/fs);
     //char key = keypad.getKey();
     if(micros() - st<500){delayMicroseconds(500+st-micros());}
-    Serial.println(micros() - st);
+    //Serial.println(micros() - st);
   }
 
 }
