@@ -23,7 +23,8 @@
 #define speaker A1
 #define keypadPin A3
 #define fs 2000
-#define fsDelay 500 //microseconds
+#define fsDelay 125 //microseconds
+#define buttonPin A2
 /*latest code takes 428microsec to read a single data
  * takes 450microsec to read and output one data
  * (Updated 2021/4/26)

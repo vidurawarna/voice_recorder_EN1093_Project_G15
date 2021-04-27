@@ -1,8 +1,9 @@
 #include "LibsANDdefs.h"
 
 unsigned long st, t;
-int pot_Read;
-const int chipSelect = 10;
+byte pot_Read;
+const byte chipSelect = 10;
+byte buff[100];
 File test_File, test_File2;
 char mode = '8';
 /*  mode = 1 for record
@@ -42,8 +43,8 @@ void setup() {
 
   pinMode(pot, INPUT);
   pinMode(keypadPin, INPUT);
-  //pinMode(speaker, OUTPUT);
-
+ // pinMode(buttonPin, INPUT_PULLUP);
+  
   //CONFIGURING PORTD FOR OUTPUT
   for ( int i = 0; i < 8; i++) {
     pinMode(i, OUTPUT);
