@@ -5,7 +5,7 @@ subplot(4, 1, 1);
 plot(t, Signal)%time domain plot of original signal
 xlabel("Frequency (Hz)");
 ylabel("Amplitude");
-title("Scaled Signal Time Spectrum");
+title("Original Signal Time Spectrum");
 
 subplot(4, 1, 2);
 show_fre(Signal, length(Signal), Fs, "Original Signal Frequency Spectrum");%frequency domain plot of original signal
@@ -27,3 +27,5 @@ xlabel("Frequency (Hz)");
 ylabel("Amplitude");
 title("Scaled Signal Frequency Spectrum");
 
+player = audioplayer(Signal,a*Fs)%play edited .wav file
+play(player)

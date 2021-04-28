@@ -1,8 +1,8 @@
 #include "LibsANDdefs.h"
 
-unsigned long st, t;
-int pot_Read;
-
+unsigned long st,t;
+byte pot_Read,fsDelayin =400,fsDelayout= 400;
+const byte chipSelect = 10;
 File test_File, test_File2;
 char mode = '8';
 /*  mode = 1 for record
@@ -40,17 +40,23 @@ LCDScreen lcd(0x20, 16, 2);
 //Initializing things
 void setup() {
 
-pinMode(pot,INPUT);
-pinMode(keypadPin,INPUT);
-pinMode(speaker,OUTPUT);
-  Serial.begin(9600);
+  pinMode(pot, INPUT);
+  pinMode(keypadPin, INPUT);
+ // pinMode(buttonPin, INPUT_PULLUP);
+  
+  //CONFIGURING PORTD FOR OUTPUT
+  for ( int i = 0; i < 8; i++) {
+    pinMode(i, OUTPUT);
+  }
+  
+  //Serial.begin(9600);
   lcd.begin();
   firstLine("Starting...");
   //setupKeyPad();
   delay(1000);
 
 
-  if (!SD.begin(4)) {
+  if (!SD.begin(chipSelect)) {
     clrDisplay("SD card Error!");
     while (1);
   }
@@ -69,6 +75,7 @@ void loop() {
 
   if (mode == '1') {
     record();
+    mode = '8';
   }
 
   if (mode == '2') {
@@ -119,7 +126,7 @@ void loop() {
   }
 
   if (mode == '8') {
-    clrDisplay("Voice Recorder");  
+    clrDisplay("Voice Recorder");
     while (true) {
       char key_input = keyInput();
       if (key_input) {

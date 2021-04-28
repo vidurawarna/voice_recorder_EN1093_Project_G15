@@ -12,4 +12,7 @@ void loop() {
     delay(10);*/
     PORTD = analogRead(A0);
     delayMicroseconds(1);
+    int t = analogRead(A0)*255/1023;
+    PORTD = t;
+    delayMicroseconds(8);
   }

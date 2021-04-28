@@ -45,10 +45,10 @@ char keyInput() {
   char k = 0;
   //int PinVal = analogRead(keypadPin);
   //Serial.println(PinVal);
-  if (analogRead(keypadPin)<1023){
+  if (analogRead(keypadPin) < 1023) {
     for (char i = 0; i < 16; i++) {
       if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
-        k = keys[i];        
+        k = keys[i];
         while (analogRead(keypadPin) < 1000);
       }
     }
@@ -72,16 +72,23 @@ void readFromFile()
         break;
       }
       line = test_File.readStringUntil('\n');
-      analogWrite(speaker, line.toInt());
-      //secondLine(line);
-      if(micros() - st<500){delayMicroseconds(500+st-micros());}
-      Serial.println(micros() - st);
+      PORTD = line.toInt();
+
+      //Serial.print(test_File.read());
+
+      t = micros();
+    if ( t - st < fsDelayout) {
+
+      delayMicroseconds(fsDelayout + st - t);
+    }
+      //Serial.println(micros() - st);
     }
 
     // close the file:
     secondLine("End of play");
-    delay(1000);
     test_File.close();
+    delay(1000);
+
 
   } else {
     // if the file didn't open, print an error:
@@ -110,29 +117,30 @@ void record() {
     clrDisplay("Recording....");
   }
 
-  char key = keyInput();
 
-  while (key != '*') {
+
+  while (true) {
     st = micros();
 
     pot_Read = analogRead(pot) * (255. / 1023.);
     test_File2.println(pot_Read);
 
-    key = keyInput();
+    char key = keyInput();
 
     if (key && key == '*') {
-      mode = '8';
-      clrDisplay("Data recorded.");
-      delay(1000);
-      test_File2.close();
       break;
     }
+t = micros();
+    if ( t - st < fsDelayin) {
 
-    //delay(1/fs);
-    //char key = keypad.getKey();
-    if(micros() - st<500){delayMicroseconds(500+st-micros());}
-    Serial.println(micros() - st);
+      delayMicroseconds(fsDelayin + st - t);
+    }
+    //Serial.println(t - st);
   }
+  
+  test_File2.close();
+  clrDisplay("Data recorded.");
+  delay(1000);
 
 }
 
