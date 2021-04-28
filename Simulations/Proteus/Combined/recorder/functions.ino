@@ -75,17 +75,20 @@ void readFromFile()
       PORTD = line.toInt();
 
       //Serial.print(test_File.read());
-//      t = micros();
-      if ( micros() - st < fsDelay) {
-      delayMicroseconds(fsDelay + st - micros());
+
+      t = micros();
+    if ( t - st < fsDelayout) {
+
+      delayMicroseconds(fsDelayout + st - t);
     }
       //Serial.println(micros() - st);
     }
 
     // close the file:
     secondLine("End of play");
-    delay(1000);
     test_File.close();
+    delay(1000);
+
 
   } else {
     // if the file didn't open, print an error:
@@ -125,19 +128,19 @@ void record() {
     char key = keyInput();
 
     if (key && key == '*') {
-      mode = '8';
-      clrDisplay("Data recorded.");
-      delay(1000);
-      test_File2.close();
       break;
     }
+t = micros();
+    if ( t - st < fsDelayin) {
 
-   //t = micros();
-    if ( micros() - st < fsDelay) {
-      delayMicroseconds(fsDelay + st - micros());
+      delayMicroseconds(fsDelayin + st - t);
     }
-    //Serial.println(micros() - st);
+    //Serial.println(t - st);
   }
+  
+  test_File2.close();
+  clrDisplay("Data recorded.");
+  delay(1000);
 
 }
 
