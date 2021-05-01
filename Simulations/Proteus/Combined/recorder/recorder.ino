@@ -1,9 +1,8 @@
 #include "LibsANDdefs.h"
 
-unsigned long st, t;
-byte pot_Read;
+unsigned long st,t;
+byte pot_Read,fsDelayin =400,fsDelayout= 400;
 const byte chipSelect = 10;
-byte buff[100];
 File test_File, test_File2;
 char mode = '8';
 /*  mode = 1 for record
@@ -76,6 +75,7 @@ void loop() {
 
   if (mode == '1') {
     record();
+    mode = '8';
   }
 
   if (mode == '2') {
