@@ -9,7 +9,7 @@ void setup()
   ADCSRB = 0;             // clear ADCSRB register
   ADMUX |= (0 & 0x07);    // set A0 analog input pin
   ADMUX |= (1 << REFS0);  // set reference voltage
-  ADMUX |= (1 << ADLAR);  // left align ADC value to 8 bits from ADCH register
+  ADMUX |= (1 << ADLAR);  // left align ADC value to 8 bits from ADCH regisrte
 
   // sampling rate is [ADC clock] / [prescaler] / [conversion clock cycles]
   // for Arduino Uno ADC clock is 16 MHz and a conversion takes 13 clock cycles
@@ -26,6 +26,11 @@ void setup()
 ISR(ADC_vect)
 {
   byte x = ADCH;  // read 8 bit value from ADC
+  t = micros()-t0;
+  analogRead(A0);
+  Serial.println(t);
+  t0 = micros();
+  
   numSamples++;
 }
   
