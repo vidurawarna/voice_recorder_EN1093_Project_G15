@@ -10,7 +10,7 @@ void loop() {
   /*for (int t=0; t<100; t++){
     PORTD = sine[t];
     delay(10);*/
-    int t = analogRead(A0)*255/1023;
+    int t = analogRead(A0);
     PORTD = t;
-    delayMicroseconds(000.1);
+    delayMicroseconds(8);
   }
