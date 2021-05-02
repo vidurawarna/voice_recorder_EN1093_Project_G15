@@ -1,3 +1,4 @@
+
 //###############################################
 //LIBRARIES
 //###############################################
@@ -5,31 +6,27 @@
 #include <SPI.h>
 #include <SD.h>
 #include <Wire.h>
+
 #include "src/LCDScreen/LCDScreen.h"
 
 //###############################################
 //PIN  CONFIGURATIONS
 //###############################################
 /*
-  The circuit:
    SD card attached to SPI bus as follows:
  ** MOSI - pin 11
  ** MISO - pin 12
  ** CLK - pin 13
- ** CS - pin 4 (for MKRZero SD: SDCARD_SS_PIN)
+ ** CS - pin 10
 */
 
 #define pot A0
 #define speaker A1
-#define keypadPin A3
-/*latest code takes 400microsec to read a single data - 2.5kHz
- * takes 320microsec to read and output one data - 3.125kHz
- * (Updated 2021/4/28)
+#define keypadPin A2
+#define fsDelayin 100
+#define fsDelayout 100
+
+/*latest code takes 100microsec to read a single data - 10kHz
+ * takes 100microsec to read and output one data - 10kHz
+ * (Updated 2021/5/2 2.36pm)
 */
-# define r1 3
-# define r2 5
-# define r3 6
-# define r4 7
-# define c1 8
-# define c2 9
-# define c3 10

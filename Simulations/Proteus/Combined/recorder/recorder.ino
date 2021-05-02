@@ -1,9 +1,5 @@
 #include "LibsANDdefs.h"
 
-unsigned long st,t;
-byte pot_Read,fsDelayin =400,fsDelayout= 400;
-const byte chipSelect = 10;
-File test_File, test_File2;
 char mode = '8';
 /*  mode = 1 for record
         press '*' to stop recording
@@ -19,80 +15,70 @@ char mode = '8';
     mode = 8 for pause state
 */
 
-//setting up the keypad
+LCDScreen lcd(0x20, 16, 2);
 int realVals[12] = {186, 102, 0, 359, 308, 248, 473, 439, 399, 554, 529, 501};
 char keys[12] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'};
-//const char r = 4;
-//const char c = 3;
-//char keys[r][c] = {
-//  {'1', '2', '3'},
-//  {'4', '5', '6'},
-//  {'7', '8', '9'},
-//  {'*', '0', '#'}
-//};
-//
-//char rPins[r] = {r1, r2, r3, r4};
-//char cPins[c] = {c1, c2, c3};
-//
-//Keypad keypad = Keypad(makeKeymap(keys), rPins, cPins, r, c);
-LCDScreen lcd(0x20, 16, 2);
+//long t;
 
 //Initializing things
 void setup() {
+  
+  //CONFIGURE ANALOD READ FOR FASTER READINGS
+  ADCSRA |= (1<<ADPS2);
+  ADCSRA &= ~(1<<ADPS1);
+  ADCSRA &= ~(1<<ADPS0);
 
   pinMode(pot, INPUT);
   pinMode(keypadPin, INPUT);
- // pinMode(buttonPin, INPUT_PULLUP);
-  
+
   //CONFIGURING PORTD FOR OUTPUT
   for ( int i = 0; i < 8; i++) {
     pinMode(i, OUTPUT);
   }
-  
+
   //Serial.begin(9600);
+
   lcd.begin();
   firstLine("Starting...");
-  //setupKeyPad();
   delay(1000);
 
-
-  if (!SD.begin(chipSelect)) {
+  if (!SD.begin(10)) {
     clrDisplay("SD card Error!");
     while (1);
   }
   secondLine("Welcome !!");
+
   delay(1000);
 }
 
-//Repeating part
-void loop() {
-  //char key_input = keypad.getKey();
-  char key_input = keyInput();
 
+void loop() {
+  
+  //################################ KEY INPUT ####################################
+  char key_input = keyInput();
   if (key_input) {
     mode = key_input;
   }
-
-  if (mode == '1') {
-    record();
+  
+  //################################ RECORD MODE ##################################
+  if (mode == '1') {   
+    record();   
+    mode = '8';   
+  }
+  
+  //################################# PLAY MODE ###################################
+  if (mode == '2') {      
+    playTrack();   
     mode = '8';
   }
-
-  if (mode == '2') {
-    clrDisplay("Play Mode >");
-    secondLine("File number: ");
-    readFromFile();
-    mode = '8';
-  }
-
+  
+  //############################### DELETE ALL MODE ###############################
   if (mode == '*') {
-    File root = SD.open("/");
     clrDisplay("Delete all files ? ");
     secondLine("Yes-1 No-2 ");
 
-    if (getKeyInput() == "1.TXT") {
-      deleteAll(root);
-      root.close();
+    if (getKeyInput() == "1.BIN") {
+      operation(1);
       clrDisplay("Files deleted !!");
       delay(1000);
     }
@@ -100,39 +86,33 @@ void loop() {
       clrDisplay("Leaving...");
       delay(1000);
     }
-    root.close();
-
+    
     mode = '8';
-
   }
-
+  //########################### DISPLAY TRACKS MODE ################################
   if (mode == '#') {
-    File root = SD.open("/");
-    clrDisplay("Tracks : ");
-    getTrackList(root);
-    root.close();
+    operation(3);   
     mode = '8';
   }
-
-  if (mode == '0') {
-    File root = SD.open("/");
-    clrDisplay("Delete mode X");
-    secondLine("File to delete:");
-    deleteFile(root);
-    root.close();
+  //########################### DELETE FILE MODE ###################################
+  if (mode == '0') { 
+    operation(2);
     clrDisplay("Leaving...");
-    delay(1000);
+    delay(1000);  
     mode = '8';
   }
-
-  if (mode == '8') {
+  //############################ PAUSE MODE ########################################
+  if (mode == '8') {   
+    
     clrDisplay("Voice Recorder");
+    
     while (true) {
       char key_input = keyInput();
       if (key_input) {
         mode = key_input;
         break;
       }
-    }
+    }    
   }
+  
 }
