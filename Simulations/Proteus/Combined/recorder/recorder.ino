@@ -46,6 +46,7 @@ void setup() {
     clrDisplay("SD card Error!");
     while (1);
   }
+
   secondLine("Welcome !!");
 
   delay(1000);
@@ -74,12 +75,12 @@ void loop() {
   
   //############################### DELETE ALL MODE ###############################
   if (mode == '*') {
-    clrDisplay("Delete all files ? ");
-    secondLine("Yes-1 No-2 ");
+    clrDisplay("Delete all tracks ?");
+    secondLine("Yes-1 No-2");
 
-    if (getKeyInput() == "1.BIN") {
+    if (getKeyInput() == "1.WAV") {
       operation(1);
-      clrDisplay("Files deleted !!");
+      clrDisplay("Tracks deleted !");
       delay(1000);
     }
     else {
