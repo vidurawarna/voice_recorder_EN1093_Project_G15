@@ -41,7 +41,27 @@ String getKeyInput() {
 }
 //END OF KEYPAD FUNCTIONS
 
-//################################# RECORD AND PLAY FUNCTIONS ###########################################
+//############################################ LCD DISPLAY FUNCTIONS ####################################
+void firstLine(String msg) {
+  //Prints the string passed in the first line of the LCD display
+  lcd.setCursor(0, 0);
+  lcd.print(msg);
+}
+
+void clrDisplay(String msg) {
+  //Clears the LCD and displays the msg in first line
+  lcd.clear();
+  firstLine(msg);
+}
+
+void secondLine(String msg) {
+  //Prints the string passed in the second line of the LCD display
+  lcd.setCursor(0, 1);
+  lcd.print(msg);
+}
+//END OF LCD DISPLAY FUNCTIONS
+
+//############################################ RECORD AND PLAY FUNCTIONS ####################################
 
 void record() {
   /*Used to record the data got from input into a file*/
@@ -93,33 +113,66 @@ void playTrack()
   secondLine("Track number: ");
 
   String f = getKeyInput();
-
   File test_File = SD.open(f);
 
-  if (test_File) {
+  if (!test_File) {
+    // if the file didn't open, print an error:
+    secondLine("No such track");
+    delay(1000);
+  }
+  else {
+    clrDisplay("Frequency scale:");
+    freqScal = String(getKeyInput()[0]).toInt();
+
     test_File.seek(44);
     clrDisplay("Playing Track ");
-    while (test_File.available()) {
-            //t = micros();
-      char key = keyInput();
-      if (key && key == '*') {
-        break;
+
+    //Check whether a freaquency scale is set
+    if (freqScal == 0 || freqScal == 1) {
+      while (test_File.available()) {
+        //t = micros();
+        char key = keyInput();
+        if (key && key == '*') {
+          break;
+        }
+
+        PORTD = test_File.read();
+        delayMicroseconds(50);
+        //Serial.println(micros() - t);
       }
-
-      PORTD = test_File.read();
-      delayMicroseconds(50);
-         //Serial.println(micros() - t);
     }
+    //Output for freaquency scaled track
+    //Using down sampling
+    else {
+      byte count = 1;
+      while (test_File.available()) {
+        //t = micros();
+        char key = keyInput();
+        if (key && key == '*') {
+          break;
+        }
 
+        if (count == 1) {
+          PORTD = test_File.read();//Accept the first sample among (# of samples=freqScal)
+          delayMicroseconds(50);
+          //Serial.println(micros() - t);
+        } else {
+          byte temp = test_File.read();//This is to neglet samples in between
+        }
+
+        count++;
+        
+        if (count == freqScal + 1) {//resetting the count
+          count = 1;
+        }
+        //Serial.println(micros() - t);
+      }
+    }
     // close the file:
     secondLine("End of play");
     test_File.close();
     delay(1000);
 
-  } else {
-    // if the file didn't open, print an error:
-    secondLine("No such file");
-    delay(1000);
   }
 }
 //END OF RECORD AND PLAY FUNCTIONS
@@ -162,26 +215,7 @@ String checkDuplicates(int count) {
   }
 }
 
-void firstLine(String msg) {
-  //Prints the string passed in the first line of the LCD display
-  lcd.setCursor(0, 0);
-  lcd.print(msg);
-}
-
-void clrDisplay(String msg) {
-  //Clears the LCD and displays the msg in first line
-  lcd.clear();
-  firstLine(msg);
-}
-
-void secondLine(String msg) {
-  //Prints the string passed in the second line of the LCD display
-  lcd.setCursor(0, 1);
-  lcd.print(msg);
-}
-
-
-void operation(int m) {
+void fileOperation(int m) {
   /*
      m = 1 for delete all
      m = 2 for delete a single file
@@ -217,7 +251,7 @@ void operation(int m) {
       } else if (String(dir.name()) == n) {
         SD.remove(dir.name());
         dir.close();
-        clrDisplay("Track removed");
+        clrDisplay("Track deleted");
         delay(1000);
         break;
       }
@@ -250,18 +284,18 @@ void operation(int m) {
 
 void makeWaveFile(File sFile) {
   /*
-   * This function creates the wave header file required 
-   * All bytes should be in little endian format, except String values
+     This function creates the wave header file required
+     All bytes should be in little endian format, except String values
   */
-  
+
   sFile.write((byte*)"RIFF    WAVEfmt ", 16);//Starting bytes of the wave header file
   byte chunk[] = {16, 0, 0, 0, 1, 0, 1, 0, lowByte(sampleRate), highByte(sampleRate)};
   /*
-   * chunk[]
-   * first 4 bytes: size of  previous data chunck
-   * next 2 bytes: Audio format (1 - PCM)
-   * next 2 byte: No of channels (Mono = 1, Stereo = 2) (in our case 1)
-   * last two are the first two bytes of sample rate 
+     chunk[]
+     first 4 bytes: size of  previous data chunck
+     next 2 bytes: Audio format (1 - PCM)
+     next 2 byte: No of channels (Mono = 1, Stereo = 2) (in our case 1)
+     last two are the first two bytes of sample rate
   */
   sFile.write((byte*)chunk, 10);
 
@@ -283,18 +317,18 @@ void makeWaveFile(File sFile) {
 
 void finalizeWave(File sFile) {
   /*
-   * This function finalizes the wave file
+     This function finalizes the wave file
   */
   unsigned long fSize = sFile.size();
 
   fSize -= 8;
-  sFile.seek(4); 
+  sFile.seek(4);
   byte chunk2[4] = {lowByte(fSize), highByte(fSize), fSize >> 16, fSize >> 24};
   sFile.write(chunk2, 4);//Writing chunksize to 5 - 8 bytes in wave file
 
   sFile.seek(40);
   fSize -= 36 ;
-  chunk2[0] = lowByte(fSize);chunk2[1] = highByte(fSize); chunk2[2] = fSize >> 16; chunk2[3] = fSize >> 24;
+  chunk2[0] = lowByte(fSize); chunk2[1] = highByte(fSize); chunk2[2] = fSize >> 16; chunk2[3] = fSize >> 24;
   sFile.write((byte*)chunk2, 4);//Writting num of samples to 41-44 bytes in wave file
 }
 //END OF WAVE FILE CREATE FUNCTIONS

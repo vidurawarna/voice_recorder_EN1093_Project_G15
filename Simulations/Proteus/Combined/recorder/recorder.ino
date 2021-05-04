@@ -16,6 +16,7 @@ char mode = '8';
 */
 
 LCDScreen lcd(0x20, 16, 2);
+byte freqScal=0;
 int realVals[12] = {186, 102, 0, 359, 308, 248, 473, 439, 399, 554, 529, 501};
 char keys[12] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'};
 //long t;
@@ -79,7 +80,7 @@ void loop() {
     secondLine("Yes-1 No-2");
 
     if (getKeyInput() == "1.WAV") {
-      operation(1);
+      fileOperation(1);
       clrDisplay("Tracks deleted !");
       delay(1000);
     }
@@ -92,12 +93,12 @@ void loop() {
   }
   //########################### DISPLAY TRACKS MODE ################################
   if (mode == '#') {
-    operation(3);   
+    fileOperation(3);   
     mode = '8';
   }
   //########################### DELETE FILE MODE ###################################
   if (mode == '0') { 
-    operation(2);
+    fileOperation(2);
     clrDisplay("Leaving...");
     delay(1000);  
     mode = '8';
