@@ -3,7 +3,7 @@ t = [0:1/Fs:(length(Signal)-1)/Fs];
 
 subplot(4, 1, 1);
 plot(t, Signal)%time domain plot of original signal
-xlabel("Frequency (Hz)");
+xlabel("Time (s)");
 ylabel("Amplitude");
 title("Original Signal Time Spectrum");
 
@@ -15,9 +15,13 @@ at = linspace(0, (length(Signal)-1)/(a*Fs), length(Signal));
 fft_coef = abs(fft(Signal)/length(Signal))/abs(a);
 f_a = linspace(-length(Signal)/(2*abs(a)),length(Signal)/(2*abs(a))-1,length(Signal));
 
+for i = 2:a:size(Signal)
+    Signal(i) = 0;
+end
+
 subplot(4, 1, 3);
 plot(at, Signal);%time domain plot of scaled signal
-xlabel("Frequency (Hz)");
+xlabel("Time (s)");
 ylabel("Amplitude");
 title("Scaled Signal Time Spectrum");
 
@@ -27,5 +31,5 @@ xlabel("Frequency (Hz)");
 ylabel("Amplitude");
 title("Scaled Signal Frequency Spectrum");
 
-player = audioplayer(Signal,a*Fs)%play edited .wav file
+player = audioplayer(Signal,Fs);%play edited .wav file
 play(player)

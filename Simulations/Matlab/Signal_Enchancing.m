@@ -1,10 +1,9 @@
 [Signal,Fs] = audioread('sound.wav');
 t = [0:1/Fs:(length(Signal)-1)/Fs];
-l = length(Signal);
 
 subplot(4, 1, 1);
 plot(t, Signal)%time domain plot of original signal
-xlabel("Frequency (Hz)");
+xlabel("Time (s)");
 ylabel("Amplitude");
 title("Original Signal Time Spectrum");
 
@@ -17,26 +16,26 @@ Enchance_coeff = input("Input Enchancing Coefficient: ");
 
 %enchancing components of the signal
 if Typ_Fre == 'H'
-    Signal_high = highpass(Signal, Freq_range, Fs);
+    Signal_high = High_Pass_Signal(Signal, Freq_range, Fs);
     Signal_high = Signal_high.*Enchance_coeff;
-    Signal_low = lowpass(Signal, Freq_range, Fs);
+    Signal_low = Low_Pass_Signal(Signal, Freq_range, Fs);
     New_Signal = Signal_high + Signal_low;
 elseif Typ_Fre == 'B'
-    Signal_high = highpass(Signal, Freq_range(2), Fs);
-    Signal_band = bandpass(Signal, Freq_range,Fs);
+    Signal_high = High_Pass_Signal(Signal, Freq_range(2), Fs);
+    Signal_band = Band_Pass_Signal(Signal, Freq_range(1), Freq_range(1), Fs);
     Signal_band = Signal_band.*Enchance_coeff;
-    Signal_low = lowpass(Signal, Freq_range(1), Fs);
+    Signal_low = Low_Pass_Signal(Signal, Freq_range(1), Fs);
     New_Signal = Signal_high + Signal_band + Signal_low;
 else
-    Signal_high = highpass(Signal, Freq_range, Fs);
-    Signal_low = lowpass(Signal, Freq_range, Fs);
+    Signal_high = High_Pass_Signal(Signal, Freq_range, Fs);
+    Signal_low = Low_Pass_Signal(Signal, Freq_range, Fs);
     Signal_low = Signal_low.*Enchance_coeff;
     New_Signal = Signal_high + Signal_low;
 end
 
 subplot(4, 1, 3);
 plot(t, New_Signal)%time domain plot of enchanced signal
-xlabel("Frequency (Hz)");
+xlabel("Time (s)");
 ylabel("Amplitude");
 title("Enchanced Signal Time Spectrum");
 
