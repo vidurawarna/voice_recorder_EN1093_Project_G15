@@ -15,7 +15,7 @@ char mode = '8';
     mode = 8 for pause state
 */
 
-LCDScreen lcd(0x20, 16, 2);
+LCDScreen lcd;
 byte freqScal=0;
 int realVals[12] = {186, 102, 0, 359, 308, 248, 473, 439, 399, 554, 529, 501};
 char keys[12] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'};

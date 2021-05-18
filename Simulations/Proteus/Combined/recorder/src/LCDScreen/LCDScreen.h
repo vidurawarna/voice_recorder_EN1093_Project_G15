@@ -50,6 +50,13 @@
 #define Rw B00000010  // Read/Write bit
 #define Rs B00000001  // Register select bit
 
+//Common values for 16x2 display
+/* #define _cols 16
+#define _rows 2
+#define _charsize 0x00
+#define _backlightval 0x08
+#define _addr 0x27
+ */
 /**
  * This is the driver for the Liquid Crystal LCD displays that use the I2C bus.
  *
@@ -68,7 +75,7 @@ public:
 	 * @param lcd_rows	Number of rows your LCD display has.
 	 * @param charsize	The size in dots that the display has, use LCD_5x10DOTS or LCD_5x8DOTS.
 	 */
-	LCDScreen(uint8_t lcd_addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t charsize = LCD_5x8DOTS);
+	LCDScreen();
 
 	/**
 	 * Set the LCD display in the correct begin state, must be called before anything else is done.
@@ -96,21 +103,21 @@ public:
 	virtual size_t write(uint8_t);
 	void command(uint8_t);
 
-	void setBacklight(uint8_t new_val);				// alias for backlight() and nobacklight()
+	//void setBacklight(uint8_t new_val);				// alias for backlight() and nobacklight()
 	
 private:
 	void send(uint8_t, uint8_t);
 	void write4bits(uint8_t);
 	void expanderWrite(uint8_t);
 	void pulseEnable(uint8_t);
-	uint8_t _addr;
+	//uint8_t _addr;
 	uint8_t _displayfunction;
 	uint8_t _displaycontrol;
 	uint8_t _displaymode;
-	uint8_t _cols;
-	uint8_t _rows;
-	uint8_t _charsize;
-	uint8_t _backlightval;
+	//uint8_t _cols;
+	//uint8_t _rows;
+	//uint8_t _charsize;
+	//uint8_t _backlightval;
 };
 
 #endif // FDB_LIQUID_CRYSTAL_I2C_H

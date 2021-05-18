@@ -11,7 +11,7 @@ char keyInput() {
   //  int PinVal = analogRead(keypadPin);
   //  Serial.println(PinVal);
   if (analogRead(keypadPin) < 1023) {
-    for (char i = 0; i < 16; i++) {
+    for (char i = 0; i < 12; i++) {
       if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
         k = keys[i];
         while (analogRead(keypadPin) < 1000);
@@ -126,7 +126,7 @@ void playTrack()
 
     test_File.seek(44);
     clrDisplay("Playing Track ");
-
+ 
     //Check whether a freaquency scale is set
     if (freqScal == 0 || freqScal == 1) {
       while (test_File.available()) {
@@ -161,7 +161,7 @@ void playTrack()
         }
 
         count++;
-        
+
         if (count == freqScal + 1) {//resetting the count
           count = 1;
         }
