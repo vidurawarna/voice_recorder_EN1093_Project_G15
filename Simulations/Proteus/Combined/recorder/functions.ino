@@ -11,34 +11,16 @@ char keyInput() {
   //  int PinVal = analogRead(keypadPin);
   //  Serial.println(PinVal);
   if (analogRead(keypadPin) < 1023) {
-    for (char i = 0; i < 12; i++) {
+    for (uint8_t i = 0; i < 8; i++) {
       if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
         k = keys[i];
-        while (analogRead(keypadPin) < 1000);
+        while (analogRead(keypadPin) < 1000) {};
       }
     }
   }
   return k;
 }
 
-String getKeyInput() {
-  /*
-     used to get the user inputs from the keypad
-  */
-  String res = "";
-  while (true) {
-    //char key_input = keypad.getKey();
-    char key_input = keyInput();
-    if (key_input == '*') {
-      break;
-    }
-    else if (key_input) {
-      res += String(key_input);
-      clrDisplay(res);
-    }
-  }
-  return res + ".WAV";
-}
 //END OF KEYPAD FUNCTIONS
 
 //############################################ LCD DISPLAY FUNCTIONS ####################################
@@ -65,12 +47,8 @@ void secondLine(String msg) {
 
 void record() {
   /*Used to record the data got from input into a file*/
-
-  int fcount = countFiles();
-
-  String fi = checkDuplicates(fcount);//this function is used to check duplicates when new files are created
-
-  File test_File = SD.open(fi, FILE_WRITE);
+  checkDuplicates(65);
+  File test_File = SD.open(fname_temp, FILE_WRITE);
 
   if (!test_File) {
     clrDisplay("error !!");
@@ -88,14 +66,12 @@ void record() {
 
       char key = keyInput();
 
-      if (key && key == '*') {
-        break;
-      }
-      if (keyInput()) {
+      if (key && key == 's') {
         break;
       }
 
       test_File.write(pot_Read);
+      //delayMicroseconds(10);
       // Serial.println(micros() - t);
     }
     finalizeWave(test_File);
@@ -108,12 +84,7 @@ void record() {
 void playTrack()
 {
   /*This function reads data from the specified file and play*/
-
-  clrDisplay("Play Mode >");
-  secondLine("Track number: ");
-
-  String f = getKeyInput();
-  File test_File = SD.open(f);
+  File test_File = SD.open(fname_temp);
 
   if (!test_File) {
     // if the file didn't open, print an error:
@@ -121,23 +92,19 @@ void playTrack()
     delay(1000);
   }
   else {
-    clrDisplay("Frequency scale:");
-    freqScal = String(getKeyInput()[0]).toInt();
-
     test_File.seek(44);
     clrDisplay("Playing Track ");
- 
+    secondLine(fname_temp);
     //Check whether a freaquency scale is set
     if (freqScal == 0 || freqScal == 1) {
       while (test_File.available()) {
         //t = micros();
         char key = keyInput();
-        if (key && key == '*') {
+        if (key && key == 's') {
           break;
         }
-
         PORTD = test_File.read();
-        delayMicroseconds(50);
+        delayMicroseconds(35);
         //Serial.println(micros() - t);
       }
     }
@@ -148,13 +115,13 @@ void playTrack()
       while (test_File.available()) {
         //t = micros();
         char key = keyInput();
-        if (key && key == '*') {
+        if (key && key == 's') {
           break;
         }
 
         if (count == 1) {
           PORTD = test_File.read();//Accept the first sample among (# of samples=freqScal)
-          delayMicroseconds(50);
+          delayMicroseconds(35);
           //Serial.println(micros() - t);
         } else {
           byte temp = test_File.read();//This is to neglet samples in between
@@ -172,7 +139,74 @@ void playTrack()
     secondLine("End of play");
     test_File.close();
     delay(1000);
+    clrDisplay("Track on Play:");
+    delay(500);
+    secondLine(fname_temp);
+  }
+}
 
+void player() {
+  /*
+   * This is the player mode
+   * It loads the tracks in alphebetic order
+   * Press 'Play' when a track is loaded to the player
+   * Press 'Stop' to stop playing
+   * Press 'next' or 'previous' to toggle between tracks
+   * Press 'Stop' in track loaded mode to exit player mode
+  */
+  clrDisplay("Track on Play:");
+  delay(1000);
+  if (countFiles() == 0) {
+    clrDisplay("No Tracks !");
+    delay(1000);
+  }
+  else {
+    //Loads the first track in player
+    byte fcount = nextTrack(64);
+
+    while (true) {
+      //Checks for key input
+      char key = keyInput();
+      if (key) {
+        if (key == 'p') {
+          //Play the track
+          playTrack();
+        }
+        else if (key == '>') {
+          //Load the next track
+          fcount = nextTrack(fcount);
+        }
+        else if (key == '<') {
+          //load the previous track
+          fcount = previousTrack(fcount);
+        }
+        else if (key == 's') {
+          //Exit from player mode
+          break;
+        }
+        else if (key == 'd') {
+          //This mode deletes the track loaded in payer
+          clrDisplay("Delete Track?");
+          secondLine("OK    No(MOD)");
+          while (true) {
+            char key = keyInput();
+            if (key && key == 'o') {
+              SD.remove(fname_temp);
+              clrDisplay("Deleted !");
+              delay(1000);
+              break;
+            } else if (key) {
+              clrDisplay("Not Deleted !");
+              delay(1000);
+              break;
+            }
+          }
+          if(countFiles()==0){break;}
+          clrDisplay("Track on Play:");
+          fcount = nextTrack(64);
+        }
+      }
+    }
   }
 }
 //END OF RECORD AND PLAY FUNCTIONS
@@ -199,85 +233,71 @@ int countFiles() {
   r.close();
   return c;
 }
-
-String checkDuplicates(int count) {
+byte nextTrack(byte count) {
+  /*
+   * Checks tracks in alphetic order and returns the next track
+  */
+  fname_temp = String(char(++count)) + ".WAV";
+  while (true) {
+    if (SD.exists(fname_temp) || count >= 80) {
+      if (count >= 80) {
+        secondLine("End of Tracks");
+        delay(1000);
+        secondLine("                ");
+        delay(500);
+        count = nextTrack(64);
+      }
+      else {
+        secondLine(fname_temp);
+      }
+      break;
+    } else {
+      fname_temp = String(char(++count)) + ".WAV";
+    }
+  }
+  //Serial.println(count);
+  return count;
+}
+byte previousTrack(byte count) {
+  /*
+   * Checks tracks in alphetic order and returns the previous track
+  */
+  fname_temp = String(char(--count)) + ".WAV";
+  while (true) {
+    if (SD.exists(fname_temp) || count <= 65) {
+      if (count < 65) {
+        secondLine("End of Tracks");
+        delay(1000);
+        secondLine("                ");
+        delay(500);
+        count = nextTrack(64);
+      }
+      else {
+        secondLine(fname_temp);
+      }
+      break;
+    } else {
+      fname_temp = String(char(--count)) + ".WAV";
+    }
+  }
+  //Serial.println(count);
+  return count;
+}
+void checkDuplicates(byte count) {
 
   /*This function checks if the new file to be made is existing,
     if does it generates a new name for the file*/
 
-  String fname_temp = String(count + 1) + ".wav";
-  if (SD.exists(fname_temp)) {
-    fname_temp = checkDuplicates(count + 1);
-  }
-  else {
-
-    return fname_temp;
+  fname_temp = String(char(count)) + ".wav";
+  while (true) {
+    if (SD.exists(fname_temp)) {
+      fname_temp = String(char(++count)) + ".wav";
+    } else {
+      break;
+    }
   }
 }
 
-void fileOperation(int m) {
-  /*
-     m = 1 for delete all
-     m = 2 for delete a single file
-     m = 3 for display files
-  */
-
-  File r = SD.open("/");
-
-  if (m == 1) {
-    //********************** delete all **********************************
-    while (true) {
-      File dir = r.openNextFile();
-      if (!dir) {
-        dir.close();
-        break;
-      }
-      SD.remove(dir.name());
-      dir.close();
-    }
-
-  } else if (m == 2) {
-    //********************** delete file *********************************
-    clrDisplay("Delete mode X");
-    secondLine("Track to delete:");
-    String n = getKeyInput();
-    while (true) {
-      File dir = r.openNextFile();
-      if (!dir) {
-        dir.close();
-        clrDisplay("No such track");
-        delay(1000);
-        break;
-      } else if (String(dir.name()) == n) {
-        SD.remove(dir.name());
-        dir.close();
-        clrDisplay("Track deleted");
-        delay(1000);
-        break;
-      }
-      dir.close();
-    }
-
-  } else {
-    //********************** get files ***********************************
-    clrDisplay("Tracks : ");
-    while (true) {
-      File dir = r.openNextFile();
-      if (!dir) {
-        dir.close();
-        clrDisplay("End of tracks !");
-        delay(1000);
-        break;
-      }
-
-      secondLine("Track " + String(dir.name()[0]));
-      delay(1000);
-      dir.close();
-    }
-
-  }
-  r.close();
-}
 //END OF FILE HANDLING FUNCTIONS
 
 //################################### FUNCTIONS FOR WAVE FILE CREATION #######################################

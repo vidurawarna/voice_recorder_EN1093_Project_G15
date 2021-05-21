@@ -30,9 +30,9 @@
 	_charsize = charsize;
 	_backlightval = LCD_BACKLIGHT;
 } */
-LCDScreen::LCDScreen()
+LCDScreen::LCDScreen(uint8_t lcd_addr)
 {
-	
+	_addr = lcd_addr;
 }
 void LCDScreen::begin() {
 	Wire.begin();
@@ -147,7 +147,7 @@ void LCDScreen::write4bits(uint8_t value) {
 }
 
 void LCDScreen::expanderWrite(uint8_t _data){
-	Wire.beginTransmission(0x20);
+	Wire.beginTransmission(_addr);
 	Wire.write((int)(_data) | 0x08);
 	Wire.endTransmission();
 }

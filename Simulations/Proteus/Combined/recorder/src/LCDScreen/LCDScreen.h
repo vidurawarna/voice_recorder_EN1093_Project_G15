@@ -75,7 +75,7 @@ public:
 	 * @param lcd_rows	Number of rows your LCD display has.
 	 * @param charsize	The size in dots that the display has, use LCD_5x10DOTS or LCD_5x8DOTS.
 	 */
-	LCDScreen();
+	LCDScreen(uint8_t lcd_addr);
 
 	/**
 	 * Set the LCD display in the correct begin state, must be called before anything else is done.
@@ -110,7 +110,7 @@ private:
 	void write4bits(uint8_t);
 	void expanderWrite(uint8_t);
 	void pulseEnable(uint8_t);
-	//uint8_t _addr;
+	uint8_t _addr;
 	uint8_t _displayfunction;
 	uint8_t _displaycontrol;
 	uint8_t _displaymode;

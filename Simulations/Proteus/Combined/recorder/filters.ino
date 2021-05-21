@@ -64,3 +64,12 @@ void filter(float cut_Off1, float cut_Off2, byte m) {
   }
 
 }
+
+void cosFunc(){
+  byte m;
+  File test_File = SD.open("cos200Hz.bin", FILE_WRITE);
+  for(int i =0;i<sampleCounter;i++){
+     m= (byte)(127.5 + 127.5*cos(w*i));
+    test_File.write(m);  }
+    test_File.close();
+}

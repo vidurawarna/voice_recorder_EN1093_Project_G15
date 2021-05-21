@@ -1,33 +1,29 @@
 #include "LibsANDdefs.h"
 
-char mode = '8';
-/*  mode = 1 for record
-        press '*' to stop recording
-    mode = 2 for display values
-        enter track number and press '*'
-        enter '*' to stop playing
-    mode = * for delete all files
-        enter the response and press '*'
-    mode = 0 for delete a specific file
-        enter track number and press '*'
-        enter '*' to delete track
-    mode = # for display files
-    mode = 8 for pause state
+char mode = 'i';
+/*  mode = 'r' for record
+        press 'record' to stop recording
+    mode = 'p' for player mode
+        play the track by skipping and press 'play'
+        press 'stop' to stop playing
+    mode = 'i' for pause state
 */
 
-LCDScreen lcd;
-byte freqScal=0;
-int realVals[12] = {186, 102, 0, 359, 308, 248, 473, 439, 399, 554, 529, 501};
-char keys[12] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'};
+LCDScreen lcd(0x20);
+byte freqScal = 0;
+String fname_temp;
+
+int realVals[8] = {501, 0, 248, 334, 522,  78, 294, 429};
+char keys[8] = {'r', '<', 'p', '>', 's',  'd', 'm', 'o'};
 //long t;
 
 //Initializing things
 void setup() {
-  
+
   //CONFIGURE ANALOD READ FOR FASTER READINGS
-  ADCSRA |= (1<<ADPS2);
-  ADCSRA &= ~(1<<ADPS1);
-  ADCSRA &= ~(1<<ADPS0);
+  ADCSRA |= (1 << ADPS2);
+  ADCSRA &= ~(1 << ADPS1);
+  ADCSRA &= ~(1 << ADPS0);
 
   pinMode(pot, INPUT);
   pinMode(keypadPin, INPUT);
@@ -37,7 +33,7 @@ void setup() {
     pinMode(i, OUTPUT);
   }
 
-  //Serial.begin(9600);
+ //Serial.begin(9600);
 
   lcd.begin();
   firstLine("Starting...");
@@ -55,66 +51,37 @@ void setup() {
 
 
 void loop() {
-  
+
   //################################ KEY INPUT ####################################
   char key_input = keyInput();
   if (key_input) {
     mode = key_input;
   }
-  
-  //################################ RECORD MODE ##################################
-  if (mode == '1') {   
-    record();   
-    mode = '8';   
-  }
-  
-  //################################# PLAY MODE ###################################
-  if (mode == '2') {      
-    playTrack();   
-    mode = '8';
-  }
-  
-  //############################### DELETE ALL MODE ###############################
-  if (mode == '*') {
-    clrDisplay("Delete all tracks ?");
-    secondLine("Yes-1 No-2");
 
-    if (getKeyInput() == "1.WAV") {
-      fileOperation(1);
-      clrDisplay("Tracks deleted !");
-      delay(1000);
-    }
-    else {
-      clrDisplay("Leaving...");
-      delay(1000);
-    }
-    
-    mode = '8';
+  //################################ RECORD MODE ##################################
+  if (mode == 'r') {
+    record();
+    mode = 'i';
   }
-  //########################### DISPLAY TRACKS MODE ################################
-  if (mode == '#') {
-    fileOperation(3);   
-    mode = '8';
+
+  //################################# PLAYER MODE ###################################
+  if (mode == 'p') {
+    player();
+    mode = 'i';
   }
-  //########################### DELETE FILE MODE ###################################
-  if (mode == '0') { 
-    fileOperation(2);
-    clrDisplay("Leaving...");
-    delay(1000);  
-    mode = '8';
-  }
+
   //############################ PAUSE MODE ########################################
-  if (mode == '8') {   
-    
+  if (mode == 'i') {
+
     clrDisplay("Voice Recorder");
-    
+
     while (true) {
       char key_input = keyInput();
       if (key_input) {
         mode = key_input;
         break;
       }
-    }    
+    }
   }
-  
+
 }
