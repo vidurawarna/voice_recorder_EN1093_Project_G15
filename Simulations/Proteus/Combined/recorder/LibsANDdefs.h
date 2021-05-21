@@ -21,10 +21,9 @@
 */
 
 //pin map
-#define pot A0
-#define speaker A1
+#define mic A0
 #define keypadPin A2
-
+#define pot A3
 //###############################################
 //common values
 //###############################################
@@ -42,7 +41,7 @@
 #define pi 3.142
 
 //for building cos wave
-#define freqShift 200
+#define freqShift 500
 #define w 2*pi*freqShift/sampleRate
 #define sampleCounter sampleRate/freqShift
 

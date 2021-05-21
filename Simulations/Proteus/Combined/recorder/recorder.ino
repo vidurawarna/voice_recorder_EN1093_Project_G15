@@ -25,16 +25,26 @@ void setup() {
   ADCSRA &= ~(1 << ADPS1);
   ADCSRA &= ~(1 << ADPS0);
 
-  pinMode(pot, INPUT);
+  pinMode(mic, INPUT);
   pinMode(keypadPin, INPUT);
-
+  pinMode(pot, INPUT);
   //CONFIGURING PORTD FOR OUTPUT
   for ( int i = 0; i < 8; i++) {
     pinMode(i, OUTPUT);
   }
 
- //Serial.begin(9600);
-
+  //Serial.begin(9600);
+  byte m = analogRead(pot) * (255. / 1023.);
+  if (m < 90) {
+    freqScal = 1;
+  }
+  else if (m < 180) {
+    freqScal = 2;
+  }
+  else {
+    freqScal = 3;
+  }
+  
   lcd.begin();
   firstLine("Starting...");
   delay(1000);

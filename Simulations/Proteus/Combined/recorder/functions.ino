@@ -60,9 +60,9 @@ void record() {
     byte pot_Read;
 
     while (true) {
-      //   t = micros();
+         //t = micros();
 
-      pot_Read = analogRead(pot) * (255. / 1023.);
+      pot_Read = analogRead(mic) * (255. / 1023.);
 
       char key = keyInput();
 
@@ -71,7 +71,7 @@ void record() {
       }
 
       test_File.write(pot_Read);
-      //delayMicroseconds(10);
+      delayMicroseconds(18);
       // Serial.println(micros() - t);
     }
     finalizeWave(test_File);
@@ -82,10 +82,22 @@ void record() {
 }
 
 void playTrack()
-{
+{ 
   /*This function reads data from the specified file and play*/
-  File test_File = SD.open(fname_temp);
 
+  byte m = analogRead(pot) * (255. / 1023.);
+  if (m < 90) {
+    freqScal = 1;
+  }
+  else if (m < 180) {
+    freqScal = 2;
+  }
+  else {
+    freqScal = 3;
+  }
+  
+  File test_File = SD.open(fname_temp);
+  
   if (!test_File) {
     // if the file didn't open, print an error:
     secondLine("No such track");
@@ -104,7 +116,7 @@ void playTrack()
           break;
         }
         PORTD = test_File.read();
-        delayMicroseconds(35);
+        delayMicroseconds(50);
         //Serial.println(micros() - t);
       }
     }
@@ -121,7 +133,7 @@ void playTrack()
 
         if (count == 1) {
           PORTD = test_File.read();//Accept the first sample among (# of samples=freqScal)
-          delayMicroseconds(35);
+          delayMicroseconds(50);
           //Serial.println(micros() - t);
         } else {
           byte temp = test_File.read();//This is to neglet samples in between
