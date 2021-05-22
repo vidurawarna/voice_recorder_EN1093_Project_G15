@@ -1,18 +1,20 @@
 #include "LibsANDdefs.h"
 
 char mode = 'i';
-/*  mode = 'r' for record
-        press 'record' to stop recording
+/*  mode = 's' for record
+        press 'record/stop' to start/stop recording
     mode = 'p' for player mode
-        play the track by skipping and press 'play'
-        press 'stop' to stop playing
+        play the track by skipping and press 'play/stop'
+        press 'play/stop'  to play/stop track
     mode = 'i' for pause state
 */
 
 LCDScreen lcd(0x20);
 byte freqScal = 0;
+bool shift=false,enhance=false;
 String fname_temp;
-
+byte tracks[15];
+byte files=0;
 int realVals[8] = {501, 0, 248, 334, 522,  78, 294, 429};
 char keys[8] = {'r', '<', 'p', '>', 's',  'd', 'm', 'o'};
 //long t;
@@ -34,17 +36,8 @@ void setup() {
   }
 
   //Serial.begin(9600);
-  byte m = analogRead(pot) * (255. / 1023.);
-  if (m < 90) {
-    freqScal = 1;
-  }
-  else if (m < 180) {
-    freqScal = 2;
-  }
-  else {
-    freqScal = 3;
-  }
   
+
   lcd.begin();
   firstLine("Starting...");
   delay(1000);
@@ -53,6 +46,8 @@ void setup() {
     clrDisplay("SD card Error!");
     while (1);
   }
+//cosFunc();
+  getTrackList(0);  
 
   secondLine("Welcome !!");
 
@@ -69,8 +64,9 @@ void loop() {
   }
 
   //################################ RECORD MODE ##################################
-  if (mode == 'r') {
+  if (mode == 's') {
     record();
+    getTrackList(0);
     mode = 'i';
   }
 

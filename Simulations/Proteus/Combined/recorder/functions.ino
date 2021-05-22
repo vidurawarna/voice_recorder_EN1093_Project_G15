@@ -60,7 +60,7 @@ void record() {
     byte pot_Read;
 
     while (true) {
-         //t = micros();
+      //t = micros();
 
       pot_Read = analogRead(mic) * (255. / 1023.);
 
@@ -82,22 +82,13 @@ void record() {
 }
 
 void playTrack()
-{ 
+{
   /*This function reads data from the specified file and play*/
 
-  byte m = analogRead(pot) * (255. / 1023.);
-  if (m < 90) {
-    freqScal = 1;
-  }
-  else if (m < 180) {
-    freqScal = 2;
-  }
-  else {
-    freqScal = 3;
-  }
-  
+  checkChanges();//check for frequency change requirements
+
   File test_File = SD.open(fname_temp);
-  
+
   if (!test_File) {
     // if the file didn't open, print an error:
     secondLine("No such track");
@@ -112,7 +103,7 @@ void playTrack()
       while (test_File.available()) {
         //t = micros();
         char key = keyInput();
-        if (key && key == 's') {
+        if (key && key == 'p') {
           break;
         }
         PORTD = test_File.read();
@@ -127,7 +118,7 @@ void playTrack()
       while (test_File.available()) {
         //t = micros();
         char key = keyInput();
-        if (key && key == 's') {
+        if (key && key == 'p') {
           break;
         }
 
@@ -151,30 +142,31 @@ void playTrack()
     secondLine("End of play");
     test_File.close();
     delay(1000);
-    clrDisplay("Track on Play:");
-    delay(500);
-    secondLine(fname_temp);
   }
 }
 
 void player() {
   /*
-   * This is the player mode
-   * It loads the tracks in alphebetic order
-   * Press 'Play' when a track is loaded to the player
-   * Press 'Stop' to stop playing
-   * Press 'next' or 'previous' to toggle between tracks
-   * Press 'Stop' in track loaded mode to exit player mode
+     This is the player mode
+     It loads the tracks in alphebetic order
+     Press 'Play/Stop' when a track is loaded to the player
+     Press 'Play/Stop' to stop playing
+     Press 'next' or 'previous' to toggle between tracks
+     Press 'Exit' in track loaded mode to exit player mode
   */
-  clrDisplay("Track on Play:");
+
+  clrDisplay("Ready to Play:");
   delay(1000);
-  if (countFiles() == 0) {
+
+  if (files == 0) {
     clrDisplay("No Tracks !");
     delay(1000);
   }
   else {
     //Loads the first track in player
-    byte fcount = nextTrack(64);
+    byte fcount = 0;
+    fname_temp = String(char(tracks[fcount])) + ".WAV";
+    secondLine(fname_temp);
 
     while (true) {
       //Checks for key input
@@ -183,6 +175,9 @@ void player() {
         if (key == 'p') {
           //Play the track
           playTrack();
+          clrDisplay("Ready to Play:");
+          if(files!=0 && fcount!=files-1){fcount = nextTrack(fcount);}
+          else{secondLine(fname_temp);}
         }
         else if (key == '>') {
           //Load the next track
@@ -192,19 +187,20 @@ void player() {
           //load the previous track
           fcount = previousTrack(fcount);
         }
-        else if (key == 's') {
+        else if (key == 'm') {
           //Exit from player mode
           break;
         }
         else if (key == 'd') {
           //This mode deletes the track loaded in payer
           clrDisplay("Delete Track?");
-          secondLine("OK    No(MOD)");
+          secondLine("OK    No(Exit)");
           while (true) {
             char key = keyInput();
             if (key && key == 'o') {
               SD.remove(fname_temp);
               clrDisplay("Deleted !");
+              getTrackList(0);
               delay(1000);
               break;
             } else if (key) {
@@ -213,85 +209,87 @@ void player() {
               break;
             }
           }
-          if(countFiles()==0){break;}
-          clrDisplay("Track on Play:");
-          fcount = nextTrack(64);
+          if (files == 0) {
+            clrDisplay("No Tracks !");
+            delay(1000);
+            break;
+          }
+          fcount = 0;
+          clrDisplay("Ready to Play:");
+          fname_temp = String(char(tracks[0])) + ".WAV";
+          secondLine(fname_temp);
         }
       }
     }
+  }
+}
+
+void checkChanges() {
+  byte m = analogRead(pot) * (255. / 1023.);
+  if (m < 90) {
+    freqScal = 1;
+  }
+  else if (m < 180) {
+    freqScal = 2;
+  }
+  else {
+    freqScal = 3;
   }
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
 //##################################### FILE HANDLING FUNCTIONS ##############################################
 
-/*From here the functions countFiles, deleteAll,getTrackList and
-  deleteFile use the same itteration method to handle file operations*/
 
-int countFiles() {
-  /*This loop checks for next file to open and
-    when there are no fles it stops counting, then return the count*/
-  File r = SD.open("/");
-  int c = 0;
+void getTrackList(byte count) {
+  files = 0;
+  fname_temp = String(char(count + 65)) + ".WAV";
+  byte arrIndex = 0;
   while (true) {
-    //File dir = r.openNextFile();
-    if (!r.openNextFile()) {
-      //dir.close();
+    if (arrIndex == 15 || count == 26) {
       break;
     }
-    c++;
-    //dir.close();
+    if (SD.exists(fname_temp)) {
+      tracks[arrIndex++] = fname_temp[0];
+      files++;
+    }
+    fname_temp = String(char(++count + 65)) + ".WAV";
+
   }
-  r.close();
-  return c;
+  for (byte i = arrIndex; i < 15; i++) {
+    tracks[i] = '_';
+  }
 }
 byte nextTrack(byte count) {
   /*
-   * Checks tracks in alphetic order and returns the next track
+     Checks tracks in alphetic order and returns the next track
   */
-  fname_temp = String(char(++count)) + ".WAV";
-  while (true) {
-    if (SD.exists(fname_temp) || count >= 80) {
-      if (count >= 80) {
-        secondLine("End of Tracks");
-        delay(1000);
-        secondLine("                ");
-        delay(500);
-        count = nextTrack(64);
-      }
-      else {
-        secondLine(fname_temp);
-      }
-      break;
-    } else {
-      fname_temp = String(char(++count)) + ".WAV";
-    }
+  count++;
+  if (tracks[count] == '_') {
+    secondLine("End of Tracks");
+    delay(1000);
+    secondLine("                ");
+    delay(200);
+    count--;
   }
+  fname_temp = String(char(tracks[count])) + ".WAV";
+  secondLine(fname_temp);
   //Serial.println(count);
   return count;
 }
 byte previousTrack(byte count) {
   /*
-   * Checks tracks in alphetic order and returns the previous track
+     Checks tracks in alphetic order and returns the previous track
   */
-  fname_temp = String(char(--count)) + ".WAV";
-  while (true) {
-    if (SD.exists(fname_temp) || count <= 65) {
-      if (count < 65) {
-        secondLine("End of Tracks");
-        delay(1000);
-        secondLine("                ");
-        delay(500);
-        count = nextTrack(64);
-      }
-      else {
-        secondLine(fname_temp);
-      }
-      break;
-    } else {
-      fname_temp = String(char(--count)) + ".WAV";
-    }
+  if (count == 0) {
+    secondLine("End of Tracks");
+    delay(1000);
+    secondLine("                ");
+    delay(200);
+    count++;
   }
+  fname_temp = String(char(tracks[--count])) + ".WAV";
+  secondLine(fname_temp);
   //Serial.println(count);
   return count;
 }

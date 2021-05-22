@@ -1,8 +1,8 @@
 void filter(float cut_Off1, float cut_Off2, byte m) {
   /*
-   * m = 1 lowpass
-   * m = 2 highpass
-   * m = 3 bandpass
+     m = 1 lowpass
+     m = 2 highpass
+     m = 3 bandpass
   */
   cut_Off1 = cut_Off1 / sampleRate;
   cut_Off2 = cut_Off2 / sampleRate;
@@ -65,11 +65,16 @@ void filter(float cut_Off1, float cut_Off2, byte m) {
 
 }
 
-void cosFunc(){
-  byte m;
-  File test_File = SD.open("cos200Hz.bin", FILE_WRITE);
-  for(int i =0;i<sampleCounter;i++){
-     m= (byte)(127.5 + 127.5*cos(w*i));
-    test_File.write(m);  }
-    test_File.close();
+void cosFunc() {
+
+  byte t;
+
+  File test_File = SD.open("cos500Hz.bin", FILE_WRITE);
+  for (long i = 0; i < sampleCounter*30000; i++) {
+    t = (byte)(127.5 + 127.5 * cos(w * i));
+test_File.write(t);
+  }
+ 
+ 
+  test_File.close();
 }
