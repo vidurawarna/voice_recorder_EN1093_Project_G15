@@ -1,15 +1,13 @@
 /*
    Definitions and implimentations all the functions used in recorder
 */
-//#################################### KEYPAD FUNCTIONS ######################################
+//>-----------------------------------< KEYPAD FUNCTIONS >-------------------------------------<
 
 char keyInput() {
   /*
     This function detects a keypress and return the corrosponding key
   */
   char k = 0;
-  //  int PinVal = analogRead(keypadPin);
-  //  Serial.println(PinVal);
   if (analogRead(keypadPin) < 1023) {
     for (uint8_t i = 0; i < 8; i++) {
       if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
@@ -21,9 +19,9 @@ char keyInput() {
   return k;
 }
 
-//END OF KEYPAD FUNCTIONS
+//END OF KEYPAD FUNCTIONS 
 
-//############################################ LCD DISPLAY FUNCTIONS ####################################
+//>--------------------------------< LCD DISPLAY FUNCTIONS >-----------------------------------<
 void firstLine(String msg) {
   //Prints the string passed in the first line of the LCD display
   lcd.setCursor(0, 0);
@@ -43,7 +41,7 @@ void secondLine(String msg) {
 }
 //END OF LCD DISPLAY FUNCTIONS
 
-//############################################ RECORD AND PLAY FUNCTIONS ####################################
+//>-----------------------------< RECORD AND PLAY FUNCTIONS >----------------------------------<
 
 void record() {
   /*Used to record the data got from input into a file*/
@@ -98,7 +96,10 @@ void playTrack()
     test_File.seek(44);
     clrDisplay("Playing Track ");
     secondLine(fname_temp);
+    
     //Check whether a freaquency scale is set
+    //>---------------------------< NORMAL OUTPUT >----------------------------------<
+    
     if (freqScal == 0 || freqScal == 1) {
       while (test_File.available()) {
         //t = micros();
@@ -111,8 +112,11 @@ void playTrack()
         //Serial.println(micros() - t);
       }
     }
+    
+    //>---------------------------< SCALED OUTPUT >----------------------------------<
     //Output for freaquency scaled track
     //Using down sampling
+    
     else {
       byte count = 1;
       while (test_File.available()) {
@@ -145,86 +149,10 @@ void playTrack()
   }
 }
 
-void player() {
-  /*
-     This is the player mode
-     It loads the tracks in alphebetic order
-     Press 'Play/Stop' when a track is loaded to the player
-     Press 'Play/Stop' to stop playing
-     Press 'next' or 'previous' to toggle between tracks
-     Press 'Exit' in track loaded mode to exit player mode
-  */
-
-  clrDisplay("Ready to Play:");
-  delay(1000);
-
-  if (files == 0) {
-    clrDisplay("No Tracks !");
-    delay(1000);
-  }
-  else {
-    //Loads the first track in player
-    byte fcount = 0;
-    fname_temp = String(char(tracks[fcount])) + ".WAV";
-    secondLine(fname_temp);
-
-    while (true) {
-      //Checks for key input
-      char key = keyInput();
-      if (key) {
-        if (key == 'p') {
-          //Play the track
-          playTrack();
-          clrDisplay("Ready to Play:");
-          if(files!=0 && fcount!=files-1){fcount = nextTrack(fcount);}
-          else{secondLine(fname_temp);}
-        }
-        else if (key == '>') {
-          //Load the next track
-          fcount = nextTrack(fcount);
-        }
-        else if (key == '<') {
-          //load the previous track
-          fcount = previousTrack(fcount);
-        }
-        else if (key == 'm') {
-          //Exit from player mode
-          break;
-        }
-        else if (key == 'd') {
-          //This mode deletes the track loaded in payer
-          clrDisplay("Delete Track?");
-          secondLine("OK    No(Exit)");
-          while (true) {
-            char key = keyInput();
-            if (key && key == 'o') {
-              SD.remove(fname_temp);
-              clrDisplay("Deleted !");
-              getTrackList(0);
-              delay(1000);
-              break;
-            } else if (key) {
-              clrDisplay("Not Deleted !");
-              delay(1000);
-              break;
-            }
-          }
-          if (files == 0) {
-            clrDisplay("No Tracks !");
-            delay(1000);
-            break;
-          }
-          fcount = 0;
-          clrDisplay("Ready to Play:");
-          fname_temp = String(char(tracks[0])) + ".WAV";
-          secondLine(fname_temp);
-        }
-      }
-    }
-  }
-}
-
 void checkChanges() {
+  /*
+   * This function checks for frequency change requirements
+  */
   byte m = analogRead(pot) * (255. / 1023.);
   if (m < 90) {
     freqScal = 1;
@@ -238,10 +166,14 @@ void checkChanges() {
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
-//##################################### FILE HANDLING FUNCTIONS ##############################################
-
+//>--------------------------------------< FILE HANDLING FUNCTIONS >--------------------------------------<
 
 void getTrackList(byte count) {
+  /*
+   * This function checks for files and make a list of available files
+   * Program only accept 15 tracks
+   * counts the number of files
+  */
   files = 0;
   fname_temp = String(char(count + 65)) + ".WAV";
   byte arrIndex = 0;
@@ -262,7 +194,7 @@ void getTrackList(byte count) {
 }
 byte nextTrack(byte count) {
   /*
-     Checks tracks in alphetic order and returns the next track
+     Checks tracks in order and returns the next track
   */
   count++;
   if (tracks[count] == '_') {
@@ -279,7 +211,7 @@ byte nextTrack(byte count) {
 }
 byte previousTrack(byte count) {
   /*
-     Checks tracks in alphetic order and returns the previous track
+     Checks tracks in order and returns the previous track
   */
   if (count == 0) {
     secondLine("End of Tracks");
@@ -310,7 +242,7 @@ void checkDuplicates(byte count) {
 
 //END OF FILE HANDLING FUNCTIONS
 
-//################################### FUNCTIONS FOR WAVE FILE CREATION #######################################
+//>------------------------------< FUNCTIONS FOR WAVE FILE CREATION >---------------------------------<
 
 void makeWaveFile(File sFile) {
   /*

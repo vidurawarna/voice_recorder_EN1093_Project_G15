@@ -1,32 +1,25 @@
-
-//###############################################
-//LIBRARIES
-//###############################################
+//>--------------- LIBRARIES -------------------<
 
 #include <SPI.h>
 #include <SD.h>
 #include <Wire.h>
-
 #include "src/LCDScreen/LCDScreen.h"
 
-//###############################################
-//PIN  CONFIGURATIONS
-//###############################################
+//>----------- PIN  CONFIGURATIONS -------------<
+
 /*
-   SD card attached to SPI bus as follows:
- ** MOSI - pin 11
- ** MISO - pin 12
- ** CLK - pin 13
- ** CS - pin 10
+ SD card attached to SPI bus as follows:
+   * MOSI - pin 11
+   * MISO - pin 12
+   * CLK - pin 13
+   * CS - pin 10
 */
 
-//pin map
 #define mic A0
 #define keypadPin A2
 #define pot A3
-//###############################################
-//common values
-//###############################################
+
+//>-------------- common values ----------------<
 
 //Audio file attributes
 #define fsDelayin 100
