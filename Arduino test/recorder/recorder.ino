@@ -18,7 +18,7 @@ String fname_temp;
 LCDScreen lcd(lcdAddr);
 
 //Variables for keypad
-int realVals[8] = {501, 0, 248, 334, 522,  78, 294, 429};
+int realVals[8] = {501, 594, 557, 504, 103,  363, 419, 292};
 char keys[8] = {'r', '<', 'p', '>', 's',  'd', 'm', 'o'};
 
 //long t;
@@ -48,11 +48,9 @@ void setup()
   pinMode(keypadPin, INPUT);
   pinMode(pot, INPUT);
   
-  //CONFIGURING PORTD FOR OUTPUT
-  for ( int i = 0; i < 8; i++) 
-  {
-    pinMode(i, OUTPUT);
-  }
+  //CONFIGURING SPEAKER FOR OUTPUT
+  pinMode(speaker, OUTPUT);
+  setPwmFrequency(speaker, 1); //function for setting PWM frequency
 
   //Serial.begin(9600);
 
@@ -60,7 +58,7 @@ void setup()
   firstLine("Starting");
   delay(1000);
 
-  if (!SD.begin(10)) 
+  if (!SD.begin(sdcard)) 
   {
     clrDisplay("Error");
     while (1);

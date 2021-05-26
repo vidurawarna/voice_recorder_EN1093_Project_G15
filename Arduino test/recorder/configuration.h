@@ -18,6 +18,8 @@
 #define mic A0
 #define keypadPin A2
 #define pot A3
+#define speaker 10
+#define sdcard 4
 
 //>-------------- common values ----------------<
 
@@ -28,7 +30,7 @@
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
 #define maxFiles 15
-#define lcdAddr 0x20
+#define lcdAddr 0x27
 
 //for filter coefficients
 #define no_of_Coffs 81

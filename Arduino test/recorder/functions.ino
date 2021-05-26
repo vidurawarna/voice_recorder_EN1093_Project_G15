@@ -8,7 +8,7 @@ char keyInput() {
     This function detects a keypress and return the corrosponding key
   */
   char k = 0;
-  if (analogRead(keypadPin) < 1023) {
+  if (analogRead(keypadPin) < 1000) {
     for (uint8_t i = 0; i < 8; i++) {
       if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
         k = keys[i];
@@ -107,8 +107,8 @@ void playTrack()
         if (key && key == 'p') {
           break;
         }
-        PORTD = test_File.read();
-        delayMicroseconds(50);
+        analogWrite(speaker,int(test_File.read()));
+        delayMicroseconds(35);
         //Serial.println(micros() - t);
       }
     }
@@ -127,8 +127,8 @@ void playTrack()
         }
 
         if (count == 1) {
-          PORTD = test_File.read();//Accept the first sample among (# of samples=freqScal)
-          delayMicroseconds(50);
+          analogWrite(speaker,test_File.read());//Accept the first sample among (# of samples=freqScal)
+          delayMicroseconds(35);
           //Serial.println(micros() - t);
         } else {
           byte temp = test_File.read();//This is to neglet samples in between
@@ -143,6 +143,7 @@ void playTrack()
       }
     }
     // close the file:
+    analogWrite(speaker,0);
     secondLine("End of play");
     test_File.close();
     delay(1000);
@@ -153,16 +154,16 @@ void checkChanges() {
   /*
      This function checks for frequency change requirements
   */
-  byte m = analogRead(pot) * (255. / 1023.);
-  if (m < 90) {
-    freqScal = 1;
-  }
-  else if (m < 180) {
-    freqScal = 2;
-  }
-  else {
-    freqScal = 3;
-  }
+//  byte m = analogRead(pot) * (255. / 1023.);
+//  if (m < 90) {
+//    freqScal = 1;
+//  }
+//  else if (m < 180) {
+//    freqScal = 2;
+//  }
+//  else {
+//    freqScal = 3;
+//  }
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
@@ -289,3 +290,36 @@ void finalizeWave(File sFile) {
   sFile.write((byte*)chunk2, 4);//Writting num of samples to 41-44 bytes in wave file
 }
 //END OF WAVE FILE CREATE FUNCTIONS
+
+//>------------------------------< FUNCTIONS FOR PWM SPEED CHANGE >---------------------------------<
+void setPwmFrequency(int pin, int divisor) {
+  byte mode;
+  if(pin == 5 || pin == 6 || pin == 9 || pin == 10) {
+    switch(divisor) {
+      case 1: mode = 0x01; break;
+      case 8: mode = 0x02; break;
+      case 64: mode = 0x03; break;
+      case 256: mode = 0x04; break;
+      case 1024: mode = 0x05; break;
+      default: return;
+    }
+    if(pin == 5 || pin == 6) {
+      TCCR0B = TCCR0B & 0b11111000 | mode;
+    } else {
+      TCCR1B = TCCR1B & 0b11111000 | mode;
+    }
+  } else if(pin == 3 || pin == 11) {
+    switch(divisor) {
+      case 1: mode = 0x01; break;
+      case 8: mode = 0x02; break;
+      case 32: mode = 0x03; break;
+      case 64: mode = 0x04; break;
+      case 128: mode = 0x05; break;
+      case 256: mode = 0x06; break;
+      case 1024: mode = 0x07; break;
+      default: return;
+    }
+    TCCR2B = TCCR2B & 0b11111000 | mode;
+  }
+}
+//END OF PWM SPEED CHANGE FUNCTION
