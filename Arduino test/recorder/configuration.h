@@ -18,15 +18,15 @@
 #define mic A0
 #define keypadPin A2
 #define pot A3
-#define speaker 10
-#define sdcard 4
+#define speaker 9
+#define sdcard 10
 
 //>-------------- common values ----------------<
 
 //Audio file attributes
 #define fsDelayin 100
 #define fsDelayout 100
-#define sampleRate 10000
+#define sampleRate 12500
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
 #define maxFiles 15
@@ -42,7 +42,7 @@
 #define w 2*pi*freqShift/sampleRate
 #define sampleCounter sampleRate/freqShift
 
-/*latest code takes 100microsec to read a single data - 10kHz
-   takes 100microsec to read and output one data - 10kHz
-   (Updated 2021/5/2 2.36pm)
+/*latest code takes 100microsec to read a single data - 12.5kHz
+   takes 100microsec to read and output one data - 12.5kHz
+   (Updated 2021/5/26 6.07pm)
 */

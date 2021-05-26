@@ -8,13 +8,29 @@ char keyInput() {
     This function detects a keypress and return the corrosponding key
   */
   char k = 0;
-  if (analogRead(keypadPin) < 1000) {
-    for (uint8_t i = 0; i < 8; i++) {
-      if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
-        k = keys[i];
-        while (analogRead(keypadPin) < 1000) {};
-      }
+  //  if (analogRead(keypadPin) < 1000) {
+  //    for (uint8_t i = 0; i < 8; i++) {
+  //      if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
+  //        k = keys[i];
+  //        while (analogRead(keypadPin) < 1000) {};
+  //      }
+  //    }
+  //  }
+  if (byte m = ~PIND) {
+
+    switch (m) {
+      case 1: k = 's'; break;
+      case 2: k = '<'; break;
+      case 4: k = 'p'; break;
+      case 8: k = '>'; break;
+      case 32: k = 'd'; break;
+      case 64: k = 'm'; break;
+      case 128: k = 'o'; break;
+      default: k = 0; break;
     }
+    delay(300);
+    PORTD = 0b11111111;
+
   }
   return k;
 }
@@ -69,8 +85,10 @@ void record() {
       }
 
       test_File.write(pot_Read);
-      delayMicroseconds(18);
-      // Serial.println(micros() - t);
+      delayMicroseconds(20);
+//            t = micros() - t;
+//            clrDisplay(String(t));
+//            delay(500);
     }
     finalizeWave(test_File);
     clrDisplay("Saved");
@@ -107,9 +125,12 @@ void playTrack()
         if (key && key == 'p') {
           break;
         }
-        analogWrite(speaker,int(test_File.read()));
-        delayMicroseconds(35);
+        analogWrite(speaker, int(test_File.read()));
+        delayMicroseconds(32);
         //Serial.println(micros() - t);
+//        t = micros() - t;
+//        clrDisplay(String(t));
+//        delay(1000);
       }
     }
 
@@ -127,9 +148,12 @@ void playTrack()
         }
 
         if (count == 1) {
-          analogWrite(speaker,test_File.read());//Accept the first sample among (# of samples=freqScal)
-          delayMicroseconds(35);
+          analogWrite(speaker, test_File.read()); //Accept the first sample among (# of samples=freqScal)
+          delayMicroseconds(40);
           //Serial.println(micros() - t);
+//          t = micros() - t;
+//          clrDisplay(String(t));
+//          delay(1000);
         } else {
           byte temp = test_File.read();//This is to neglet samples in between
         }
@@ -140,10 +164,13 @@ void playTrack()
           count = 1;
         }
         //Serial.println(micros() - t);
+        //        t = micros() - t;
+        //        clrDisplay(String(t));
+        //        delay(1000);
       }
     }
     // close the file:
-    analogWrite(speaker,0);
+    analogWrite(speaker, 0);
     secondLine("End of play");
     test_File.close();
     delay(1000);
@@ -154,16 +181,16 @@ void checkChanges() {
   /*
      This function checks for frequency change requirements
   */
-//  byte m = analogRead(pot) * (255. / 1023.);
-//  if (m < 90) {
-//    freqScal = 1;
-//  }
-//  else if (m < 180) {
-//    freqScal = 2;
-//  }
-//  else {
-//    freqScal = 3;
-//  }
+  //  byte m = analogRead(pot) * (255. / 1023.);
+  //  if (m < 90) {
+  //    freqScal = 1;
+  //  }
+  //  else if (m < 180) {
+  //    freqScal = 2;
+  //  }
+  //  else {
+  //    freqScal = 3;
+  //  }
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
@@ -294,8 +321,8 @@ void finalizeWave(File sFile) {
 //>------------------------------< FUNCTIONS FOR PWM SPEED CHANGE >---------------------------------<
 void setPwmFrequency(int pin, int divisor) {
   byte mode;
-  if(pin == 5 || pin == 6 || pin == 9 || pin == 10) {
-    switch(divisor) {
+  if (pin == 5 || pin == 6 || pin == 9 || pin == 10) {
+    switch (divisor) {
       case 1: mode = 0x01; break;
       case 8: mode = 0x02; break;
       case 64: mode = 0x03; break;
@@ -303,13 +330,13 @@ void setPwmFrequency(int pin, int divisor) {
       case 1024: mode = 0x05; break;
       default: return;
     }
-    if(pin == 5 || pin == 6) {
+    if (pin == 5 || pin == 6) {
       TCCR0B = TCCR0B & 0b11111000 | mode;
     } else {
       TCCR1B = TCCR1B & 0b11111000 | mode;
     }
-  } else if(pin == 3 || pin == 11) {
-    switch(divisor) {
+  } else if (pin == 3 || pin == 11) {
+    switch (divisor) {
       case 1: mode = 0x01; break;
       case 8: mode = 0x02; break;
       case 32: mode = 0x03; break;

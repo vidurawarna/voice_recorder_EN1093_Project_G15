@@ -5,7 +5,7 @@ char mode = 'i';
 char mode_ = 'j';
 
 //variables for frequency changing configuration
-byte freqScal = 0;
+byte freqScal = 1;
 bool shift = false, enhance = false;
 
 //variables to handle file operations
@@ -18,36 +18,44 @@ String fname_temp;
 LCDScreen lcd(lcdAddr);
 
 //Variables for keypad
-int realVals[8] = {501, 594, 557, 504, 103,  363, 419, 292};
-char keys[8] = {'r', '<', 'p', '>', 's',  'd', 'm', 'o'};
+//int realVals[8] = {501, 594, 557, 504, 103,  363, 419, 292};
+//char keys[8] = {'r', '<', 'p', '>', 's',  'd', 'm', 'o'};
 
 //long t;
 
 //>---------------------------------------- INSTRUCTIONS FOR THE PLAYER --------------------------------------------------<
-/*  
- *   different mode and  mode_ variables keeps two mode states -> (When in player mode there are lot of functions to handle, therfore two mode levels are created)
- *   mode = 's' for record -> (press 'record/stop' to start/stop recording)      #This is mode level 1 called mode_='j'
- *   mode = 'p' for player mode -> (press 'play/stop'  to enter player mode when you are in pause mode; first of all this loads the first track to palyer)      #This is mode level 2 called mode_='k'
-      *   toggle the tracks by pressing 'previous' or 'next' and press 'play/stop' to start playing
-      *   press 'play/stop' again to stop playing
-      *   press 'exit' to exit the player mode
- *   mode = 'i' for pause state (In this mode "Voice Recorder" will be displayed in screen)          
+/*
+     different mode and  mode_ variables keeps two mode states -> (When in player mode there are lot of functions to handle, therfore two mode levels are created)
+     mode = 's' for record -> (press 'record/stop' to start/stop recording)      #This is mode level 1 called mode_='j'
+     mode = 'p' for player mode -> (press 'play/stop'  to enter player mode when you are in pause mode; first of all this loads the first track to palyer)      #This is mode level 2 called mode_='k'
+          toggle the tracks by pressing 'previous' or 'next' and press 'play/stop' to start playing
+          press 'play/stop' again to stop playing
+          press 'exit' to exit the player mode
+     mode = 'i' for pause state (In this mode "Voice Recorder" will be displayed in screen)
 */
 //END OF INSTRUCTIONS ----------------------------------------------------------------------------------------------------<
 
 //Initializing things
-void setup() 
+void setup()
 {
   //CONFIGURE ANALOD READ FOR FASTER READINGS
-  ADCSRA |= (1 << ADPS2);
-  ADCSRA &= ~(1 << ADPS1);
-  ADCSRA &= ~(1 << ADPS0);
+  //  ADCSRA |= (1 << ADPS2);
+  //  ADCSRA &= ~(1 << ADPS1);
+  //  ADCSRA &= ~(1 << ADPS0);
+
+  ADCSRA &= ~(1 << ADPS2);
+  ADCSRA |= (1 << ADPS1);
+  ADCSRA |= (1 << ADPS0);
+
+  //PORTD FOR KEYS
+  DDRD = 0b00000000;
+  PORTD = 0b11111111;
 
   //CONFIGURING PINS FOR INPUT
   pinMode(mic, INPUT);
-  pinMode(keypadPin, INPUT);
+  //pinMode(keypadPin, INPUT);
   pinMode(pot, INPUT);
-  
+
   //CONFIGURING SPEAKER FOR OUTPUT
   pinMode(speaker, OUTPUT);
   setPwmFrequency(speaker, 1); //function for setting PWM frequency
@@ -58,7 +66,7 @@ void setup()
   firstLine("Starting");
   delay(1000);
 
-  if (!SD.begin(sdcard)) 
+  if (!SD.begin(sdcard))
   {
     clrDisplay("Error");
     while (1);
@@ -72,27 +80,27 @@ void setup()
 }
 
 
-void loop() 
+void loop()
 {
-//>------------------------------------< KEY INPUT >--------------------------------------<
-  
+  //>------------------------------------< KEY INPUT >--------------------------------------<
+
   char key_input = keyInput();
-  if (key_input) 
+  if (key_input)
   {
     mode = key_input;
   }
 
-//>-------------------------------< RECORD MODE (LEVEL 1)>--------------------------------<
-  if (mode == 's' && mode_ == 'j') 
+  //>-------------------------------< RECORD MODE (LEVEL 1)>--------------------------------<
+  if (mode == 's' && mode_ == 'j')
   {
     record();
     getTrackList();
     mode = 'i';
   }
 
-//>--------------------------< ENTERING PLAYER MODE (LEVEL 1)>----------------------------<
+  //>--------------------------< ENTERING PLAYER MODE (LEVEL 1)>----------------------------<
 
-  if (mode == 'p' && mode_ == 'j') 
+  if (mode == 'p' && mode_ == 'j')
   {
     mode_ = 'k';
     mode = 'i';
@@ -104,14 +112,14 @@ void loop()
       Press 'next' or 'previous' to toggle between tracks
       Press 'Exit' in track loaded mode to exit player mode
     */
-    if (files == 0) 
+    if (files == 0)
     {
       mode_ = 'j';
       // mode = 'i';
       clrDisplay("No Tracks");
       delay(1000);
     }
-    else 
+    else
     {
       clrDisplay("Ready to Play");
       delay(1000);
@@ -119,79 +127,81 @@ void loop()
       secondLine(fname_temp);
     }
   }
-//>--------------------------< PLAYER MODE (LEVEL 2)>------------------------------------<
-  if (mode_ == 'k') 
+  //>--------------------------< PLAYER MODE (LEVEL 2)>------------------------------------<
+  if (mode_ == 'k')
   {
-    if (mode == 'p') 
-    {      
+    if (mode == 'p')
+    {
       //Play the track
       playTrack();
       clrDisplay("Ready to Play");
       delay(200);
-      secondLine(fname_temp);    
-    } 
-    else if (mode == '>') 
+      secondLine(fname_temp);
+    }
+    else if (mode == '>')
     {
       //Load the next track
       nextTrack();
     }
-    else if (mode == '<') 
+    else if (mode == '<')
     {
       //load the previous track
       previousTrack();
     }
-    else if (mode == 'm') 
+    else if (mode == 'm')
     {
       //Exit from player mode
       mode_ = 'j';
       mode = 'i';
-    } 
-    else if (mode == 'd') 
+    }
+    else if (mode == 'd')
     {
       //This mode deletes the track loaded in payer
       clrDisplay("Delete?");
       secondLine("OK Exit");
-      while (true) 
+      while (true)
       {
         char key = keyInput();
-        if (key && key == 'o') 
+        if (key && key == 'o')
         {
           SD.remove(fname_temp);
           clrDisplay("Deleted");
           getTrackList();
           delay(1000);
           break;
-        } 
-        else if (key) 
+        }
+        else if (key)
         {
           clrDisplay("Not Deleted");
           delay(1000);
           break;
         }
       }
-      if (files == 0) 
+      if (files == 0)
       {
         clrDisplay("No Tracks");
         delay(1000);
         mode_ = 'j';
         //mode = 'i';
       }
-      fcount = 0;
+      if(fcount == files){
+        fcount--;
+      }
       clrDisplay("Ready to Play");
-      fname_temp = String(char(tracks[0])) + ".WAV";
+      fname_temp = String(char(tracks[fcount])) + ".WAV";
       secondLine(fname_temp);
     }
     mode = 'i';
   }
-//>-------------------------< PAUSE MODE (LEVEL 1)>--------------------------------------<
-  if (mode == 'i' && mode_ == 'j') 
+  //>-------------------------< PAUSE MODE (LEVEL 1)>--------------------------------------<
+  if (mode == 'i' && mode_ == 'j')
   {
     clrDisplay("Voice Recorder");
 
-    while (true) 
+    while (true)
     {
       char key_input = keyInput();
-      if (key_input) 
+      if (key_input)
       {
         mode = key_input;
         break;
