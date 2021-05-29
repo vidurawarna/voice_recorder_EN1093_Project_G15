@@ -17,15 +17,14 @@
 
 #define mic A0
 #define keypadPin A2
-#define pot A3
+#define ScalePOT A3
+#define shiftEnhancePOT A1
 #define speaker 9
 #define sdcard 10
 
 //>-------------- common values ----------------<
 
 //Audio file attributes
-#define fsDelayin 100
-#define fsDelayout 100
 #define sampleRate 12500
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
@@ -36,6 +35,9 @@
 #define no_of_Coffs 81
 #define middle_Coff (no_of_Coffs-1)/2
 #define pi 3.142
+
+#define bufflen 25
+#define filterlen 11
 
 //for building cos wave
 #define freqShift 500

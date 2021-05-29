@@ -85,7 +85,7 @@ void record() {
       }
 
       test_File.write(pot_Read);
-      delayMicroseconds(20);
+      delayMicroseconds(16);
 //            t = micros() - t;
 //            clrDisplay(String(t));
 //            delay(500);
@@ -102,6 +102,12 @@ void playTrack()
   /*This function reads data from the specified file and play*/
 
   checkChanges();//check for frequency change requirements
+
+  if(shift)
+  {
+    secondLine("Processing");
+    sig_freqShift();
+  }
 
   File test_File = SD.open(fname_temp);
 
@@ -121,12 +127,13 @@ void playTrack()
     if (freqScal == 0 || freqScal == 1) {
       while (test_File.available()) {
         //t = micros();
+        analogWrite(speaker, int(test_File.read()));
+        delayMicroseconds(40);
         char key = keyInput();
         if (key && key == 'p') {
           break;
         }
-        analogWrite(speaker, int(test_File.read()));
-        delayMicroseconds(32);
+        
         //Serial.println(micros() - t);
 //        t = micros() - t;
 //        clrDisplay(String(t));
@@ -173,6 +180,13 @@ void playTrack()
     analogWrite(speaker, 0);
     secondLine("End of play");
     test_File.close();
+    
+    if(shift || enhance){
+      fname_temp = String(char(tracks[fcount])) + ".WAV";
+      shift = false;
+      enhance = false;
+    }
+    
     delay(1000);
   }
 }
@@ -181,16 +195,31 @@ void checkChanges() {
   /*
      This function checks for frequency change requirements
   */
-  //  byte m = analogRead(pot) * (255. / 1023.);
-  //  if (m < 90) {
-  //    freqScal = 1;
-  //  }
-  //  else if (m < 180) {
-  //    freqScal = 2;
-  //  }
-  //  else {
-  //    freqScal = 3;
-  //  }
+    byte fsc = analogRead(ScalePOT) * (255. / 1023.);
+    byte fshift = analogRead(shiftEnhancePOT) * (255. / 1023.);
+    
+    if (fsc < 90) {
+      freqScal = 1;
+    }
+    else if (fsc < 180) {
+      freqScal = 2;
+    }
+    else {
+      freqScal = 3;
+    }
+
+    if(fshift < 90){
+      shift = false;
+      enhance = false;
+    }
+    else if(fshift < 180){
+      shift = true;
+      enhance = false;
+    }
+    else{
+      shift = false;
+      enhance = true;
+    }
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
@@ -221,6 +250,7 @@ void getTrackList() {
     tracks[i] = '_';
   }
 }
+
 void nextTrack() {
   /*
      Checks tracks in order and returns the next track
@@ -233,6 +263,7 @@ void nextTrack() {
   secondLine(fname_temp);
   //Serial.println(count);
 }
+
 void previousTrack() {
   /*
      Checks tracks in order and returns the previous track
@@ -248,6 +279,7 @@ void previousTrack() {
   secondLine(fname_temp);
   //Serial.println(count);
 }
+
 void checkDuplicates() {
 
   /*This function checks if the new file to be made is existing,

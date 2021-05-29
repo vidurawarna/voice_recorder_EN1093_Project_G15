@@ -30,7 +30,7 @@ LCDScreen lcd(lcdAddr);
      mode = 'p' for player mode -> (press 'play/stop'  to enter player mode when you are in pause mode; first of all this loads the first track to palyer)      #This is mode level 2 called mode_='k'
           toggle the tracks by pressing 'previous' or 'next' and press 'play/stop' to start playing
           press 'play/stop' again to stop playing
-          press 'exit' to exit the player mode
+          press 'record/stop' to exit the player mode
      mode = 'i' for pause state (In this mode "Voice Recorder" will be displayed in screen)
 */
 //END OF INSTRUCTIONS ----------------------------------------------------------------------------------------------------<
@@ -54,8 +54,9 @@ void setup()
   //CONFIGURING PINS FOR INPUT
   pinMode(mic, INPUT);
   //pinMode(keypadPin, INPUT);
-  pinMode(pot, INPUT);
-
+  pinMode(ScalePOT, INPUT);
+  pinMode(shiftEnhancePOT, INPUT);
+  
   //CONFIGURING SPEAKER FOR OUTPUT
   pinMode(speaker, OUTPUT);
   setPwmFrequency(speaker, 1); //function for setting PWM frequency
@@ -110,7 +111,7 @@ void loop()
       Press 'Play/Stop' when a track is loaded to the player
       Press 'Play/Stop' to stop playing
       Press 'next' or 'previous' to toggle between tracks
-      Press 'Exit' in track loaded mode to exit player mode
+      Press 'record/stop' in track loaded mode to exit player mode
     */
     if (files == 0)
     {
@@ -148,7 +149,7 @@ void loop()
       //load the previous track
       previousTrack();
     }
-    else if (mode == 'm')
+    else if (mode == 's')
     {
       //Exit from player mode
       mode_ = 'j';
@@ -158,11 +159,11 @@ void loop()
     {
       //This mode deletes the track loaded in payer
       clrDisplay("Delete?");
-      secondLine("OK Exit");
+      secondLine("DELETE (NO)PLAY");
       while (true)
       {
         char key = keyInput();
-        if (key && key == 'o')
+        if (key && key == 'd')
         {
           SD.remove(fname_temp);
           clrDisplay("Deleted");
@@ -170,7 +171,7 @@ void loop()
           delay(1000);
           break;
         }
-        else if (key)
+        else if (key=='p')
         {
           clrDisplay("Not Deleted");
           delay(1000);
