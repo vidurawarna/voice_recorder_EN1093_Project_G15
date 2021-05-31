@@ -1,4 +1,4 @@
-[Signal,Fs] = audioread('sound.wav');
+[Signal,Fs] = audioread('Sound.wav');
 t = [0:1/Fs:(length(Signal)-1)/Fs];
 
 subplot(4, 1, 1);
@@ -8,7 +8,7 @@ ylabel("Amplitude");
 title("Original Signal Time Spectrum");
 
 subplot(4, 1, 2);
-show_fre(Signal, length(Signal), Fs, "Original Signal Frequency Spectrum");%frequency domain plot of original signal
+Show_Frequency(Signal, length(Signal), Fs, "Original Signal Frequency Spectrum");%frequency domain plot of original signal
 
 a = input("Enter Scaling Coefficient: ");
 at = linspace(0, (length(Signal)-1)/(a*Fs), length(Signal));

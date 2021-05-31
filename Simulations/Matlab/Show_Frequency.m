@@ -1,4 +1,4 @@
-function [] = show_fre(signal, l, Fs, Title)
+function [] = Show_Frequency(signal, l, Fs, Title)
     f = (-l/2:l/2-1)*(Fs/l);
     fft_vals = fftshift(fft(signal)/l);
     

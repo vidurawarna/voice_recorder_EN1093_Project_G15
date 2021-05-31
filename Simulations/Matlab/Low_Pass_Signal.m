@@ -6,7 +6,7 @@ function [y] = Low_Pass_Signal(Original_Signal, CutF, Fs)
     H = zeros(M,1);
     
     for I = 1:M%finding filter coeffecients
-        if (I-M/2)== 0
+        if (I-M/2) == 0
             H(I) = 2*pi*CutF;
         else
             H(I) = sin(2*pi*CutF*(I-M/2))/(I-M/2);

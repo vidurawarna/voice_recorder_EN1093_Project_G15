@@ -66,5 +66,9 @@ function [y] = Band_Pass_Signal(Original_Signal, CutF1, CutF2, Fs)
     H(400) = H(400) + 1;
     
     y = conv(Original_Signal,H,'same');%convolution
+
+    fileID = fopen('Band_Pass_Coeff.txt','w');
+    Content = fprintf(fileID, '%f\n' , H);
+    fclose(fileID);
     
 end

@@ -30,4 +30,8 @@ function [y] = High_Pass_Signal(Original_Signal, CutF, Fs)
     
     y = conv(Original_Signal,H,'same');%convolution
     
+    fileID = fopen('High_Pass_Coeff.txt','w');
+    Content = fprintf(fileID, '%f\n' , H);
+    fclose(fileID);  
+    
 end
