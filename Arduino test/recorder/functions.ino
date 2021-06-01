@@ -105,7 +105,7 @@ void playTrack()
 
   if(shift)
   {
-    secondLine("Processing");
+    secondLine("Wait");
     sig_freqShift();
   }
 
@@ -118,7 +118,7 @@ void playTrack()
   }
   else {
     test_File.seek(44);
-    clrDisplay("Now Playing");
+    clrDisplay("Playing");
     secondLine(fname_temp);
 
     //Check whether a freaquency scale is set

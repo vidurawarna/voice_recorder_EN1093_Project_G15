@@ -61,11 +61,11 @@ void setup()
   pinMode(speaker, OUTPUT);
   setPwmFrequency(speaker, 1); //function for setting PWM frequency
 
-  //Serial.begin(9600);
+  Serial.begin(9600);
 
   lcd.begin();
-  firstLine("Starting");
-  delay(1000);
+//  firstLine("Starting");
+//  delay(1000);
 
   if (!SD.begin(sdcard))
   {
@@ -74,8 +74,8 @@ void setup()
   }
 
   getTrackList();
-
-  secondLine("Welcome");
+  //convolve();
+//  secondLine("Welcome");
 
   delay(1000);
 }
@@ -159,7 +159,7 @@ void loop()
     {
       //This mode deletes the track loaded in payer
       clrDisplay("Delete?");
-      secondLine("DELETE (NO)PLAY");
+      //secondLine("DELETE");
       while (true)
       {
         char key = keyInput();
