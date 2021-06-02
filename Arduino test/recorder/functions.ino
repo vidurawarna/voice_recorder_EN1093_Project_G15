@@ -105,7 +105,7 @@ void playTrack()
 
   if(shift)
   {
-    secondLine("Wait");
+    secondLine("Processing");
     sig_freqShift();
   }
 

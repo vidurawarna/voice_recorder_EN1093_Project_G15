@@ -75,7 +75,6 @@ void sig_freqShift() {
     File target = SD.open(fname_temp, FILE_READ);
     target.seek(44);
 
-    //float highPass[filterlen] = {0.00002549 , 0.00104805 , 0.00491863, -0.00418244, -0.04804388, 0.92006927, -0.04804388, -0.00418244, 0.00491863, 0.00104805, 0.00002549 };
     byte buff[bufflen];
     int cosWave12_5[25] = {10, 10, 9, 7, 5, 3, 1, -2, -4, -6, -8, -9, -10, -10, -9, -8, -6, -4, -2, 1, 3, 5, 7, 9, 10};
     byte count = 0;
@@ -106,56 +105,68 @@ void sig_freqShift() {
 //CODE AFTER THIS IS NOT IMPLEMENTED FULLY YET
 
 void convolve() {
-Serial.println("con");
+  Serial.println("con");
   //int filter[26]={0,0,0,1,1,2,3,4,5,5,5,4,1,-2,-7,-13,-21,-30,-40,-50,-60,-68,-76,-82,-85,1000};
   //int filter[51] = {0,0,0,1,1,2,3,4,5,5,5,4,1,-2,-7,-13,-21,-30,-40,-50,-60,-68,-76,-82,-85,1000,-85,-82,-76,-68,-60,-50,-40,-30,-21,-13,-7,-2,1,4,5,5,5,4,3,2,1,1,0,0,0};
-  int filter[51] ={0,0,0,1,1,2,3,4,4,5,4,3,1,-1,-6,-12,-20,-28,-37,-46,-55,-63,-70,-75,-78,919,-78,-75,-70,-63,-55,-46,-37,-28,-20,-12,-6,-1,1,3,4,5,4,4,3,2,1,1,0,0,0};
+  int filter[51] = {0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 4, 3, 1, -1, -6, -12, -20, -28, -37, -46, -55, -63, -70, -75, -78, 919, -78, -75, -70, -63, -55, -46, -37, -28, -20, -12, -6, -1, 1, 3, 4, 5, 4, 4, 3, 2, 1, 1, 0, 0, 0};
   //int filter[11] = {0,1,5,-5,-52,1000,-52,-5,5,1,0};
- // int temp[filterlen] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  // int temp[filterlen] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   //int signal_out[bufflen];
   //int filter[26];
   byte signal_in[bufflen];
- // byte tt[4]={1,1,1,1};
+  // byte tt[4]={1,1,1,1};
   byte signal_out[bufflen];
   //byte buffCount = 0;
   //byte c = 0;
-  bool ok=true;
+  bool ok = true;
   //int temp;
-  
-//  File coffs = SD.open("FILT.txt", FILE_READ);
-//  while(coffs.available()){
-//    filter[c++] = coffs.readStringUntil("\n").toInt();
-//  }
-//  coffs.close();
+
+  //  File coffs = SD.open("FILT.txt", FILE_READ);
+  //  while(coffs.available()){
+  //    filter[c++] = coffs.readStringUntil("\n").toInt();
+  //  }
+  //  coffs.close();
   //byte k[20] = {1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20};
-  File out = SD.open("B.wav", FILE_WRITE);  
+  File out = SD.open("fC.wav", FILE_WRITE);
   makeWaveFile(out);
-  File target = SD.open("SHIFTD.WAV", FILE_READ);
+  File target = SD.open("SHIFTC.WAV", FILE_READ);
   target.seek(44);
-   while (ok){
-    int temp=0;
+  unsigned long fSize = target.size() - 44;
+  unsigned long pos = target.position();
+
+  target.read(signal_in, bufflen);
+  while (pos != fSize) {
+    int temp = 0;
     byte temp_;
-    target.read(signal_in,bufflen);
-    if(target.peek()==-1){ok = false;}
-    for(byte i = 0;i<bufflen;i++){
-      byte j = i;
-      //if(j>25){j = 50 - j;}
-      temp += (int(signal_in[i])-127)*filter[j]/2000;
-      //Serial.println(signal_in[i]);
+    
+
+    for (byte i = 0; i < bufflen; i++) {
+     // if (signal_in[i] != 127 || filter[i] != 0) {
+        temp += (int(signal_in[i]) - 127) * filter[i] / 1200;
+      //}
     }
-    char key = keyInput();
-    if(key=='p'){break;}
+    //    char key = keyInput();
+    //    if(key=='p'){break;}
     temp_ = byte(temp + 127) ;
     out.write(temp_);
+
+    for (byte i = 0; i < bufflen; i++) {
+        
+        if(i == bufflen-1){signal_in[i] = target.read();}
+        else{signal_in[i] = signal_in[i+1];}
+     
+    }
     
-    target.seek(target.position()-bufflen+1);
-   }
- finalizeWave(out);
+    //fSize -= 1;
+    pos++;
+    //target.seek(++pos);
+  }
+  finalizeWave(out);
   out.close();
   target.close();
   Serial.println("stop");
 }
-  
+
 
 //  while (target.available()) {
 //
@@ -167,7 +178,7 @@ Serial.println("con");
 //      for (c = 0; c < (bufflen); c++) {
 //        signal_out_byte[c] = 127;
 //      }
-     // c = 0;
+// c = 0;
 //###############################################################################################
 //      for (byte i = 0; i < (bufflen + filterlen); i++)
 //      {
@@ -186,7 +197,7 @@ Serial.println("con");
 //      c = 0;
 //      for (byte i = 0; i < (bufflen ); i++)
 //      {
-//        
+//
 //        if (i < bufflen) {
 //          signal_out_byte[i] = (byte)(signal_out[i]/18  + 127);
 //          if(signal_out_byte[i]>maxm){maxm = signal_out_byte[i];}
@@ -205,7 +216,7 @@ Serial.println("con");
 //          if(j>23){jj = 44 - j;}
 //          signal_out_byte[i] += (int)(signal_in[i - j] * (filter[jj] / 1000));
 //        }
-//        
+//
 //      }
 //###########################################################################################
 
@@ -214,7 +225,7 @@ Serial.println("con");
 //    }
 //  }
 
-  //Serial.println(maxm);
+//Serial.println(maxm);
 //  Serial.println(maxm);
 //      Serial.println(minm);
 
@@ -235,7 +246,7 @@ Serial.println("con");
 //      c = 0;
 //      for (byte i = 0; i < (bufflen ); i++)
 //      {
-//        
+//
 //        if (i < bufflen) {
 //          signal_out_byte[i] = (byte)(signal_out[i]/18  + 127);
 //          if(signal_out_byte[i]>maxm){maxm = signal_out_byte[i];}

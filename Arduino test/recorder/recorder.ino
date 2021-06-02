@@ -61,7 +61,7 @@ void setup()
   pinMode(speaker, OUTPUT);
   setPwmFrequency(speaker, 1); //function for setting PWM frequency
 
-  Serial.begin(9600);
+ // Serial.begin(9600);
 
   lcd.begin();
 //  firstLine("Starting");
@@ -74,7 +74,7 @@ void setup()
   }
 
   getTrackList();
-  //convolve();
+  convolve();
 //  secondLine("Welcome");
 
   delay(1000);
