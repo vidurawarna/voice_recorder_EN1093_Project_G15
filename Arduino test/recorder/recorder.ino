@@ -21,7 +21,7 @@ LCDScreen lcd(lcdAddr);
 //int realVals[8] = {501, 594, 557, 504, 103,  363, 419, 292};
 //char keys[8] = {'r', '<', 'p', '>', 's',  'd', 'm', 'o'};
 
-//long t;
+long t;
 
 //>---------------------------------------- INSTRUCTIONS FOR THE PLAYER --------------------------------------------------<
 /*
@@ -61,7 +61,7 @@ void setup()
   pinMode(speaker, OUTPUT);
   setPwmFrequency(speaker, 1); //function for setting PWM frequency
 
- // Serial.begin(9600);
+  //Serial.begin(9600);
 
   lcd.begin();
 //  firstLine("Starting");
@@ -74,7 +74,10 @@ void setup()
   }
 
   getTrackList();
-  convolve();
+  //t = millis();
+  //convolve();
+  //Serial.println(String(millis()-t));
+  //secondLine(String(millis()-t));
 //  secondLine("Welcome");
 
   delay(1000);

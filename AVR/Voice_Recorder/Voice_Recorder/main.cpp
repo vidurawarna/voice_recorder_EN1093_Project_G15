@@ -1,4 +1,261 @@
 /*
+ * Voice_Recorder.cpp
+ *
+ * Created: 6/5/2021 11:13:04 AM
+ * Author : Vidura
+ */ 
+
+//>----------- LIBRARIES -------------<
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include <SD.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <LCDScreen.h>
+
+//>----------- PIN  CONFIGURATIONS -------------<
+
+/*
+ SD card attached to SPI bus as follows:
+   * MOSI - pin 11
+   * MISO - pin 12
+   * CLK - pin 13
+   * CS - pin 10
+*/
+
+#define mic A0
+#define keypadPin A2
+#define ScalePOT A3
+#define shiftEnhancePOT A1
+#define speaker 9
+#define sdcard 10
+
+//>-------------- common values ----------------<
+
+//Audio file attributes
+#define sampleRate 12500
+#define byteRate (sampleRate/8)*monoStereo*8
+#define monoStereo 1
+#define maxFiles 15
+#define lcdAddr 0x20
+
+//for filter coefficients
+#define bufflen 25
+#define filterlen 11
+#define temp_buff_size 50
+
+/*latest code takes 100microsec to read a single data - 12.5kHz
+   takes 100microsec to read and output one data - 12.5kHz
+   (Updated 2021/5/26 6.07pm)
+*/
+
+//variables for modes
+char mode = 'i';
+char mode_ = 'j';
+
+//variables for frequency changing configuration
+byte freqScal = 1;
+bool shift = false, enhance = false;
+
+//variables to handle file operations
+byte tracks[maxFiles];
+byte files = 0;
+byte fcount = 0;
+String fname_temp;
+
+//LCD screen instance
+LCDScreen lcd(lcdAddr);
+
+//functions used in recorder
+char keyInput();
+void firstLine(String);
+void clrDisplay(String);
+void secondLine(String);
+void record();
+void playTrack();
+void checkChanges();
+void getTrackList();
+void nextTrack();
+void previousTrack();
+void checkDuplicates();
+void makeWaveFile(File);
+void finalizeWave(File);
+void setPwmFrequency(int, int );
+void convolve();
+void sig_freqShift();
+
+
+int main(void)
+{	
+	//CONFIGURE ANALOD READ FOR FASTER READINGS
+	//  ADCSRA |= (1 << ADPS2);
+	//  ADCSRA &= ~(1 << ADPS1);
+	//  ADCSRA &= ~(1 << ADPS0);
+
+	ADCSRA &= ~(1 << ADPS2);
+	ADCSRA |= (1 << ADPS1);
+	ADCSRA |= (1 << ADPS0);
+
+	//PORTD FOR KEYS
+	DDRD = 0b00000000;
+	PORTD = 0b11111111;
+	
+	//CONFIGURING PINS FOR INPUT
+	pinMode(mic, INPUT);
+	//pinMode(keypadPin, INPUT);
+	pinMode(ScalePOT, INPUT);
+	pinMode(shiftEnhancePOT, INPUT);
+	
+	//CONFIGURING SPEAKER FOR OUTPUT
+	pinMode(speaker, OUTPUT);
+	setPwmFrequency(speaker, 1); //function for setting PWM frequency
+	
+	lcd.begin();
+	
+	if (!SD.begin(sdcard))
+	{
+		clrDisplay("Error");
+		while (1);
+	}
+	
+	getTrackList();
+	
+	_delay_ms(1000);
+	
+    /* Replace with your application code */
+    while (1) 
+    {
+		//>------------------------------------< KEY INPUT >--------------------------------------<
+
+		  char key_input = keyInput();
+		  if (key_input)
+		  {
+			mode = key_input;
+		  }
+
+		  //>-------------------------------< RECORD MODE (LEVEL 1)>--------------------------------<
+		  if (mode == 's' && mode_ == 'j')
+		  {
+			record();
+			getTrackList();
+			mode = 'i';
+		  }
+
+		  //>--------------------------< ENTERING PLAYER MODE (LEVEL 1)>----------------------------<
+
+		  if (mode == 'p' && mode_ == 'j')
+		  {
+			mode_ = 'k';
+			mode = 'i';
+			/*
+			  This is the player mode
+			  It loads the tracks in alphebetic order
+			  Press 'Play/Stop' when a track is loaded to the player
+			  Press 'Play/Stop' to stop playing
+			  Press 'next' or 'previous' to toggle between tracks
+			  Press 'record/stop' in track loaded mode to exit player mode
+			*/
+			if (files == 0)
+			{
+			  mode_ = 'j';
+			  // mode = 'i';
+			  clrDisplay("No Tracks");
+			  _delay_ms(1000);
+			}
+			else
+			{
+			  clrDisplay("Ready to Play");
+			  _delay_ms(1000);
+			  fname_temp = String(char(tracks[fcount])) + ".WAV";
+			  secondLine(fname_temp);
+			}
+		  }
+		  //>--------------------------< PLAYER MODE (LEVEL 2)>------------------------------------<
+		  if (mode_ == 'k')
+		  {
+			if (mode == 'p')
+			{
+			  //Play the track
+			  playTrack();
+			  clrDisplay("Ready to Play");
+			  _delay_ms(200);
+			  secondLine(fname_temp);
+			}
+			else if (mode == '>')
+			{
+			  //Load the next track
+			  nextTrack();
+			}
+			else if (mode == '<')
+			{
+			  //load the previous track
+			  previousTrack();
+			}
+			else if (mode == 's')
+			{
+			  //Exit from player mode
+			  mode_ = 'j';
+			  mode = 'i';
+			}
+			else if (mode == 'd')
+			{
+			  //This mode deletes the track loaded in payer
+			  clrDisplay("Delete?");
+			  //secondLine("DELETE");
+			  while (true)
+			  {
+				char key = keyInput();
+				if (key && key == 'd')
+				{
+				  SD.remove(fname_temp);
+				  clrDisplay("Deleted");
+				  getTrackList();
+				  _delay_ms(1000);
+				  break;
+				}
+				else if (key=='p')
+				{
+				  clrDisplay("Not Deleted");
+				  _delay_ms(1000);
+				  break;
+				}
+			  }
+			  if (files == 0)
+			  {
+				clrDisplay("No Tracks");
+				_delay_ms(1000);
+				mode_ = 'j';
+				//mode = 'i';
+			  }
+			  if(fcount == files){
+				fcount--;
+			  }
+			  clrDisplay("Ready to Play");
+			  fname_temp = String(char(tracks[fcount])) + ".WAV";
+			  secondLine(fname_temp);
+			}
+			mode = 'i';
+		  }
+		  //>-------------------------< PAUSE MODE (LEVEL 1)>--------------------------------------<
+		  if (mode == 'i' && mode_ == 'j')
+		  {
+			clrDisplay("Voice Recorder");
+
+			while (true)
+			{
+			  char key_input = keyInput();
+			  if (key_input)
+			  {
+				mode = key_input;
+				break;
+			  }
+			}
+		  }
+    }
+}
+
+/*
    Definitions and implimentations all the functions used in recorder
 */
 //>-----------------------------------< KEYPAD FUNCTIONS >-------------------------------------<
@@ -8,14 +265,7 @@ char keyInput() {
     This function detects a keypress and return the corrosponding key
   */
   char k = 0;
-  //  if (analogRead(keypadPin) < 1000) {
-  //    for (uint8_t i = 0; i < 8; i++) {
-  //      if (abs(analogRead(keypadPin) - realVals[i]) < 5) {
-  //        k = keys[i];
-  //        while (analogRead(keypadPin) < 1000) {};
-  //      }
-  //    }
-  //  }
+
   if (byte m = ~PIND) {
 
     switch (m) {
@@ -28,7 +278,7 @@ char keyInput() {
       case 128: k = 'o'; break;
       default: k = 0; break;
     }
-    delay(300);
+    _delay_ms(300);
     PORTD = 0b11111111;
 
   }
@@ -66,7 +316,7 @@ void record() {
 
   if (!test_File) {
     clrDisplay("Error");
-    delay(1000);
+    _delay_ms(1000);
   }
   else {
     clrDisplay("Recording");
@@ -85,14 +335,14 @@ void record() {
       }
 
       test_File.write(pot_Read);
-      delayMicroseconds(16);
+      _delay_us(16);
       //t = micros() - t;
       //clrDisplay(String(t));
       //delay(1000);
     }
     finalizeWave(test_File);
     clrDisplay("Saved");
-    delay(1000);
+    _delay_ms(1000);
   }
   test_File.close();
 }
@@ -105,11 +355,8 @@ void playTrack()
 
   if (shift)
   {
-    
-    //t = millis();
+    secondLine("Processing");
     sig_freqShift();
-    //secondLine(String(millis()-t));
-    //delay(1000);
   }
 
   File test_File = SD.open(fname_temp);
@@ -117,7 +364,7 @@ void playTrack()
   if (!test_File) {
     // if the file didn't open, print an error:
     secondLine("Error");
-    delay(1000);
+    _delay_ms(1000);
   }
   else {
     test_File.seek(44);
@@ -132,8 +379,8 @@ void playTrack()
         //t = micros();
         analogWrite(speaker, int(test_File.read()));
         
-        delayMicroseconds(40);  //Use this delay for 12.5KHz play
-        //delayMicroseconds(20);    //Use this delay for 16kHz play
+        _delay_us(40);  //Use this delay for 12.5KHz play
+        //_delay_us(20);    //Use this delay for 16kHz play
         //Comment both of delays for 24kHz play
         
         char key = keyInput();
@@ -164,7 +411,7 @@ void playTrack()
         if (count == 1) {
           analogWrite(speaker, test_File.read()); //Accept the first sample among (# of samples=freqScal)
           
-          delayMicroseconds(40);  //Use this delay for 12.5KHz play
+          _delay_us(40);  //Use this delay for 12.5KHz play
           //delayMicroseconds(20);    //Use this delay for 16kHz play
           //Comment both of delays for 24kHz play
           
@@ -198,7 +445,7 @@ void playTrack()
       enhance = false;
     }
 
-    delay(1000);
+    _delay_ms(1000);
   }
 }
 
@@ -393,3 +640,98 @@ void setPwmFrequency(int pin, int divisor) {
   }
 }
 //END OF PWM SPEED CHANGE FUNCTION
+
+
+//>--------------------------------------< FREQUENCY SHIFTING >--------------------------------------<
+void sig_freqShift() {
+	if (!SD.exists("SHIFT" + fname_temp)) {
+
+		File out = SD.open("SHIFT" + fname_temp, FILE_WRITE);
+		makeWaveFile(out);
+		File target = SD.open(fname_temp, FILE_READ);
+		target.seek(44);
+
+		byte buff[bufflen];
+		int cosWave12_5[25] = {10, 10, 9, 7, 5, 3, 1, -2, -4, -6, -8, -9, -10, -10, -9, -8, -6, -4, -2, 1, 3, 5, 7, 9, 10};
+		byte count = 0;
+		byte buffCount = 0;
+
+		while (target.available()) {
+
+			buff[buffCount++] = (byte)((int)(target.read() - 127) * cosWave12_5[count++] / 10 + 127);
+			if (count == 25 )
+			{
+				count = 0;
+			}
+			if (buffCount == bufflen) {
+				buffCount = 0;
+				out.write((byte*)buff, bufflen);
+			}
+
+		}
+
+		finalizeWave(out);
+		out.close();
+		target.close();
+	}
+	fname_temp = "SHIFT" + fname_temp;
+}
+//END OF FREQUENCY SHIFTING
+
+//CODE AFTER THIS IS NOT IMPLEMENTED FULLY YET
+
+void convolve() {
+	Serial.println("con");
+	//firstLine("con");
+	int filter[filterlen] = {0, 1, 5, -4, -48, 920, -48, -4, 5, 1, 0};
+	//float filter[filterlen] = {0.0,0.001,0.005,-0.004,-0.048,0.92,-0.048,-0.004,0.005,0.001,0.0};
+	//int filter[filterlen] ={0,0,0,1,1,2,3,4,4,5,4,3,1,-1,-6,-12,-20,-28,-37,-46,-55,-63,-70,-75,-78,919,-78,-75,-70,-63,-55,-46,-37,-28,-20,-12,-6,-1,1,3,4,5,4,4,3,2,1,1,0,0,0};
+	byte signal_in[filterlen];
+	byte temp_buff[temp_buff_size];
+	float temp = 0;
+	byte temp_count= 0;
+
+
+	File out = SD.open("Z.wav", FILE_WRITE);
+	makeWaveFile(out);
+	File target = SD.open("SHIFTD.WAV", FILE_READ);
+	target.seek(44);
+	
+	unsigned long fSize = target.size() - 44;
+
+
+	target.read(signal_in,filterlen);
+	target.read(temp_buff,temp_buff_size);
+	//target.seek(45);
+
+	while (fSize) {
+		//t = micros();
+		if(temp_count == temp_buff_size){
+			target.read(temp_buff,temp_buff_size);
+			temp_count = 0;
+		}
+		temp = 127;
+		//temp_ = 0;
+		
+		for (byte i = 0; i < filterlen-1; i++) {
+			temp += (((float(signal_in[i]) - 127)) * filter[i]/1000);
+			signal_in[i] = signal_in[i + 1];
+		}
+		temp += (((float(signal_in[filterlen-1]) - 127)) * filter[filterlen-1]/1000);
+		signal_in[filterlen-1] = temp_buff[temp_count++];
+		
+		
+		//temp_ = byte(temp + 127) ;
+		out.write(byte(temp));
+		//Serial.println(String(micros()-t));
+		fSize --;
+		
+		
+	}
+	finalizeWave(out);
+	out.close();
+	target.close();
+	Serial.println("stop");
+}
+
+

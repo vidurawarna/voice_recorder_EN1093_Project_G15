@@ -29,20 +29,12 @@
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
 #define maxFiles 15
-#define lcdAddr 0x20
+#define lcdAddr 0x27
 
 //for filter coefficients
-#define no_of_Coffs 81
-#define middle_Coff (no_of_Coffs-1)/2
-#define pi 3.142
-
-#define bufflen 51
-#define filterlen 51
-
-//for building cos wave
-#define freqShift 500
-#define w 2*pi*freqShift/sampleRate
-#define sampleCounter sampleRate/freqShift
+#define bufflen 25
+#define filterlen 11
+#define temp_buff_size 100
 
 /*latest code takes 100microsec to read a single data - 12.5kHz
    takes 100microsec to read and output one data - 12.5kHz
