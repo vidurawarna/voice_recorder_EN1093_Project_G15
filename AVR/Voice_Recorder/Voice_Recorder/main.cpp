@@ -24,10 +24,10 @@
    * CS - pin 10
 */
 
-#define mic A0
+#define mic 0b0000
 #define keypadPin A2
-#define ScalePOT A3
-#define shiftEnhancePOT A1
+#define ScalePOT 0b0011
+#define shiftEnhancePOT 0b0001
 #define speaker 9
 #define sdcard 10
 
@@ -84,7 +84,7 @@ void finalizeWave(File);
 void setPwmFrequency(int, int );
 void convolve();
 void sig_freqShift();
-
+int analog_in(int);
 
 int main(void)
 {	
@@ -102,13 +102,18 @@ int main(void)
 	PORTD = 0b11111111;
 	
 	//CONFIGURING PINS FOR INPUT
-	pinMode(mic, INPUT);
+	
+	//pinMode(mic, INPUT);
 	//pinMode(keypadPin, INPUT);
-	pinMode(ScalePOT, INPUT);
-	pinMode(shiftEnhancePOT, INPUT);
+	//pinMode(ScalePOT, INPUT);
+	//pinMode(shiftEnhancePOT, INPUT);
+	
+	DDRC &= 0b11110100;
 	
 	//CONFIGURING SPEAKER FOR OUTPUT
-	pinMode(speaker, OUTPUT);
+	//pinMode(speaker, OUTPUT);
+	DDRB |= 0b00000010;
+	
 	setPwmFrequency(speaker, 1); //function for setting PWM frequency
 	
 	lcd.begin();
@@ -266,7 +271,7 @@ char keyInput() {
   */
   char k = 0;
 
-  if (byte m = ~PIND) {
+  if (char m = ~PIND) {
 
     switch (m) {
       case 1: k = 's'; break;
@@ -326,8 +331,10 @@ void record() {
     while (true) {
       //t = micros();
 
-      pot_Read = analogRead(mic) * (255. / 1023.);
-
+      //pot_Read = analogRead(mic) * (255. / 1023.);
+		
+		pot_Read = analog_in(mic);
+		
       char key = keyInput();
 
       if (key && key == 's') {
@@ -621,9 +628,9 @@ void setPwmFrequency(int pin, int divisor) {
       default: return;
     }
     if (pin == 5 || pin == 6) {
-      TCCR0B = TCCR0B & 0b11111000 | mode;
+      TCCR0B = TCCR0B & (0b11111000 | mode);
     } else {
-      TCCR1B = TCCR1B & 0b11111000 | mode;
+      TCCR1B = TCCR1B & (0b11111000 | mode);
     }
   } else if (pin == 3 || pin == 11) {
     switch (divisor) {
@@ -636,7 +643,7 @@ void setPwmFrequency(int pin, int divisor) {
       case 1024: mode = 0x07; break;
       default: return;
     }
-    TCCR2B = TCCR2B & 0b11111000 | mode;
+    TCCR2B = TCCR2B & (0b11111000 | mode);
   }
 }
 //END OF PWM SPEED CHANGE FUNCTION
@@ -734,4 +741,16 @@ void convolve() {
 	Serial.println("stop");
 }
 
-
+//I/O FUNCTIONS
+int analog_in(int inputPin = 0000){
+	//DDRC = 0b00000000;
+	ADMUX = 0b01100000;
+	ADCSRA = 0b10000100;
+	
+	ADMUX |= inputPin;
+	
+	ADCSRA = ADCSRA | (1 << ADSC);
+	while(ADCSRA & (1 << ADSC));
+	
+	return ADCH;
+}

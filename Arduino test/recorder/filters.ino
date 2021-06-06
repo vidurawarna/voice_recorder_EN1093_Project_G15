@@ -46,6 +46,7 @@ void convolve() {
   //Serial.println("con");
   //firstLine("con");
   int filter[filterlen] = {0, 1, 5, -4, -48, 920, -48, -4, 5, 1, 0};
+  //int filter[filterlen] ={0,0,-13,18,270,480,270,18,-13,0,0};
   byte signal_in[filterlen];
   byte temp_buff[temp_buff_size];
   float temp = 0;
@@ -53,8 +54,10 @@ void convolve() {
 
 
   File out = SD.open("SHIFT" + fname_temp, FILE_WRITE);
+  //File out = SD.open("test.wav", FILE_WRITE);
   makeWaveFile(out);
   File target = SD.open("S" + String(fname_temp[0]) + ".bin", FILE_READ);
+  //File target = SD.open("D.wav", FILE_READ);
   //target.seek(44);
 
   //unsigned long fSize = target.size() - 44;
@@ -74,10 +77,10 @@ void convolve() {
     //temp_ = 0;
 
     for (byte i = 0; i < filterlen - 1; i++) {
-      temp += ((float(signal_in[i]) - 127) * filter[i] / 1000);
+      temp += ((float(signal_in[i]) - 127) * filter[i] / 1000);//570
       signal_in[i] = signal_in[i + 1];
     }
-    temp += ((float(signal_in[filterlen - 1]) - 127) * filter[filterlen - 1] / 1000);
+    temp += ((float(signal_in[filterlen - 1]) - 127) * filter[filterlen - 1] / 1000);//570
     signal_in[filterlen - 1] = temp_buff[temp_count++];
 
 

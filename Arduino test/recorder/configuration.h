@@ -29,12 +29,12 @@
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
 #define maxFiles 15
-#define lcdAddr 0x27
+#define lcdAddr 0x20
 
 //for filter coefficients
 #define bufflen 25
 #define filterlen 11
-#define temp_buff_size 100
+#define temp_buff_size 50
 
 /*latest code takes 100microsec to read a single data - 12.5kHz
    takes 100microsec to read and output one data - 12.5kHz
