@@ -38,19 +38,19 @@ char keyInput() {
 //END OF KEYPAD FUNCTIONS
 
 //>--------------------------------< LCD DISPLAY FUNCTIONS >-----------------------------------<
-void firstLine(char msg[]) {
+void firstLine(String msg) {
   //Prints the string passed in the first line of the LCD display
   lcd.setCursor(0, 0);
   lcd.print(msg);
 }
 
-void clrDisplay(char msg[]) {
+void clrDisplay(String msg) {
   //Clears the LCD and displays the msg in first line
   lcd.clear();
   firstLine(msg);
 }
 
-void secondLine(char msg[]) {
+void secondLine(String msg) {
   //Prints the string passed in the second line of the LCD display
   lcd.setCursor(0, 1);
   lcd.print(msg);

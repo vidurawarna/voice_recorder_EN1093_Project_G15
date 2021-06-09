@@ -65,8 +65,7 @@ void setup()
   //Serial.begin(9600);
 //tt = "hello";
   lcd.begin();
-  char tt[16] = {'h','e','l','l','o','!'};
-  firstLine("dd");
+  
 //  lcd.print({'h','e','l','l','o','!'});
   //delay(1000);
 
