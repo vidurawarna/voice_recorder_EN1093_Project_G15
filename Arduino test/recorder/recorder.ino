@@ -14,6 +14,7 @@ byte files = 0;
 byte fcount = 0;
 String fname_temp;
 
+
 //LCD screen instance
 LCDScreen lcd(lcdAddr);
 
@@ -62,10 +63,12 @@ void setup()
   setPwmFrequency(speaker, 1); //function for setting PWM frequency
 
   //Serial.begin(9600);
-
+//tt = "hello";
   lcd.begin();
-//  firstLine("Starting");
-//  delay(1000);
+  char tt[16] = {'h','e','l','l','o','!'};
+  firstLine("dd");
+//  lcd.print({'h','e','l','l','o','!'});
+  //delay(1000);
 
   if (!SD.begin(sdcard))
   {
