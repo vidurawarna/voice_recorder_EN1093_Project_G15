@@ -35,11 +35,12 @@ void init()
 	// 8 MHz (with a 16 MHz clock) at 50% duty cycle
 	TCCR1B = 0;
 	
-	// set timer 1 prescale factor to 64
+	//select no-prescaling
 	//sbi(TCCR1B, CS11);
 	sbi(TCCR1B, CS10);
 	
-	// put timer 1 in 8-bit phase correct pwm mode
+	//select the Wave form generation mode as FAST PWM
+	//select the non-inverting mode
 	sbi(TCCR1A, WGM10);
 	sbi(TCCR1A, COM1A1);
 	sbi(TCCR1B, WGM12);
@@ -50,7 +51,7 @@ void init()
 	// configure timer 2 for phase correct pwm (8-bit)
 	sbi(TCCR2A, WGM20);
 	
-	// set a2d prescaler so we are inside the desired 50-200 KHz range.
+	// set a2d prescaler(16) so we are inside the desired 50-200 KHz range.
 	sbi(ADCSRA, ADPS2);
 	//sbi(ADCSRA, ADPS1);
 	//sbi(ADCSRA, ADPS0);
@@ -58,10 +59,14 @@ void init()
 	// enable a2d conversions
 	sbi(ADCSRA, ADEN);
 	
+	//set the reference voltage as AVCC
+	//set the Left adjust result
+	//keeping last 3bits as 0, because for the default pin selection as ADC0
+	ADMUX = 0b01100000;
+	
 	// the bootloader connects pins 0 and 1 to the USART; disconnect them
 	// here so they can be used as normal digital i/o; they will be
 	// reconnected in Serial.begin()
-	ADMUX = 0b01100000;
 	UCSR0B = 0;
 }
 
