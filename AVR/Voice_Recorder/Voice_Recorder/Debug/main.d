@@ -14,7 +14,7 @@ main.d main.o: .././main.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/SD.h \
+ ../SD/src/SD.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
@@ -35,17 +35,13 @@ main.d main.o: .././main.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\eeprom.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\standard/pins_arduino.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdFat.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/Sd2Card.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/Sd2PinMap.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdInfo.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/FatStructs.h \
+ ../SD/src/utility/SdFat.h ../SD/src/utility/Sd2Card.h \
+ ../SD/src/utility/Sd2PinMap.h ../SD/src/utility/SdInfo.h \
+ ../SD/src/utility/FatStructs.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Print.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdFatUtil.h \
- C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h \
- C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src/Wire.h \
+ ../SD/src/utility/SdFatUtil.h ../SPI/src/SPI.h ../Wire/src/Wire.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Stream.h \
- C:\Users\Vidura\DOCUME~1\Projects\VOICE_~1\AVR\VOICE_~1\VOICE_~1\LCDSCR~1/LCDScreen.h
+ ../LCDScreen/LCDScreen.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -77,7 +73,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/SD.h:
+../SD/src/SD.h:
 
 C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h:
 
@@ -119,24 +115,24 @@ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h:
 
 C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\standard/pins_arduino.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdFat.h:
+../SD/src/utility/SdFat.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/Sd2Card.h:
+../SD/src/utility/Sd2Card.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/Sd2PinMap.h:
+../SD/src/utility/Sd2PinMap.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdInfo.h:
+../SD/src/utility/SdInfo.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/FatStructs.h:
+../SD/src/utility/FatStructs.h:
 
 C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Print.h:
 
-C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdFatUtil.h:
+../SD/src/utility/SdFatUtil.h:
 
-C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h:
+../SPI/src/SPI.h:
 
-C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src/Wire.h:
+../Wire/src/Wire.h:
 
 C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Stream.h:
 
-C:\Users\Vidura\DOCUME~1\Projects\VOICE_~1\AVR\VOICE_~1\VOICE_~1\LCDSCR~1/LCDScreen.h:
+../LCDScreen/LCDScreen.h:

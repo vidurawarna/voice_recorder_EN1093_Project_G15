@@ -15,12 +15,12 @@
 #include <Wire.h>
 #include <LCDScreen.h>
 
+
 //>----------------- CALCULATIONS -----------------<
 
 #define lower_Byte(w) ((uint8_t) ((w) & 0xff))
 #define higher_Byte(w) ((uint8_t) ((w) >> 8))
 #define sbi(port,bit) port |= 1<<bit
-#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
 
 //>----------- PIN  CONFIGURATIONS -------------<
 
@@ -56,7 +56,7 @@
 //for filters
 #define bufflen 25
 #define filterlen 11
-#define temp_buff_size 25
+#define temp_buff_size 100
 
 /*latest code takes 80microsec to read a single data - 12.5kHz
    takes 80microsec to read and output one data - 12.5kHz
@@ -69,13 +69,15 @@ char mode_ = 'j';
 
 //variables for frequency changing configuration
 uint8_t freqScal = 1;
-bool shift = false, enhance = false;
+bool shift = false;
+uint8_t enhance = false;
 
 //variables to handle file operations
 char tracks[maxFiles];
 uint8_t files = 0;
 uint8_t fcount = 0;
-char fname_temp[10];
+char fname_temp[7];
+
 
 //LCD screen instance
 LCDScreen lcd(lcdAddr);
@@ -102,8 +104,8 @@ void makeWaveFile(File);
 void finalizeWave(File);
 
 //frequency modification functions
-void convolve(char[]);
-void sig_freqShift();
+void convolve();
+bool sig_freqShift(char[]);
 
 //IO functions
 void initialize_Things();
@@ -117,7 +119,7 @@ int main(void)
 	//This function is from arduino...need to edit
 	initialize_Things();
 	//sei();
-	
+
 	fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';
 
 	//PORTD FOR KEYS
@@ -398,7 +400,7 @@ void playTrack()
   if (shift)
   {
     secondLine("Processing");
-    sig_freqShift();
+    convolve();
   }
 
   File test_File = SD.open(fname_temp);
@@ -488,10 +490,9 @@ void playTrack()
       //fname_temp = String(tracks[fcount]) + ".WAV";
 	  //setFileName();
 
-	  fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';
-	  fname_temp[5] = '\0';fname_temp[6] = '\0';fname_temp[7] = '\0';fname_temp[8] = '\0';fname_temp[9] = '\0';
+	  fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';fname_temp[5] = NULL;
       shift = false;
-      enhance = false;
+      enhance = 0;
     }
 
     _delay_ms(1000);
@@ -515,18 +516,26 @@ void checkChanges() {
   else {
     freqScal = 3;
   }
-
-  if (fshift < 90) {
-    shift = false;
-    enhance = false;
-  }
-  else if (fshift < 180) {
+  
+  if(fshift==0){
+	  shift = false;
+	  enhance = 0;
+  }	
+  else if (fshift < 64) {
     shift = true;
-    enhance = false;
+    enhance = 0;
   }
-  else {
+  else if (fshift < 128) {
     shift = false;
-    enhance = true;
+    enhance = 1;
+  }
+  else if(fshift < 192){
+    shift = false;
+    enhance = 2;
+  }
+  else{
+	shift = false;
+	enhance = 3;  
   }
 }
 //END OF RECORD AND PLAY FUNCTIONS
@@ -673,18 +682,17 @@ void finalizeWave(File sFile) {
 
 
 //>--------------------------------------< FREQUENCY SHIFTING >--------------------------------------<
-void sig_freqShift() {
-	char tempName[6] = {'S',tracks[fcount],'.','B','I','N'};
+bool sig_freqShift(char tempName[]) {
+	bool needConvolve;
 //"S" + String(fname_temp[0]) + ".bin"
-	if (!SD.exists(tempName)) {
-
-		secondLine("Processing");
+	if (!(SD.exists(tempName))) {
+		needConvolve = true;
 		File out = SD.open(tempName, FILE_WRITE);
 		File target = SD.open(fname_temp, FILE_READ);
 		target.seek(44);
 
 		uint8_t buff[bufflen];
-		int cosWave12_5[25] = {10, 10, 9, 7, 5, 3, 1, -2, -4, -6, -8, -9, -10, -10, -9, -8, -6, -4, -2, 1, 3, 5, 7, 9, 10};
+		int16_t cosWave12_5[25] = {10, 10, 9, 7, 5, 3, 1, -2, -4, -6, -8, -9, -10, -10, -9, -8, -6, -4, -2, 1, 3, 5, 7, 9, 10};
 		uint8_t count = 0;
 		uint8_t buffCount = 0;
 
@@ -705,62 +713,71 @@ void sig_freqShift() {
 		out.close();
 		target.close();
 	}
-
-	fname_temp[0] = 'S';fname_temp[1] = 'H';fname_temp[2] = 'I';fname_temp[3] = 'F';fname_temp[4] = 'T';
-	fname_temp[5] = tracks[fcount];fname_temp[6] = '.';fname_temp[7] = 'W';fname_temp[8] = 'A';fname_temp[9] = 'V';
-	
-	if (!SD.exists(fname_temp)) {
-		convolve(tempName);
+	else{
+		needConvolve = false;
 	}
+	
+	fname_temp[0] = 'S';fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
+
+	return needConvolve;
 }
 
 
-void convolve(char inFile[]) {
-
-	int filter[filterlen] = {0, 1, 5, -4, -48, 920, -48, -4, 5, 1, 0};
-	uint8_t signal_in[filterlen];
-	uint8_t temp_buff[temp_buff_size];
-	float temp = 0;
-	uint8_t temp_count = 0;
+void convolve() {
+			
+	if(shift && enhance==0){
+		
+		char tempName[7] = {'S',tracks[fcount],'.','B','I','N'};
+		
+		if(sig_freqShift(tempName)){
+		
+			int filter[filterlen] = {0, 1, 5, -4, -48, 920, -48, -4, 5, 1, 0};
+	
+			uint8_t signal_in[filterlen];
+			uint8_t temp_buff[temp_buff_size];
+			float temp = 0;
+			uint8_t temp_count = 0;
 
 	
-	File out = SD.open(fname_temp, FILE_WRITE);
-	makeWaveFile(out);
-	File target = SD.open(inFile, FILE_READ);
+			File out = SD.open(fname_temp, FILE_WRITE);
+			makeWaveFile(out);
+			File target = SD.open(tempName, FILE_READ);
 
-	unsigned long fSize = target.size();
+			unsigned long fSize = target.size();
 
-	target.read(signal_in, filterlen);
-	target.read(temp_buff, temp_buff_size);
-
-	while (fSize) {
-		//t = micros();
-		if (temp_count == temp_buff_size) {
+			target.read(signal_in, filterlen);
 			target.read(temp_buff, temp_buff_size);
-			temp_count = 0;
+
+			while (fSize) {
+				//t = micros();
+				if (temp_count == temp_buff_size) {
+					target.read(temp_buff, temp_buff_size);
+					temp_count = 0;
+				}
+				temp = 127;
+				//temp_ = 0;
+
+				for (uint8_t i = 0; i < filterlen - 1; i++) {
+					temp += ((float(signal_in[i]) - 127) * filter[i] / 1000);//570
+					signal_in[i] = signal_in[i + 1];
+				}
+				temp += ((float(signal_in[filterlen - 1]) - 127) * filter[filterlen - 1] / 1000);//570
+				signal_in[filterlen - 1] = temp_buff[temp_count++];
+
+
+				//temp_ = byte(temp + 127) ;
+				out.write(uint8_t(temp));
+				//Serial.println(String(micros()-t));
+				fSize --;
+
+
+			}
+			finalizeWave(out);
+			out.close();
+			target.close();
+			//Serial.println("stop");
 		}
-		temp = 127;
-		//temp_ = 0;
-
-		for (uint8_t i = 0; i < filterlen - 1; i++) {
-			temp += ((float(signal_in[i]) - 127) * filter[i] / 1000);//570
-			signal_in[i] = signal_in[i + 1];
-		}
-		temp += ((float(signal_in[filterlen - 1]) - 127) * filter[filterlen - 1] / 1000);//570
-		signal_in[filterlen - 1] = temp_buff[temp_count++];
-
-
-		//temp_ = byte(temp + 127) ;
-		out.write(uint8_t(temp));
-		//Serial.println(String(micros()-t));
-		fSize --;
-
-
 	}
-	finalizeWave(out);
-	out.close();
-	target.close();
-	//Serial.println("stop");
 }
 //END OF FREQUENCY SHIFTING
 

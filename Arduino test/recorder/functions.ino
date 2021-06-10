@@ -19,13 +19,13 @@ char keyInput() {
   if (byte m = ~PIND) {
 
     switch (m) {
-      case 1: k = 's'; break;
-      case 2: k = '<'; break;
-      case 4: k = 'p'; break;
-      case 8: k = '>'; break;
-      case 32: k = 'd'; break;
-      case 64: k = 'm'; break;
-      case 128: k = 'o'; break;
+      case 1: k = '_'; break;
+      case 2: k = '*'; break;
+      case 4: k = 's'; break;
+      case 8: k = '<'; break;
+      case 32: k = 'p'; break;
+      case 64: k = '>'; break;
+      case 128: k = 'd'; break;
       default: k = 0; break;
     }
     delay(300);

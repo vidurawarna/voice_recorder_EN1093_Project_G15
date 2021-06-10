@@ -88,13 +88,7 @@ void setup()
 
 void loop()
 {
-  //>------------------------------------< KEY INPUT >--------------------------------------<
 
-  char key_input = keyInput();
-  if (key_input)
-  {
-    mode = key_input;
-  }
 
   //>-------------------------------< RECORD MODE (LEVEL 1)>--------------------------------<
   if (mode == 's' && mode_ == 'j')

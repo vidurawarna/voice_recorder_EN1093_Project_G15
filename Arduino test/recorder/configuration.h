@@ -29,7 +29,7 @@
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
 #define maxFiles 15
-#define lcdAddr 0x20
+#define lcdAddr 0x27
 
 //for filter coefficients
 #define bufflen 25
