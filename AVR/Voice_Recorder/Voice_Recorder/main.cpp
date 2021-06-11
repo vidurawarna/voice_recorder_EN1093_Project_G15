@@ -40,8 +40,8 @@
 */
 
 #define mic 0b0000
-#define ScalePOT 0b0011
-#define shiftEnhancePOT 0b0001
+//#define ScalePOT 0b0011
+//#define shiftEnhancePOT 0b0001
 #define sdcard 10
 
 //>-------------- common values ----------------<
@@ -54,9 +54,9 @@
 #define lcdAddr 0x27 //Change this to 0x20 for proteus simulation,0x27 for real application
 
 //for filters
-#define bufflen 25
-#define filterlen 11
-#define temp_buff_size 100
+#define bufflen 26
+#define temp_buff_size 75
+#define coslen 13
 
 /*latest code takes 80microsec to read a single data - 12.5kHz
    takes 80microsec to read and output one data - 12.5kHz
@@ -69,8 +69,6 @@ char mode_ = 'j';
 
 //variables for frequency changing configuration
 uint8_t freqScal = 1;
-bool shift = false;
-uint8_t enhance = false;
 
 //variables to handle file operations
 char tracks[maxFiles];
@@ -98,20 +96,20 @@ void getTrackList();
 void nextTrack();
 void previousTrack();
 void checkDuplicates();
+void deleteTrack();
 
 //wave file creating functions
 void makeWaveFile(File);
 void finalizeWave(File);
 
 //frequency modification functions
-void convolve();
-bool sig_freqShift(char[]);
+void pickFilter(char);
+void convolve(int[],char[],uint8_t,int);
+void sig_freqShift(char[]);
 
 //IO functions
 void initialize_Things();
 uint8_t analog_in(int);
-//void analogWrite_config();
-//void analogRead_config();
 
 
 int main(void)
@@ -127,7 +125,7 @@ int main(void)
 	PORTD = 0b11111111;
 	
 	//CONFIGURING PINS FOR ANALOG INPUT
-	DDRC &= 0b11110100;	
+	DDRC &= 0b11111110;	
 	//analogRead_config();
 	
 	//CONFIGURING SPEAKER FOR OUTPUT
@@ -151,11 +149,7 @@ int main(void)
 
     while (1) 
     {
-		//>------------------------------------< KEY INPUT >--------------------------------------<
-
-		  
-		  
-
+		
 		  //>-------------------------------< RECORD MODE (LEVEL 1)>--------------------------------<
 		  if (mode == 's' && mode_ == 'j')
 		  {
@@ -190,8 +184,6 @@ int main(void)
 			  
 			  _delay_ms(1000);
 			  
-			  //fname_temp = String(tracks[fcount]) + ".WAV";
-			  //setFileName(tracks[fcount],"",".WAV");
 			  fname_temp[0] = tracks[fcount];
 			  secondLine(fname_temp);
 			}
@@ -214,9 +206,7 @@ int main(void)
 			  playTrack();
 			  
 			  clrDisplay("Ready to Play");
-			  
-			  //setFileName(tracks[fcount],"",".WAV");
-			  //secondLine(fname_temp);
+
 			}
 			else if (mode == '>')
 			{
@@ -236,46 +226,45 @@ int main(void)
 			}
 			else if (mode == 'd')
 			{
-			  //This mode deletes the track loaded in payer
-			  clrDisplay("Delete?");
-			  //secondLine("DELETE");
-			  while (true)
-			  {
-				char key = keyInput();
-				if (key && key == 'd')
-				{
-				  SD.remove(fname_temp);
-				  clrDisplay("Deleted");
-				  getTrackList();
-				  
-				  if(fcount == files){
-					  fcount--;
-				  }
-				  
-				  _delay_ms(1000);
-				  break;
-				}
-				else if (key=='p')
-				{
-				  clrDisplay("Not Deleted");
-				  _delay_ms(1000);
-				  break;
-				}
-			  }
+						  //This mode deletes the track loaded in payer
+						  clrDisplay("Delete?");
+						  //secondLine("DELETE");
+						  while (true)
+						  {
+							  char key = keyInput();
+							  if (key && key == 'd')
+							  {
+								  //SD.remove(fname_temp);
+								  deleteTrack();
+								  clrDisplay("Deleted");
+								  getTrackList();
+								  
+								  if(fcount == files){
+									  fcount--;
+								  }
+								  
+								  _delay_ms(1000);
+								  break;
+							  }
+							  else if (key=='p')
+							  {
+								  clrDisplay("Not Deleted");
+								  _delay_ms(1000);
+								  break;
+							  }
+						  }
 
-			  if (files == 0)
-			  {
-				clrDisplay("No Tracks");
-				_delay_ms(1000);
-				mode_ = 'j';
-			  }
-			  else{
-				  clrDisplay("Ready to Play");
-				  //fname_temp = String(tracks[fcount]) + ".WAV";
-				  //setFileName(tracks[fcount],"",".WAV");
-				  fname_temp[0] = tracks[fcount];
-				  //secondLine(fname_temp);
-			  }
+						  if (files == 0)
+						  {
+							  clrDisplay("No Tracks");
+							  _delay_ms(1000);
+							  mode_ = 'j';
+						  }
+						  else{
+							  clrDisplay("Ready to Play");
+
+							  fname_temp[0] = tracks[fcount];
+						  }
 			}
 			secondLine(fname_temp);
 			mode = 'i';
@@ -360,7 +349,6 @@ void record() {
 
 	  if (!test_File) {
 		clrDisplay("Error");
-		_delay_ms(1000);
 	  }
 	  else {
 		clrDisplay("Recording");
@@ -368,7 +356,6 @@ void record() {
 		uint8_t pot_Read;
 
 		while (true) {
-		  //t = micros();
 		
 		  pot_Read = analog_in(mic);
 		
@@ -380,9 +367,7 @@ void record() {
 
 		  test_File.write(pot_Read);
 		  _delay_us(16);
-		  //t = micros() - t;
-		  //clrDisplay(String(t));
-		  //_delay_ms(1000);
+
 		}
 		finalizeWave(test_File);
 		clrDisplay("Saved");
@@ -396,12 +381,7 @@ void playTrack()
   /*This function reads data from the specified file and play*/
 
   checkChanges();//check for frequency change requirements
-
-  if (shift)
-  {
-    secondLine("Processing");
-    convolve();
-  }
+clrDisplay("Playing");
 
   File test_File = SD.open(fname_temp);
 
@@ -412,7 +392,7 @@ void playTrack()
   }
   else {
     test_File.seek(44);
-    clrDisplay("Playing");
+    
     secondLine(fname_temp);
 
     //Check whether a frequency scale is set
@@ -420,7 +400,7 @@ void playTrack()
 
     if (freqScal == 0 || freqScal == 1) {
       while (test_File.available()) {
-        //t = micros();
+
         OCR1A = test_File.read();
 		
         _delay_us(40);  //Use this delay for 12.5KHz play
@@ -432,11 +412,6 @@ void playTrack()
         if (key && key == 'p') {
           break;
         }
-
-        //Serial.println(micros() - t);
-        //t = micros() - t;
-        //clrDisplay(String(t));
-        //_delay_ms(1000);;
       }
     }
 
@@ -447,7 +422,7 @@ void playTrack()
     else {
       uint8_t count = 1;
       while (test_File.available()) {
-        //t = micros();
+
         char key = keyInput();
         if (key && key == 'p') {
           break;
@@ -460,11 +435,7 @@ void playTrack()
           _delay_us(40);  //Use this delay for 12.5KHz play
           //_delay_us(20);    //Use this delay for 16kHz play
           //Comment both of delays for 24kHz play
-          
-          //Serial.println(micros() - t);
-          //t = micros() - t;
-          //clrDisplay(String(t));
-          //delay(1000);
+
         } else {
           test_File.read();//This is to neglet samples in between
         }
@@ -474,69 +445,68 @@ void playTrack()
         if (count == freqScal + 1) {//resetting the count
           count = 1;
         }
-        //Serial.println(micros() - t);
-        //        t = micros() - t;
-        //        clrDisplay(String(t));
-        //        delay(1000);
       }
     }
     // close the file:
-    //analogWrite(speaker, 0);
+
 	OCR1A = 0;
     secondLine("End of play");
     test_File.close();
-
-    if (shift || enhance) {
-      //fname_temp = String(tracks[fcount]) + ".WAV";
-	  //setFileName();
-
-	  fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';fname_temp[5] = NULL;
-      shift = false;
-      enhance = 0;
-    }
-
-    _delay_ms(1000);
+	    
   }
+  _delay_ms(1000);
+   fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';fname_temp[5] = NULL;
 }
 
 void checkChanges() {
   /*
      This function checks for frequency change requirements
   */
+	clrDisplay("SCL M");
+	
 
-	uint8_t fsc = analog_in(ScalePOT);
-	uint8_t fshift = analog_in(shiftEnhancePOT);
+	char fsc =49;//= analog_in(ScalePOT);
+	char fshift='X'; //= analog_in(shiftEnhancePOT);
+	char row[6] = {' ',fsc,' ',' ',fshift};
+	while(true){
+		char key_input = keyInput();
+		if (key_input=='p')
+		{
+			freqScal = uint8_t(fsc) - 48;
+			break;
+		}
+		else if(key_input=='>'){
+			if(fshift=='X'){
+				fshift='H';
+			}
+			else if(fshift=='H'){
+				fshift='L';
+			}
+			else if(fshift=='L'){
+				fshift='B';
+			}
+			else if(fshift=='B'){
+				fshift='S';
+			}
+			else if(fshift=='S'){
+				fshift='X';
+			}
+		}
+		else if(key_input=='<'){
+			if(fsc==51){
+				fsc=48;
+			}
+			fsc++;
+		}
+		row[1]=fsc;row[4]=fshift;
+		secondLine(row);
+	}
+	
+	if(fshift!='X'){
+		  clrDisplay("Processing");
+		  pickFilter(fshift);
+	}
 
-  if (fsc < 90) {
-    freqScal = 1;
-  }
-  else if (fsc < 180) {
-    freqScal = 2;
-  }
-  else {
-    freqScal = 3;
-  }
-  
-  if(fshift==0){
-	  shift = false;
-	  enhance = 0;
-  }	
-  else if (fshift < 64) {
-    shift = true;
-    enhance = 0;
-  }
-  else if (fshift < 128) {
-    shift = false;
-    enhance = 1;
-  }
-  else if(fshift < 192){
-    shift = false;
-    enhance = 2;
-  }
-  else{
-	shift = false;
-	enhance = 3;  
-  }
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
@@ -551,8 +521,6 @@ void getTrackList() {
   char ASCIIcount = 65;
   files = 0;
   
-  //fname_temp = String(ASCIIcount) + ".WAV";
-  //setFileName(ASCIIcount,"",".WAV");
   fname_temp[0] = ASCIIcount;
   
   uint8_t arrIndex = 0;
@@ -564,8 +532,6 @@ void getTrackList() {
       tracks[arrIndex++] = fname_temp[0];
       files++;
     }
-    //fname_temp = String(++ASCIIcount) + ".WAV";
-	//setFileName(++ASCIIcount,"",".WAV");
 	fname_temp[0] = ++ASCIIcount;
   }
   for (uint8_t i = arrIndex; i < maxFiles; i++) {
@@ -581,11 +547,7 @@ void nextTrack() {
   if (tracks[fcount] == '_') {
     fcount = 0;
   }
-  //fname_temp = String(tracks[fcount]) + ".WAV";
-  //setFileName(tracks[fcount],"",".WAV");
   fname_temp[0] = tracks[fcount];
-  //secondLine(fname_temp);
-  //Serial.println(count);
 }
 
 void previousTrack() {
@@ -599,11 +561,7 @@ void previousTrack() {
   {
     fcount--;
   }
-  //fname_temp = String(tracks[fcount]) + ".WAV";
-  //setFileName(tracks[fcount],"",".WAV");
   fname_temp[0] = tracks[fcount];
-  //secondLine(fname_temp);
-  //Serial.println(count);
 }
 
 void checkDuplicates() {
@@ -611,18 +569,30 @@ void checkDuplicates() {
   /*This function checks if the new file to be made is existing,
     if does it generates a new name for the file*/
   char count = 65;
-  //fname_temp = String(count) + ".wav";
-  //setFileName(count);
+
   fname_temp[0] = count;
   while (true) {
     if (SD.exists(fname_temp)) {
-      //fname_temp = String(++count) + ".wav";
-	  //setFileName(++count);
 	  fname_temp[0] = ++count;
     } else {
       break;
     }
   }
+}
+
+void deleteTrack(){
+	SD.remove(fname_temp);
+
+	fname_temp[0] = 'S';fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
+	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
+	fname_temp[0] = 'H';
+	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
+	fname_temp[0] = 'L';
+	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
+	fname_temp[0] = 'B';
+	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
+		
+	fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';fname_temp[5] = NULL;
 }
 
 //END OF FILE HANDLING FUNCTIONS
@@ -682,24 +652,22 @@ void finalizeWave(File sFile) {
 
 
 //>--------------------------------------< FREQUENCY SHIFTING >--------------------------------------<
-bool sig_freqShift(char tempName[]) {
-	bool needConvolve;
-//"S" + String(fname_temp[0]) + ".bin"
-	if (!(SD.exists(tempName))) {
-		needConvolve = true;
-		File out = SD.open(tempName, FILE_WRITE);
-		File target = SD.open(fname_temp, FILE_READ);
+void sig_freqShift(char tempName[]) {
+		
+		File out = SD.open("temp.bin", FILE_WRITE);
+		File target = SD.open(tempName, FILE_READ);
 		target.seek(44);
 
 		uint8_t buff[bufflen];
-		int16_t cosWave12_5[25] = {10, 10, 9, 7, 5, 3, 1, -2, -4, -6, -8, -9, -10, -10, -9, -8, -6, -4, -2, 1, 3, 5, 7, 9, 10};
+		//int16_t cosWave12_5[coslen] = {10, 10, 9, 7, 5, 3, 1, -2, -4, -6, -8, -9, -10, -10, -9, -8, -6, -4, -2, 1, 3, 5, 7, 9, 10};
+		int16_t cosWave12_5[coslen] =	{10,8,5,0,-4,-8,-9,-9,-6,-1,3,7,9};
 		uint8_t count = 0;
 		uint8_t buffCount = 0;
 
 		while (target.available()) {
 
 			buff[buffCount++] = (uint8_t)((int)(target.read() - 127) * cosWave12_5[count++] / 10 + 127);
-			if (count == 25 )
+			if (count == coslen )
 			{
 				count = 0;
 			}
@@ -707,77 +675,94 @@ bool sig_freqShift(char tempName[]) {
 				buffCount = 0;
 				out.write((uint8_t*)buff, bufflen);
 			}
-
 		}
 
 		out.close();
 		target.close();
-	}
-	else{
-		needConvolve = false;
-	}
-	
-	fname_temp[0] = 'S';fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
 
-	return needConvolve;
 }
 
-
-void convolve() {
-			
-	if(shift && enhance==0){
-		
-		char tempName[7] = {'S',tracks[fcount],'.','B','I','N'};
-		
-		if(sig_freqShift(tempName)){
-		
-			int filter[filterlen] = {0, 1, 5, -4, -48, 920, -48, -4, 5, 1, 0};
+void pickFilter(char M){
 	
-			uint8_t signal_in[filterlen];
-			uint8_t temp_buff[temp_buff_size];
-			float temp = 0;
-			uint8_t temp_count = 0;
-
+	char tempName[6] = {tracks[fcount],'.','W','A','V'};
+	fname_temp[0] = M;fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
 	
-			File out = SD.open(fname_temp, FILE_WRITE);
-			makeWaveFile(out);
-			File target = SD.open(tempName, FILE_READ);
-
-			unsigned long fSize = target.size();
-
-			target.read(signal_in, filterlen);
-			target.read(temp_buff, temp_buff_size);
-
-			while (fSize) {
-				//t = micros();
-				if (temp_count == temp_buff_size) {
-					target.read(temp_buff, temp_buff_size);
-					temp_count = 0;
-				}
-				temp = 127;
-				//temp_ = 0;
-
-				for (uint8_t i = 0; i < filterlen - 1; i++) {
-					temp += ((float(signal_in[i]) - 127) * filter[i] / 1000);//570
-					signal_in[i] = signal_in[i + 1];
-				}
-				temp += ((float(signal_in[filterlen - 1]) - 127) * filter[filterlen - 1] / 1000);//570
-				signal_in[filterlen - 1] = temp_buff[temp_count++];
-
-
-				//temp_ = byte(temp + 127) ;
-				out.write(uint8_t(temp));
-				//Serial.println(String(micros()-t));
-				fSize --;
-
-
+	if(!SD.exists(fname_temp)){
+		if(M=='S' || M=='H'){
+			//int filter[14] =	{3,-10,-30,-58,-103,-199,-637,637,199,103,58,30,10,-3};//rectangular 14
+			int filter[11] ={-36,-70,-103,-131,-150,823,-150,-131,-103,-70,-36};//rect 1000fc 
+			if(M=='S'){
+				sig_freqShift(tempName);
+				convolve(filter,tempName,11,1000);
 			}
-			finalizeWave(out);
-			out.close();
-			target.close();
-			//Serial.println("stop");
+			else{
+				convolve(filter,tempName,11,500);
+			}
+			
+		}
+		
+		else if(M=='B'){
+			int filter[26] ={0,0,0,5,19,29,10,-44,-106,-121,-50,77,181,181,77,-50,-121,-106,-44,10,29,19,5,0,0,0};//bandpass Bar-hann
+			//int filter[11] =	{-112,-153,-106,11,132,183,132,11,-106,-153,-112};//KAISER
+			convolve(filter,tempName,26,500);		
+		}
+		else if(M=='L'){
+			int filter[14] ={66,68,70,72,73,74,74,74,74,73,72,70,68,66};
+			convolve(filter,tempName,14,250);
 		}
 	}
+}
+
+void convolve(int filter[],char tempName[],uint8_t filterlen,int divider) {
+	/*
+		Times that processing took:
+		
+			Band Pass: 3min 45sec
+			Frequency shifting: 2min 45sec
+			High pass: 1min 55sec
+			Low pass: 1min 53sec
+	*/
+			
+	uint8_t signal_in[filterlen];
+	uint8_t temp_buff[temp_buff_size];
+	float temp = 0;
+	uint8_t temp_count = 0;
+	File target;
+			
+	if(fname_temp[0]=='S'){target = SD.open("temp.bin", FILE_READ);}
+	else{target = SD.open(tempName, FILE_READ);}
+	File out = SD.open(fname_temp, FILE_WRITE);	
+	makeWaveFile(out);
+			
+	unsigned long fSize = target.size();
+
+	target.read(signal_in, filterlen);
+	target.read(temp_buff, temp_buff_size);
+
+	while (fSize) {
+
+		if (temp_count == temp_buff_size) {
+			target.read(temp_buff, temp_buff_size);
+			temp_count = 0;
+		}
+		temp = 127;
+
+		for (uint8_t i = 0; i < filterlen - 1; i++) {
+			temp += ((float(signal_in[i]) - 127) * filter[i] / divider);
+			signal_in[i] = signal_in[i + 1];
+		}
+		temp += ((float(signal_in[filterlen - 1]) - 127) * filter[filterlen - 1] / divider);
+		signal_in[filterlen - 1] = temp_buff[temp_count++];
+
+		out.write(uint8_t(temp));
+
+		fSize --;
+	}
+	finalizeWave(out);
+	out.close();
+	target.close();
+			
+	if(SD.exists("temp.bin")){SD.remove("temp.bin");}	
 }
 //END OF FREQUENCY SHIFTING
 
@@ -794,35 +779,6 @@ uint8_t analog_in(int inputPin = 0000){
 	
 	return ADCH;
 }
-
-/*void analogWrite_config(){
-
-	//TCCR1A |= ((1<<WGM10) | (1<<COM1A1));
-	//TCCR1B |= ((1<<WGM12) | (1<<CS10));
-	
-	//Setting the timers for fast pwm mode
-	TCCR1A |= ((1<<WGM10) | (1<<COM1A1));
-	TCCR1A &= 0b10111101;
-	TCCR1B |= ((1<<WGM12) | (1<<CS10));
-	TCCR1B &= 0b11101001;
-	
-	//TCCR1B = (TCCR1B & 0b11111000) | 0x01;
-	
-}
-
-void analogRead_config(){
-	
-	//set the reference voltage as AVCC
-	//set the Left adjust result
-	//keeping last 3bits as 0, because for the default pin selection as ADC0
-	ADMUX = 0b01100000;
-	
-	//enable the ADC
-	//set the ADC pre scaler as 16
-	ADCSRA = 0b10000100;
-}
-*/
-//END OF IO FUNCTIONS
 
 void initialize_Things()
 {
