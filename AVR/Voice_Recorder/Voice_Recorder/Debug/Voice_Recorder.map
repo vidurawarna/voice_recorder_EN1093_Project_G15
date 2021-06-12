@@ -1349,7 +1349,7 @@ END GROUP
  *(.fini0)
                 0x0000566e                _etext = .
 
-.data           0x00800100      0x182 load address 0x0000566e
+.data           0x00800100      0x160 load address 0x0000566e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
@@ -1370,172 +1370,172 @@ END GROUP
  *(.gnu.linkonce.d*)
  *(.rodata)
  .rodata        0x0080010d        0x8 LCDScreen/LCDScreen.o
- .rodata        0x00800115       0x8a main.o
+ .rodata        0x00800115       0x68 main.o
  *(.rodata*)
  .rodata._ZTV5Print
-                0x0080019f        0xc Core/Print.o
-                0x0080019f                _ZTV5Print
+                0x0080017d        0xc Core/Print.o
+                0x0080017d                _ZTV5Print
  .rodata._ZTV9LCDScreen
-                0x008001ab        0xc LCDScreen/LCDScreen.o
-                0x008001ab                _ZTV9LCDScreen
+                0x00800189        0xc LCDScreen/LCDScreen.o
+                0x00800189                _ZTV9LCDScreen
  .rodata.str1.1
-                0x008001b7       0x99 main.o
+                0x00800195       0x99 main.o
                                  0xa1 (size before relaxing)
  .rodata._ZTVN5SDLib4FileE
-                0x00800250       0x12 SD/src/File.o
-                0x00800250                _ZTVN5SDLib4FileE
+                0x0080022e       0x12 SD/src/File.o
+                0x0080022e                _ZTVN5SDLib4FileE
  .rodata.str1.1
-                0x00800262        0x2 SD/src/SD.o
+                0x00800240        0x2 SD/src/SD.o
  .rodata._ZTV6SdFile
-                0x00800264        0xc SD/src/utility/SdFile.o
-                0x00800264                _ZTV6SdFile
+                0x00800242        0xc SD/src/utility/SdFile.o
+                0x00800242                _ZTV6SdFile
  .rodata._ZTV7TwoWire
-                0x00800270       0x12 Wire/src/Wire.o
-                0x00800270                _ZTV7TwoWire
+                0x0080024e       0x12 Wire/src/Wire.o
+                0x0080024e                _ZTV7TwoWire
  *(.gnu.linkonce.r*)
-                0x00800282                . = ALIGN (0x2)
-                0x00800282                _edata = .
-                0x00800282                PROVIDE (__data_end, .)
+                0x00800260                . = ALIGN (0x2)
+                0x00800260                _edata = .
+                0x00800260                PROVIDE (__data_end, .)
 
-.bss            0x00800282      0x350
-                0x00800282                PROVIDE (__bss_start, .)
+.bss            0x00800260      0x350
+                0x00800260                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.timer0_fract
-                0x00800282        0x1 Core/time.o
+                0x00800260        0x1 Core/time.o
  .bss.timer0_millis
-                0x00800283        0x4 Core/time.o
-                0x00800283                timer0_millis
+                0x00800261        0x4 Core/time.o
+                0x00800261                timer0_millis
  .bss.timer0_overflow_count
-                0x00800287        0x4 Core/time.o
-                0x00800287                timer0_overflow_count
- .bss.lcd       0x0080028b        0x8 main.o
-                0x0080028b                lcd
+                0x00800265        0x4 Core/time.o
+                0x00800265                timer0_overflow_count
+ .bss.lcd       0x00800269        0x8 main.o
+                0x00800269                lcd
  .bss.fname_temp
-                0x00800293        0x7 main.o
-                0x00800293                fname_temp
- .bss.fcount    0x0080029a        0x1 main.o
-                0x0080029a                fcount
- .bss.files     0x0080029b        0x1 main.o
-                0x0080029b                files
- .bss.tracks    0x0080029c        0xf main.o
-                0x0080029c                tracks
+                0x00800271        0x7 main.o
+                0x00800271                fname_temp
+ .bss.fcount    0x00800278        0x1 main.o
+                0x00800278                fcount
+ .bss.files     0x00800279        0x1 main.o
+                0x00800279                files
+ .bss.tracks    0x0080027a        0xf main.o
+                0x0080027a                tracks
  .bss._ZN5SDLib2SDE
-                0x008002ab       0x49 SD/src/SD.o
-                0x008002ab                _ZN5SDLib2SDE
+                0x00800289       0x49 SD/src/SD.o
+                0x00800289                _ZN5SDLib2SDE
  .bss._ZL20chip_select_asserted
-                0x008002f4        0x1 SD/src/utility/Sd2Card.o
+                0x008002d2        0x1 SD/src/utility/Sd2Card.o
  .bss._ZL8settings
-                0x008002f5        0x2 SD/src/utility/Sd2Card.o
+                0x008002d3        0x2 SD/src/utility/Sd2Card.o
  .bss._ZN6SdFile9dateTime_E
-                0x008002f7        0x2 SD/src/utility/SdFile.o
-                0x008002f7                _ZN6SdFile9dateTime_E
+                0x008002d5        0x2 SD/src/utility/SdFile.o
+                0x008002d5                _ZN6SdFile9dateTime_E
  .bss._ZN8SdVolume17cacheMirrorBlock_E
-                0x008002f9        0x4 SD/src/utility/SdVolume.o
-                0x008002f9                _ZN8SdVolume17cacheMirrorBlock_E
+                0x008002d7        0x4 SD/src/utility/SdVolume.o
+                0x008002d7                _ZN8SdVolume17cacheMirrorBlock_E
  .bss._ZN8SdVolume11cacheDirty_E
-                0x008002fd        0x1 SD/src/utility/SdVolume.o
-                0x008002fd                _ZN8SdVolume11cacheDirty_E
+                0x008002db        0x1 SD/src/utility/SdVolume.o
+                0x008002db                _ZN8SdVolume11cacheDirty_E
  .bss._ZN8SdVolume7sdCard_E
-                0x008002fe        0x2 SD/src/utility/SdVolume.o
-                0x008002fe                _ZN8SdVolume7sdCard_E
+                0x008002dc        0x2 SD/src/utility/SdVolume.o
+                0x008002dc                _ZN8SdVolume7sdCard_E
  .bss._ZN8SdVolume12cacheBuffer_E
-                0x00800300      0x200 SD/src/utility/SdVolume.o
-                0x00800300                _ZN8SdVolume12cacheBuffer_E
+                0x008002de      0x200 SD/src/utility/SdVolume.o
+                0x008002de                _ZN8SdVolume12cacheBuffer_E
  .bss._ZN8SPIClass13interruptSaveE
-                0x00800500        0x1 SPI/src/SPI.o
-                0x00800500                _ZN8SPIClass13interruptSaveE
+                0x008004de        0x1 SPI/src/SPI.o
+                0x008004de                _ZN8SPIClass13interruptSaveE
  .bss._ZN8SPIClass13interruptMaskE
-                0x00800501        0x1 SPI/src/SPI.o
-                0x00800501                _ZN8SPIClass13interruptMaskE
+                0x008004df        0x1 SPI/src/SPI.o
+                0x008004df                _ZN8SPIClass13interruptMaskE
  .bss._ZN8SPIClass13interruptModeE
-                0x00800502        0x1 SPI/src/SPI.o
-                0x00800502                _ZN8SPIClass13interruptModeE
+                0x008004e0        0x1 SPI/src/SPI.o
+                0x008004e0                _ZN8SPIClass13interruptModeE
  .bss._ZN8SPIClass11initializedE
-                0x00800503        0x1 SPI/src/SPI.o
-                0x00800503                _ZN8SPIClass11initializedE
+                0x008004e1        0x1 SPI/src/SPI.o
+                0x008004e1                _ZN8SPIClass11initializedE
  .bss.twi_error
-                0x00800504        0x1 Wire/src/utility/twi.o
+                0x008004e2        0x1 Wire/src/utility/twi.o
  .bss.twi_rxBufferIndex
-                0x00800505        0x1 Wire/src/utility/twi.o
+                0x008004e3        0x1 Wire/src/utility/twi.o
  .bss.twi_rxBuffer
-                0x00800506       0x20 Wire/src/utility/twi.o
+                0x008004e4       0x20 Wire/src/utility/twi.o
  .bss.twi_txBufferLength
-                0x00800526        0x1 Wire/src/utility/twi.o
+                0x00800504        0x1 Wire/src/utility/twi.o
  .bss.twi_txBufferIndex
-                0x00800527        0x1 Wire/src/utility/twi.o
+                0x00800505        0x1 Wire/src/utility/twi.o
  .bss.twi_txBuffer
-                0x00800528       0x20 Wire/src/utility/twi.o
+                0x00800506       0x20 Wire/src/utility/twi.o
  .bss.twi_masterBufferLength
-                0x00800548        0x1 Wire/src/utility/twi.o
+                0x00800526        0x1 Wire/src/utility/twi.o
  .bss.twi_masterBufferIndex
-                0x00800549        0x1 Wire/src/utility/twi.o
+                0x00800527        0x1 Wire/src/utility/twi.o
  .bss.twi_masterBuffer
-                0x0080054a       0x20 Wire/src/utility/twi.o
+                0x00800528       0x20 Wire/src/utility/twi.o
  .bss.twi_onSlaveReceive
-                0x0080056a        0x2 Wire/src/utility/twi.o
+                0x00800548        0x2 Wire/src/utility/twi.o
  .bss.twi_onSlaveTransmit
-                0x0080056c        0x2 Wire/src/utility/twi.o
+                0x0080054a        0x2 Wire/src/utility/twi.o
  .bss.twi_do_reset_on_timeout
-                0x0080056e        0x1 Wire/src/utility/twi.o
+                0x0080054c        0x1 Wire/src/utility/twi.o
  .bss.twi_timed_out_flag
-                0x0080056f        0x1 Wire/src/utility/twi.o
+                0x0080054d        0x1 Wire/src/utility/twi.o
  .bss.twi_timeout_us
-                0x00800570        0x4 Wire/src/utility/twi.o
+                0x0080054e        0x4 Wire/src/utility/twi.o
  .bss.twi_inRepStart
-                0x00800574        0x1 Wire/src/utility/twi.o
+                0x00800552        0x1 Wire/src/utility/twi.o
  .bss.twi_sendStop
-                0x00800575        0x1 Wire/src/utility/twi.o
+                0x00800553        0x1 Wire/src/utility/twi.o
  .bss.twi_slarw
-                0x00800576        0x1 Wire/src/utility/twi.o
+                0x00800554        0x1 Wire/src/utility/twi.o
  .bss.twi_state
-                0x00800577        0x1 Wire/src/utility/twi.o
- .bss.Wire      0x00800578        0xc Wire/src/Wire.o
-                0x00800578                Wire
+                0x00800555        0x1 Wire/src/utility/twi.o
+ .bss.Wire      0x00800556        0xc Wire/src/Wire.o
+                0x00800556                Wire
  .bss._ZN7TwoWire14user_onReceiveE
-                0x00800584        0x2 Wire/src/Wire.o
-                0x00800584                _ZN7TwoWire14user_onReceiveE
+                0x00800562        0x2 Wire/src/Wire.o
+                0x00800562                _ZN7TwoWire14user_onReceiveE
  .bss._ZN7TwoWire14user_onRequestE
-                0x00800586        0x2 Wire/src/Wire.o
-                0x00800586                _ZN7TwoWire14user_onRequestE
+                0x00800564        0x2 Wire/src/Wire.o
+                0x00800564                _ZN7TwoWire14user_onRequestE
  .bss._ZN7TwoWire12transmittingE
-                0x00800588        0x1 Wire/src/Wire.o
-                0x00800588                _ZN7TwoWire12transmittingE
+                0x00800566        0x1 Wire/src/Wire.o
+                0x00800566                _ZN7TwoWire12transmittingE
  .bss._ZN7TwoWire14txBufferLengthE
-                0x00800589        0x1 Wire/src/Wire.o
-                0x00800589                _ZN7TwoWire14txBufferLengthE
+                0x00800567        0x1 Wire/src/Wire.o
+                0x00800567                _ZN7TwoWire14txBufferLengthE
  .bss._ZN7TwoWire13txBufferIndexE
-                0x0080058a        0x1 Wire/src/Wire.o
-                0x0080058a                _ZN7TwoWire13txBufferIndexE
+                0x00800568        0x1 Wire/src/Wire.o
+                0x00800568                _ZN7TwoWire13txBufferIndexE
  .bss._ZN7TwoWire8txBufferE
-                0x0080058b       0x20 Wire/src/Wire.o
-                0x0080058b                _ZN7TwoWire8txBufferE
+                0x00800569       0x20 Wire/src/Wire.o
+                0x00800569                _ZN7TwoWire8txBufferE
  .bss._ZN7TwoWire9txAddressE
-                0x008005ab        0x1 Wire/src/Wire.o
-                0x008005ab                _ZN7TwoWire9txAddressE
+                0x00800589        0x1 Wire/src/Wire.o
+                0x00800589                _ZN7TwoWire9txAddressE
  .bss._ZN7TwoWire14rxBufferLengthE
-                0x008005ac        0x1 Wire/src/Wire.o
-                0x008005ac                _ZN7TwoWire14rxBufferLengthE
+                0x0080058a        0x1 Wire/src/Wire.o
+                0x0080058a                _ZN7TwoWire14rxBufferLengthE
  .bss._ZN7TwoWire13rxBufferIndexE
-                0x008005ad        0x1 Wire/src/Wire.o
-                0x008005ad                _ZN7TwoWire13rxBufferIndexE
+                0x0080058b        0x1 Wire/src/Wire.o
+                0x0080058b                _ZN7TwoWire13rxBufferIndexE
  .bss._ZN7TwoWire8rxBufferE
-                0x008005ae       0x20 Wire/src/Wire.o
-                0x008005ae                _ZN7TwoWire8rxBufferE
+                0x0080058c       0x20 Wire/src/Wire.o
+                0x0080058c                _ZN7TwoWire8rxBufferE
  *(COMMON)
- COMMON         0x008005ce        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
-                0x008005ce                __brkval
-                0x008005d0                __flp
-                0x008005d2                PROVIDE (__bss_end, .)
+ COMMON         0x008005ac        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+                0x008005ac                __brkval
+                0x008005ae                __flp
+                0x008005b0                PROVIDE (__bss_end, .)
                 0x0000566e                __data_load_start = LOADADDR (.data)
-                0x000057f0                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000057ce                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008005d2        0x0
+.noinit         0x008005b0        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008005d2                _end = .
-                0x008005d2                PROVIDE (__heap_start, .)
+                0x008005b0                _end = .
+                0x008005b0                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -1647,7 +1647,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x1fb5c
+.debug_info     0x00000000    0x1fb4d
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4       0x94 Core/abi.o
@@ -1655,15 +1655,15 @@ END GROUP
  .debug_info    0x00002e34      0x214 Core/time.o
  .debug_info    0x00003048      0x5db Core/wiring_digital.o
  .debug_info    0x00003623      0xdd4 LCDScreen/LCDScreen.o
- .debug_info    0x000043f7     0x576e main.o
- .debug_info    0x00009b65     0x2cc8 SD/src/File.o
- .debug_info    0x0000c82d     0x4ed9 SD/src/SD.o
- .debug_info    0x00011706     0x3229 SD/src/utility/Sd2Card.o
- .debug_info    0x0001492f     0x52e4 SD/src/utility/SdFile.o
- .debug_info    0x00019c13     0x2684 SD/src/utility/SdVolume.o
- .debug_info    0x0001c297      0x66b SPI/src/SPI.o
- .debug_info    0x0001c902      0x931 Wire/src/utility/twi.o
- .debug_info    0x0001d233     0x2929 Wire/src/Wire.o
+ .debug_info    0x000043f7     0x575f main.o
+ .debug_info    0x00009b56     0x2cc8 SD/src/File.o
+ .debug_info    0x0000c81e     0x4ed9 SD/src/SD.o
+ .debug_info    0x000116f7     0x3229 SD/src/utility/Sd2Card.o
+ .debug_info    0x00014920     0x52e4 SD/src/utility/SdFile.o
+ .debug_info    0x00019c04     0x2684 SD/src/utility/SdVolume.o
+ .debug_info    0x0001c288      0x66b SPI/src/SPI.o
+ .debug_info    0x0001c8f3      0x931 Wire/src/utility/twi.o
+ .debug_info    0x0001d224     0x2929 Wire/src/Wire.o
 
 .debug_abbrev   0x00000000     0x40f1
  *(.debug_abbrev)

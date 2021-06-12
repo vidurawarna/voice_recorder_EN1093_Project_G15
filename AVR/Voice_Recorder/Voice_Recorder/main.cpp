@@ -689,11 +689,12 @@ void pickFilter(char M){
 	
 	if(!SD.exists(fname_temp)){
 		if(M=='S' || M=='H'){
-			//int filter[14] =	{3,-10,-30,-58,-103,-199,-637,637,199,103,58,30,10,-3};//rectangular 14
-			int filter[11] ={-36,-70,-103,-131,-150,823,-150,-131,-103,-70,-36};//rect 1000fc 
+
+			//int filter[11] ={-18,-47,-83,-121,-148,833,-148,-121,-83,-47,-18};//kaiser 100fc beta1.8
+			int filter[11] =	{-18,-46,-83,-120,-148,834,-148,-120,-83,-46,-18};//kaiser 1000fc beta1.84
 			if(M=='S'){
 				sig_freqShift(tempName);
-				convolve(filter,tempName,11,1000);
+				convolve(filter,tempName,11,500);
 			}
 			else{
 				convolve(filter,tempName,11,500);
@@ -702,13 +703,15 @@ void pickFilter(char M){
 		}
 		
 		else if(M=='B'){
-			int filter[26] ={0,0,0,5,19,29,10,-44,-106,-121,-50,77,181,181,77,-50,-121,-106,-44,10,29,19,5,0,0,0};//bandpass Bar-hann
-			//int filter[11] =	{-112,-153,-106,11,132,183,132,11,-106,-153,-112};//KAISER
-			convolve(filter,tempName,26,500);		
+			//int filter[26] ={0,0,0,5,19,29,10,-44,-106,-121,-50,77,181,181,77,-50,-121,-106,-44,10,29,19,5,0,0,0};//bandpass Bar-hann 
+			//int filter[15] ={14,-10,-71,-127,-107,12,164,233,164,12,-107,-127,-71,-10,14};//kaiser beta3 good
+			int filter[11] =	{-69,-128,-109,13,170,242,170,13,-109,-128,-69};//kaiser beta1.9
+			convolve(filter,tempName,11,500);		
 		}
 		else if(M=='L'){
-			int filter[14] ={66,68,70,72,73,74,74,74,74,73,72,70,68,66};
-			convolve(filter,tempName,14,250);
+			//int filter[14] ={66,68,70,72,73,74,74,74,74,73,72,70,68,66};
+			int filter[12] =	{37,57,77,96,111,119,119,111,96,77,57,37};//KAISER BETA=-2
+			convolve(filter,tempName,12,1000);
 		}
 	}
 }
@@ -717,7 +720,7 @@ void convolve(int filter[],char tempName[],uint8_t filterlen,int divider) {
 	/*
 		Times that processing took:
 		
-			Band Pass: 3min 45sec
+			Band Pass: 1min 55sec for kaiser beta1.9
 			Frequency shifting: 2min 45sec
 			High pass: 1min 55sec
 			Low pass: 1min 53sec

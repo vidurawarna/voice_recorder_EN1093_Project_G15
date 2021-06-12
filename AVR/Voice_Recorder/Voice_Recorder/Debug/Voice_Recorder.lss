@@ -3,31 +3,31 @@ Voice_Recorder.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000182  00800100  0000566e  00005702  2**0
+  0 .data         00000160  00800100  0000566e  00005702  2**0
                   CONTENTS, ALLOC, LOAD, DATA
   1 .text         0000566e  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000350  00800282  00800282  00005884  2**0
+  2 .bss          00000350  00800260  00800260  00005862  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00005884  2**0
+  3 .comment      00000030  00000000  00000000  00005862  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000058b4  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00005894  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000008b8  00000000  00000000  000058f4  2**0
+  5 .debug_aranges 000008b8  00000000  00000000  000058d4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0001fb5c  00000000  00000000  000061ac  2**0
+  6 .debug_info   0001fb4d  00000000  00000000  0000618c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000040f1  00000000  00000000  00025d08  2**0
+  7 .debug_abbrev 000040f1  00000000  00000000  00025cd9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00006b3b  00000000  00000000  00029df9  2**0
+  8 .debug_line   00006b3b  00000000  00000000  00029dca  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000020b8  00000000  00000000  00030934  2**2
+  9 .debug_frame  000020b8  00000000  00000000  00030908  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000058fc  00000000  00000000  000329ec  2**0
+ 10 .debug_str    000058fc  00000000  00000000  000329c0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000d948  00000000  00000000  000382e8  2**0
+ 11 .debug_loc    0000d948  00000000  00000000  000382bc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000009e8  00000000  00000000  00045c30  2**0
+ 12 .debug_ranges 000009e8  00000000  00000000  00045c04  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -310,13 +310,13 @@ Disassembly of section .text:
      278:	02 c0       	rjmp	.+4      	; 0x27e <__do_copy_data+0x10>
      27a:	05 90       	lpm	r0, Z+
      27c:	0d 92       	st	X+, r0
-     27e:	a2 38       	cpi	r26, 0x82	; 130
+     27e:	a0 36       	cpi	r26, 0x60	; 96
      280:	b1 07       	cpc	r27, r17
      282:	d9 f7       	brne	.-10     	; 0x27a <__do_copy_data+0xc>
 
 00000284 <__do_clear_bss>:
      284:	25 e0       	ldi	r18, 0x05	; 5
-     286:	a2 e8       	ldi	r26, 0x82	; 130
+     286:	a0 e6       	ldi	r26, 0x60	; 96
      288:	b2 e0       	ldi	r27, 0x02	; 2
      28a:	01 c0       	rjmp	.+2      	; 0x28e <.do_clear_bss_start>
 
@@ -324,7 +324,7 @@ Disassembly of section .text:
      28c:	1d 92       	st	X+, r1
 
 0000028e <.do_clear_bss_start>:
-     28e:	a2 3d       	cpi	r26, 0xD2	; 210
+     28e:	a0 3b       	cpi	r26, 0xB0	; 176
      290:	b2 07       	cpc	r27, r18
      292:	e1 f7       	brne	.-8      	; 0x28c <.do_clear_bss_loop>
 
@@ -499,12 +499,12 @@ ISR(TIMER0_OVF_vect)
 	// copy these to local variables so they can be stored in registers
 	// (volatile variables must be read from memory on every access)
 	unsigned long m = timer0_millis;
-     370:	00 91 83 02 	lds	r16, 0x0283	; 0x800283 <timer0_millis>
-     374:	10 91 84 02 	lds	r17, 0x0284	; 0x800284 <timer0_millis+0x1>
-     378:	20 91 85 02 	lds	r18, 0x0285	; 0x800285 <timer0_millis+0x2>
-     37c:	30 91 86 02 	lds	r19, 0x0286	; 0x800286 <timer0_millis+0x3>
+     370:	00 91 61 02 	lds	r16, 0x0261	; 0x800261 <timer0_millis>
+     374:	10 91 62 02 	lds	r17, 0x0262	; 0x800262 <timer0_millis+0x1>
+     378:	20 91 63 02 	lds	r18, 0x0263	; 0x800263 <timer0_millis+0x2>
+     37c:	30 91 64 02 	lds	r19, 0x0264	; 0x800264 <timer0_millis+0x3>
 	unsigned char f = timer0_fract;
-     380:	90 91 82 02 	lds	r25, 0x0282	; 0x800282 <__data_end>
+     380:	90 91 60 02 	lds	r25, 0x0260	; 0x800260 <__data_end>
 
 	m += MILLIS_INC;
      384:	b9 01       	movw	r22, r18
@@ -532,24 +532,24 @@ ISR(TIMER0_OVF_vect)
 	}
 
 	timer0_fract = f;
-     3a8:	80 93 82 02 	sts	0x0282, r24	; 0x800282 <__data_end>
+     3a8:	80 93 60 02 	sts	0x0260, r24	; 0x800260 <__data_end>
 	timer0_millis = m;
-     3ac:	40 93 83 02 	sts	0x0283, r20	; 0x800283 <timer0_millis>
-     3b0:	50 93 84 02 	sts	0x0284, r21	; 0x800284 <timer0_millis+0x1>
-     3b4:	60 93 85 02 	sts	0x0285, r22	; 0x800285 <timer0_millis+0x2>
-     3b8:	70 93 86 02 	sts	0x0286, r23	; 0x800286 <timer0_millis+0x3>
+     3ac:	40 93 61 02 	sts	0x0261, r20	; 0x800261 <timer0_millis>
+     3b0:	50 93 62 02 	sts	0x0262, r21	; 0x800262 <timer0_millis+0x1>
+     3b4:	60 93 63 02 	sts	0x0263, r22	; 0x800263 <timer0_millis+0x2>
+     3b8:	70 93 64 02 	sts	0x0264, r23	; 0x800264 <timer0_millis+0x3>
 	timer0_overflow_count++;
-     3bc:	80 91 87 02 	lds	r24, 0x0287	; 0x800287 <timer0_overflow_count>
-     3c0:	90 91 88 02 	lds	r25, 0x0288	; 0x800288 <timer0_overflow_count+0x1>
-     3c4:	a0 91 89 02 	lds	r26, 0x0289	; 0x800289 <timer0_overflow_count+0x2>
-     3c8:	b0 91 8a 02 	lds	r27, 0x028A	; 0x80028a <timer0_overflow_count+0x3>
+     3bc:	80 91 65 02 	lds	r24, 0x0265	; 0x800265 <timer0_overflow_count>
+     3c0:	90 91 66 02 	lds	r25, 0x0266	; 0x800266 <timer0_overflow_count+0x1>
+     3c4:	a0 91 67 02 	lds	r26, 0x0267	; 0x800267 <timer0_overflow_count+0x2>
+     3c8:	b0 91 68 02 	lds	r27, 0x0268	; 0x800268 <timer0_overflow_count+0x3>
      3cc:	01 96       	adiw	r24, 0x01	; 1
      3ce:	a1 1d       	adc	r26, r1
      3d0:	b1 1d       	adc	r27, r1
-     3d2:	80 93 87 02 	sts	0x0287, r24	; 0x800287 <timer0_overflow_count>
-     3d6:	90 93 88 02 	sts	0x0288, r25	; 0x800288 <timer0_overflow_count+0x1>
-     3da:	a0 93 89 02 	sts	0x0289, r26	; 0x800289 <timer0_overflow_count+0x2>
-     3de:	b0 93 8a 02 	sts	0x028A, r27	; 0x80028a <timer0_overflow_count+0x3>
+     3d2:	80 93 65 02 	sts	0x0265, r24	; 0x800265 <timer0_overflow_count>
+     3d6:	90 93 66 02 	sts	0x0266, r25	; 0x800266 <timer0_overflow_count+0x1>
+     3da:	a0 93 67 02 	sts	0x0267, r26	; 0x800267 <timer0_overflow_count+0x2>
+     3de:	b0 93 68 02 	sts	0x0268, r27	; 0x800268 <timer0_overflow_count+0x3>
 }
      3e2:	bf 91       	pop	r27
      3e4:	af 91       	pop	r26
@@ -581,10 +581,10 @@ unsigned long millis()
 	cli();
      406:	f8 94       	cli
 	m = timer0_millis;
-     408:	60 91 83 02 	lds	r22, 0x0283	; 0x800283 <timer0_millis>
-     40c:	70 91 84 02 	lds	r23, 0x0284	; 0x800284 <timer0_millis+0x1>
-     410:	80 91 85 02 	lds	r24, 0x0285	; 0x800285 <timer0_millis+0x2>
-     414:	90 91 86 02 	lds	r25, 0x0286	; 0x800286 <timer0_millis+0x3>
+     408:	60 91 61 02 	lds	r22, 0x0261	; 0x800261 <timer0_millis>
+     40c:	70 91 62 02 	lds	r23, 0x0262	; 0x800262 <timer0_millis+0x1>
+     410:	80 91 63 02 	lds	r24, 0x0263	; 0x800263 <timer0_millis+0x2>
+     414:	90 91 64 02 	lds	r25, 0x0264	; 0x800264 <timer0_millis+0x3>
 	SREG = oldSREG;
      418:	2f bf       	out	0x3f, r18	; 63
 
@@ -602,10 +602,10 @@ unsigned long micros() {
 	cli();
      41e:	f8 94       	cli
 	m = timer0_overflow_count;
-     420:	80 91 87 02 	lds	r24, 0x0287	; 0x800287 <timer0_overflow_count>
-     424:	90 91 88 02 	lds	r25, 0x0288	; 0x800288 <timer0_overflow_count+0x1>
-     428:	a0 91 89 02 	lds	r26, 0x0289	; 0x800289 <timer0_overflow_count+0x2>
-     42c:	b0 91 8a 02 	lds	r27, 0x028A	; 0x80028a <timer0_overflow_count+0x3>
+     420:	80 91 65 02 	lds	r24, 0x0265	; 0x800265 <timer0_overflow_count>
+     424:	90 91 66 02 	lds	r25, 0x0266	; 0x800266 <timer0_overflow_count+0x1>
+     428:	a0 91 67 02 	lds	r26, 0x0267	; 0x800267 <timer0_overflow_count+0x2>
+     42c:	b0 91 68 02 	lds	r27, 0x0268	; 0x800268 <timer0_overflow_count+0x3>
 #if defined(TCNT0)
 	t = TCNT0;
      430:	26 b5       	in	r18, 0x26	; 38
@@ -925,7 +925,7 @@ LCDScreen::LCDScreen(uint8_t lcd_addr)
     Print() : write_error(0) {}
      5a8:	13 82       	std	Z+3, r1	; 0x03
      5aa:	12 82       	std	Z+2, r1	; 0x02
-     5ac:	8f ea       	ldi	r24, 0xAF	; 175
+     5ac:	8d e8       	ldi	r24, 0x8D	; 141
      5ae:	91 e0       	ldi	r25, 0x01	; 1
      5b0:	91 83       	std	Z+1, r25	; 0x01
      5b2:	80 83       	st	Z, r24
@@ -946,7 +946,7 @@ void LCDScreen::expanderWrite(uint8_t _data){
 	Wire.beginTransmission(_addr);
      5bc:	fc 01       	movw	r30, r24
      5be:	64 81       	ldd	r22, Z+4	; 0x04
-     5c0:	88 e7       	ldi	r24, 0x78	; 120
+     5c0:	86 e5       	ldi	r24, 0x56	; 86
      5c2:	95 e0       	ldi	r25, 0x05	; 5
      5c4:	0e 94 6f 27 	call	0x4ede	; 0x4ede <_ZN7TwoWire17beginTransmissionEh>
 	Wire.write((int)(_data) | 0x08);
@@ -958,16 +958,16 @@ void LCDScreen::expanderWrite(uint8_t _data){
     inline size_t write(long n) { return write((uint8_t)n); }
     inline size_t write(unsigned int n) { return write((uint8_t)n); }
     inline size_t write(int n) { return write((uint8_t)n); }
-     5cc:	e0 91 78 05 	lds	r30, 0x0578	; 0x800578 <Wire>
-     5d0:	f0 91 79 05 	lds	r31, 0x0579	; 0x800579 <Wire+0x1>
+     5cc:	e0 91 56 05 	lds	r30, 0x0556	; 0x800556 <Wire>
+     5d0:	f0 91 57 05 	lds	r31, 0x0557	; 0x800557 <Wire+0x1>
      5d4:	01 90       	ld	r0, Z+
      5d6:	f0 81       	ld	r31, Z
      5d8:	e0 2d       	mov	r30, r0
-     5da:	88 e7       	ldi	r24, 0x78	; 120
+     5da:	86 e5       	ldi	r24, 0x56	; 86
      5dc:	95 e0       	ldi	r25, 0x05	; 5
      5de:	09 95       	icall
 	Wire.endTransmission();
-     5e0:	88 e7       	ldi	r24, 0x78	; 120
+     5e0:	86 e5       	ldi	r24, 0x56	; 86
      5e2:	95 e0       	ldi	r25, 0x05	; 5
      5e4:	0e 94 8c 27 	call	0x4f18	; 0x4f18 <_ZN7TwoWire15endTransmissionEv>
 }
@@ -1228,7 +1228,7 @@ void LCDScreen::begin() {
      72a:	df 93       	push	r29
      72c:	ec 01       	movw	r28, r24
 	Wire.begin();
-     72e:	88 e7       	ldi	r24, 0x78	; 120
+     72e:	86 e5       	ldi	r24, 0x56	; 86
      730:	95 e0       	ldi	r25, 0x05	; 5
      732:	0e 94 5c 27 	call	0x4eb8	; 0x4eb8 <_ZN7TwoWire5beginEv>
 	_displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
@@ -1393,7 +1393,7 @@ void firstLine(const char *msg) {
      7e6:	7f 4f       	sbci	r23, 0xFF	; 255
      7e8:	29 f4       	brne	.+10     	; 0x7f4 <_Z41__static_initialization_and_destruction_0ii+0x14>
      7ea:	67 e2       	ldi	r22, 0x27	; 39
-     7ec:	8b e8       	ldi	r24, 0x8B	; 139
+     7ec:	89 e6       	ldi	r24, 0x69	; 105
      7ee:	92 e0       	ldi	r25, 0x02	; 2
      7f0:	0e 94 d3 02 	call	0x5a6	; 0x5a6 <_ZN9LCDScreenC1Eh>
      7f4:	08 95       	ret
@@ -1457,18 +1457,18 @@ void clrDisplay(const char *msg) {
      85c:	ec 01       	movw	r28, r24
   //Clears the LCD and displays the msg in first line
   lcd.clear();
-     85e:	8b e8       	ldi	r24, 0x8B	; 139
+     85e:	89 e6       	ldi	r24, 0x69	; 105
      860:	92 e0       	ldi	r25, 0x02	; 2
      862:	0e 94 3d 03 	call	0x67a	; 0x67a <_ZN9LCDScreen5clearEv>
   lcd.setCursor(0, 0);
      866:	40 e0       	ldi	r20, 0x00	; 0
      868:	60 e0       	ldi	r22, 0x00	; 0
-     86a:	8b e8       	ldi	r24, 0x8B	; 139
+     86a:	89 e6       	ldi	r24, 0x69	; 105
      86c:	92 e0       	ldi	r25, 0x02	; 2
      86e:	0e 94 53 03 	call	0x6a6	; 0x6a6 <_ZN9LCDScreen9setCursorEhh>
   lcd.print(msg);
      872:	be 01       	movw	r22, r28
-     874:	8b e8       	ldi	r24, 0x8B	; 139
+     874:	89 e6       	ldi	r24, 0x69	; 105
      876:	92 e0       	ldi	r25, 0x02	; 2
      878:	0e 94 91 01 	call	0x322	; 0x322 <_ZN5Print5printEPKc>
 }
@@ -1486,12 +1486,12 @@ void secondLine(const char *msg) {
   lcd.setCursor(0, 1);
      888:	41 e0       	ldi	r20, 0x01	; 1
      88a:	60 e0       	ldi	r22, 0x00	; 0
-     88c:	8b e8       	ldi	r24, 0x8B	; 139
+     88c:	89 e6       	ldi	r24, 0x69	; 105
      88e:	92 e0       	ldi	r25, 0x02	; 2
      890:	0e 94 53 03 	call	0x6a6	; 0x6a6 <_ZN9LCDScreen9setCursorEhh>
   lcd.print(msg);
      894:	be 01       	movw	r22, r28
-     896:	8b e8       	ldi	r24, 0x8B	; 139
+     896:	89 e6       	ldi	r24, 0x69	; 105
      898:	92 e0       	ldi	r25, 0x02	; 2
      89a:	0e 94 91 01 	call	0x322	; 0x322 <_ZN5Print5printEPKc>
 }
@@ -1514,11 +1514,11 @@ void getTrackList() {
   */
   char ASCIIcount = 65;
   files = 0;
-     8a8:	10 92 9b 02 	sts	0x029B, r1	; 0x80029b <files>
+     8a8:	10 92 79 02 	sts	0x0279, r1	; 0x800279 <files>
   
   fname_temp[0] = ASCIIcount;
      8ac:	81 e4       	ldi	r24, 0x41	; 65
-     8ae:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     8ae:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
   
   uint8_t arrIndex = 0;
      8b2:	c0 e0       	ldi	r28, 0x00	; 0
@@ -1542,9 +1542,9 @@ void getTrackList() {
       break;
     }
     if (SD.exists(fname_temp)) {
-     8be:	63 e9       	ldi	r22, 0x93	; 147
+     8be:	61 e7       	ldi	r22, 0x71	; 113
      8c0:	72 e0       	ldi	r23, 0x02	; 2
-     8c2:	8b ea       	ldi	r24, 0xAB	; 171
+     8c2:	89 e8       	ldi	r24, 0x89	; 137
      8c4:	92 e0       	ldi	r25, 0x02	; 2
      8c6:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
      8ca:	88 23       	and	r24, r24
@@ -1552,14 +1552,14 @@ void getTrackList() {
       tracks[arrIndex++] = fname_temp[0];
      8ce:	ec 2f       	mov	r30, r28
      8d0:	f0 e0       	ldi	r31, 0x00	; 0
-     8d2:	80 91 93 02 	lds	r24, 0x0293	; 0x800293 <fname_temp>
-     8d6:	e4 56       	subi	r30, 0x64	; 100
+     8d2:	80 91 71 02 	lds	r24, 0x0271	; 0x800271 <fname_temp>
+     8d6:	e6 58       	subi	r30, 0x86	; 134
      8d8:	fd 4f       	sbci	r31, 0xFD	; 253
      8da:	80 83       	st	Z, r24
       files++;
-     8dc:	80 91 9b 02 	lds	r24, 0x029B	; 0x80029b <files>
+     8dc:	80 91 79 02 	lds	r24, 0x0279	; 0x800279 <files>
      8e0:	8f 5f       	subi	r24, 0xFF	; 255
-     8e2:	80 93 9b 02 	sts	0x029B, r24	; 0x80029b <files>
+     8e2:	80 93 79 02 	sts	0x0279, r24	; 0x800279 <files>
   while (true) {
     if (arrIndex == maxFiles || ASCIIcount == 91) {
       break;
@@ -1571,7 +1571,7 @@ void getTrackList() {
     }
 	fname_temp[0] = ++ASCIIcount;
      8e8:	df 5f       	subi	r29, 0xFF	; 255
-     8ea:	d0 93 93 02 	sts	0x0293, r29	; 0x800293 <fname_temp>
+     8ea:	d0 93 71 02 	sts	0x0271, r29	; 0x800271 <fname_temp>
   files = 0;
   
   fname_temp[0] = ASCIIcount;
@@ -1590,7 +1590,7 @@ void getTrackList() {
     tracks[i] = '_';
      8f4:	ec 2f       	mov	r30, r28
      8f6:	f0 e0       	ldi	r31, 0x00	; 0
-     8f8:	e4 56       	subi	r30, 0x64	; 100
+     8f8:	e6 58       	subi	r30, 0x86	; 134
      8fa:	fd 4f       	sbci	r31, 0xFD	; 253
      8fc:	8f e5       	ldi	r24, 0x5F	; 95
      8fe:	80 83       	st	Z, r24
@@ -1616,26 +1616,26 @@ void nextTrack() {
      Checks tracks in order and returns the next track
   */
   fcount++;
-     90a:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+     90a:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
      90e:	ef 5f       	subi	r30, 0xFF	; 255
-     910:	e0 93 9a 02 	sts	0x029A, r30	; 0x80029a <fcount>
+     910:	e0 93 78 02 	sts	0x0278, r30	; 0x800278 <fcount>
   if (tracks[fcount] == '_') {
      914:	f0 e0       	ldi	r31, 0x00	; 0
-     916:	e4 56       	subi	r30, 0x64	; 100
+     916:	e6 58       	subi	r30, 0x86	; 134
      918:	fd 4f       	sbci	r31, 0xFD	; 253
      91a:	80 81       	ld	r24, Z
      91c:	8f 35       	cpi	r24, 0x5F	; 95
      91e:	11 f4       	brne	.+4      	; 0x924 <_Z9nextTrackv+0x1a>
     fcount = 0;
-     920:	10 92 9a 02 	sts	0x029A, r1	; 0x80029a <fcount>
+     920:	10 92 78 02 	sts	0x0278, r1	; 0x800278 <fcount>
   }
   fname_temp[0] = tracks[fcount];
-     924:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+     924:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
      928:	f0 e0       	ldi	r31, 0x00	; 0
-     92a:	e4 56       	subi	r30, 0x64	; 100
+     92a:	e6 58       	subi	r30, 0x86	; 134
      92c:	fd 4f       	sbci	r31, 0xFD	; 253
      92e:	80 81       	ld	r24, Z
-     930:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     930:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
      934:	08 95       	ret
 
 00000936 <_Z13previousTrackv>:
@@ -1645,28 +1645,28 @@ void previousTrack() {
      Checks tracks in order and returns the previous track
   */
   if (fcount == 0) {
-     936:	80 91 9a 02 	lds	r24, 0x029A	; 0x80029a <fcount>
+     936:	80 91 78 02 	lds	r24, 0x0278	; 0x800278 <fcount>
      93a:	81 11       	cpse	r24, r1
      93c:	06 c0       	rjmp	.+12     	; 0x94a <_Z13previousTrackv+0x14>
     fcount = files - 1;
-     93e:	80 91 9b 02 	lds	r24, 0x029B	; 0x80029b <files>
+     93e:	80 91 79 02 	lds	r24, 0x0279	; 0x800279 <files>
      942:	81 50       	subi	r24, 0x01	; 1
-     944:	80 93 9a 02 	sts	0x029A, r24	; 0x80029a <fcount>
+     944:	80 93 78 02 	sts	0x0278, r24	; 0x800278 <fcount>
      948:	03 c0       	rjmp	.+6      	; 0x950 <_Z13previousTrackv+0x1a>
   }
   else
   {
     fcount--;
      94a:	81 50       	subi	r24, 0x01	; 1
-     94c:	80 93 9a 02 	sts	0x029A, r24	; 0x80029a <fcount>
+     94c:	80 93 78 02 	sts	0x0278, r24	; 0x800278 <fcount>
   }
   fname_temp[0] = tracks[fcount];
-     950:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+     950:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
      954:	f0 e0       	ldi	r31, 0x00	; 0
-     956:	e4 56       	subi	r30, 0x64	; 100
+     956:	e6 58       	subi	r30, 0x86	; 134
      958:	fd 4f       	sbci	r31, 0xFD	; 253
      95a:	80 81       	ld	r24, Z
-     95c:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     95c:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
      960:	08 95       	ret
 
 00000962 <_Z15checkDuplicatesv>:
@@ -1681,7 +1681,7 @@ void checkDuplicates() {
 
   fname_temp[0] = count;
      964:	81 e4       	ldi	r24, 0x41	; 65
-     966:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     966:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
 
 void checkDuplicates() {
 
@@ -1693,16 +1693,16 @@ void checkDuplicates() {
   fname_temp[0] = count;
   while (true) {
     if (SD.exists(fname_temp)) {
-     96c:	63 e9       	ldi	r22, 0x93	; 147
+     96c:	61 e7       	ldi	r22, 0x71	; 113
      96e:	72 e0       	ldi	r23, 0x02	; 2
-     970:	8b ea       	ldi	r24, 0xAB	; 171
+     970:	89 e8       	ldi	r24, 0x89	; 137
      972:	92 e0       	ldi	r25, 0x02	; 2
      974:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
      978:	88 23       	and	r24, r24
      97a:	21 f0       	breq	.+8      	; 0x984 <_Z15checkDuplicatesv+0x22>
 	  fname_temp[0] = ++count;
      97c:	cf 5f       	subi	r28, 0xFF	; 255
-     97e:	c0 93 93 02 	sts	0x0293, r28	; 0x800293 <fname_temp>
+     97e:	c0 93 71 02 	sts	0x0271, r28	; 0x800271 <fname_temp>
   /*This function checks if the new file to be made is existing,
     if does it generates a new name for the file*/
   char count = 65;
@@ -1723,20 +1723,20 @@ void checkDuplicates() {
 
 void deleteTrack(){
 	SD.remove(fname_temp);
-     988:	63 e9       	ldi	r22, 0x93	; 147
+     988:	61 e7       	ldi	r22, 0x71	; 113
      98a:	72 e0       	ldi	r23, 0x02	; 2
-     98c:	8b ea       	ldi	r24, 0xAB	; 171
+     98c:	89 e8       	ldi	r24, 0x89	; 137
      98e:	92 e0       	ldi	r25, 0x02	; 2
      990:	0e 94 ef 11 	call	0x23de	; 0x23de <_ZN5SDLib7SDClass6removeEPKc>
 
 	fname_temp[0] = 'S';fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
-     994:	e3 e9       	ldi	r30, 0x93	; 147
+     994:	e1 e7       	ldi	r30, 0x71	; 113
      996:	f2 e0       	ldi	r31, 0x02	; 2
      998:	83 e5       	ldi	r24, 0x53	; 83
      99a:	80 83       	st	Z, r24
-     99c:	a0 91 9a 02 	lds	r26, 0x029A	; 0x80029a <fcount>
+     99c:	a0 91 78 02 	lds	r26, 0x0278	; 0x800278 <fcount>
      9a0:	b0 e0       	ldi	r27, 0x00	; 0
-     9a2:	a4 56       	subi	r26, 0x64	; 100
+     9a2:	a6 58       	subi	r26, 0x86	; 134
      9a4:	bd 4f       	sbci	r27, 0xFD	; 253
      9a6:	8c 91       	ld	r24, X
      9a8:	81 83       	std	Z+1, r24	; 0x01
@@ -1750,72 +1750,72 @@ void deleteTrack(){
      9b8:	85 83       	std	Z+5, r24	; 0x05
 	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
      9ba:	bf 01       	movw	r22, r30
-     9bc:	8b ea       	ldi	r24, 0xAB	; 171
+     9bc:	89 e8       	ldi	r24, 0x89	; 137
      9be:	92 e0       	ldi	r25, 0x02	; 2
      9c0:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
      9c4:	88 23       	and	r24, r24
      9c6:	31 f0       	breq	.+12     	; 0x9d4 <_Z11deleteTrackv+0x4c>
-     9c8:	63 e9       	ldi	r22, 0x93	; 147
+     9c8:	61 e7       	ldi	r22, 0x71	; 113
      9ca:	72 e0       	ldi	r23, 0x02	; 2
-     9cc:	8b ea       	ldi	r24, 0xAB	; 171
+     9cc:	89 e8       	ldi	r24, 0x89	; 137
      9ce:	92 e0       	ldi	r25, 0x02	; 2
      9d0:	0e 94 ef 11 	call	0x23de	; 0x23de <_ZN5SDLib7SDClass6removeEPKc>
 	fname_temp[0] = 'H';
      9d4:	88 e4       	ldi	r24, 0x48	; 72
-     9d6:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     9d6:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
 	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
-     9da:	63 e9       	ldi	r22, 0x93	; 147
+     9da:	61 e7       	ldi	r22, 0x71	; 113
      9dc:	72 e0       	ldi	r23, 0x02	; 2
-     9de:	8b ea       	ldi	r24, 0xAB	; 171
+     9de:	89 e8       	ldi	r24, 0x89	; 137
      9e0:	92 e0       	ldi	r25, 0x02	; 2
      9e2:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
      9e6:	88 23       	and	r24, r24
      9e8:	31 f0       	breq	.+12     	; 0x9f6 <_Z11deleteTrackv+0x6e>
-     9ea:	63 e9       	ldi	r22, 0x93	; 147
+     9ea:	61 e7       	ldi	r22, 0x71	; 113
      9ec:	72 e0       	ldi	r23, 0x02	; 2
-     9ee:	8b ea       	ldi	r24, 0xAB	; 171
+     9ee:	89 e8       	ldi	r24, 0x89	; 137
      9f0:	92 e0       	ldi	r25, 0x02	; 2
      9f2:	0e 94 ef 11 	call	0x23de	; 0x23de <_ZN5SDLib7SDClass6removeEPKc>
 	fname_temp[0] = 'L';
      9f6:	8c e4       	ldi	r24, 0x4C	; 76
-     9f8:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     9f8:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
 	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
-     9fc:	63 e9       	ldi	r22, 0x93	; 147
+     9fc:	61 e7       	ldi	r22, 0x71	; 113
      9fe:	72 e0       	ldi	r23, 0x02	; 2
-     a00:	8b ea       	ldi	r24, 0xAB	; 171
+     a00:	89 e8       	ldi	r24, 0x89	; 137
      a02:	92 e0       	ldi	r25, 0x02	; 2
      a04:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
      a08:	88 23       	and	r24, r24
      a0a:	31 f0       	breq	.+12     	; 0xa18 <_Z11deleteTrackv+0x90>
-     a0c:	63 e9       	ldi	r22, 0x93	; 147
+     a0c:	61 e7       	ldi	r22, 0x71	; 113
      a0e:	72 e0       	ldi	r23, 0x02	; 2
-     a10:	8b ea       	ldi	r24, 0xAB	; 171
+     a10:	89 e8       	ldi	r24, 0x89	; 137
      a12:	92 e0       	ldi	r25, 0x02	; 2
      a14:	0e 94 ef 11 	call	0x23de	; 0x23de <_ZN5SDLib7SDClass6removeEPKc>
 	fname_temp[0] = 'B';
      a18:	82 e4       	ldi	r24, 0x42	; 66
-     a1a:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+     a1a:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
 	if(SD.exists(fname_temp)){SD.remove(fname_temp);}
-     a1e:	63 e9       	ldi	r22, 0x93	; 147
+     a1e:	61 e7       	ldi	r22, 0x71	; 113
      a20:	72 e0       	ldi	r23, 0x02	; 2
-     a22:	8b ea       	ldi	r24, 0xAB	; 171
+     a22:	89 e8       	ldi	r24, 0x89	; 137
      a24:	92 e0       	ldi	r25, 0x02	; 2
      a26:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
      a2a:	88 23       	and	r24, r24
      a2c:	31 f0       	breq	.+12     	; 0xa3a <_Z11deleteTrackv+0xb2>
-     a2e:	63 e9       	ldi	r22, 0x93	; 147
+     a2e:	61 e7       	ldi	r22, 0x71	; 113
      a30:	72 e0       	ldi	r23, 0x02	; 2
-     a32:	8b ea       	ldi	r24, 0xAB	; 171
+     a32:	89 e8       	ldi	r24, 0x89	; 137
      a34:	92 e0       	ldi	r25, 0x02	; 2
      a36:	0e 94 ef 11 	call	0x23de	; 0x23de <_ZN5SDLib7SDClass6removeEPKc>
 		
 	fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';fname_temp[5] = NULL;
-     a3a:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+     a3a:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
      a3e:	f0 e0       	ldi	r31, 0x00	; 0
-     a40:	e4 56       	subi	r30, 0x64	; 100
+     a40:	e6 58       	subi	r30, 0x86	; 134
      a42:	fd 4f       	sbci	r31, 0xFD	; 253
      a44:	80 81       	ld	r24, Z
-     a46:	e3 e9       	ldi	r30, 0x93	; 147
+     a46:	e1 e7       	ldi	r30, 0x71	; 113
      a48:	f2 e0       	ldi	r31, 0x02	; 2
      a4a:	80 83       	st	Z, r24
      a4c:	8e e2       	ldi	r24, 0x2E	; 46
@@ -1857,7 +1857,7 @@ void makeWaveFile(File sFile) {
   sFile.write((uint8_t*)"RIFF    WAVEfmt ", 16);//Starting bytes of the wave header file
      a7a:	40 e1       	ldi	r20, 0x10	; 16
      a7c:	50 e0       	ldi	r21, 0x00	; 0
-     a7e:	67 eb       	ldi	r22, 0xB7	; 183
+     a7e:	65 e9       	ldi	r22, 0x95	; 149
      a80:	71 e0       	ldi	r23, 0x01	; 1
      a82:	0e 94 29 0d 	call	0x1a52	; 0x1a52 <_ZN5SDLib4File5writeEPKhj>
   uint8_t chunk[] = {16, 0, 0, 0, 1, 0, 1, 0, lower_Byte(sampleRate), higher_Byte(sampleRate)};
@@ -1920,7 +1920,7 @@ void makeWaveFile(File sFile) {
   sFile.write((uint8_t*)"data    ", 8);
      ad4:	48 e0       	ldi	r20, 0x08	; 8
      ad6:	50 e0       	ldi	r21, 0x00	; 0
-     ad8:	68 ec       	ldi	r22, 0xC8	; 200
+     ad8:	66 ea       	ldi	r22, 0xA6	; 166
      ada:	71 e0       	ldi	r23, 0x01	; 1
      adc:	c8 01       	movw	r24, r16
      ade:	0e 94 29 0d 	call	0x1a52	; 0x1a52 <_ZN5SDLib4File5writeEPKhj>
@@ -2065,9 +2065,9 @@ void sig_freqShift(char tempName[]) {
 		
 		File out = SD.open("temp.bin", FILE_WRITE);
      bc8:	27 e1       	ldi	r18, 0x17	; 23
-     bca:	41 ed       	ldi	r20, 0xD1	; 209
+     bca:	4f ea       	ldi	r20, 0xAF	; 175
      bcc:	51 e0       	ldi	r21, 0x01	; 1
-     bce:	6b ea       	ldi	r22, 0xAB	; 171
+     bce:	69 e8       	ldi	r22, 0x89	; 137
      bd0:	72 e0       	ldi	r23, 0x02	; 2
      bd2:	ce 01       	movw	r24, r28
      bd4:	01 96       	adiw	r24, 0x01	; 1
@@ -2075,7 +2075,7 @@ void sig_freqShift(char tempName[]) {
 		File target = SD.open(tempName, FILE_READ);
      bda:	21 e0       	ldi	r18, 0x01	; 1
      bdc:	a8 01       	movw	r20, r16
-     bde:	6b ea       	ldi	r22, 0xAB	; 171
+     bde:	69 e8       	ldi	r22, 0x89	; 137
      be0:	72 e0       	ldi	r23, 0x02	; 2
      be2:	ce 01       	movw	r24, r28
      be4:	4c 96       	adiw	r24, 0x1c	; 28
@@ -2241,7 +2241,7 @@ void sig_freqShift(char tempName[]) {
      cc6:	08 95       	ret
 
 00000cc8 <_Z8convolvePiPchi>:
-			convolve(filter,tempName,14,250);
+			convolve(filter,tempName,12,1000);
 		}
 	}
 }
@@ -2327,14 +2327,14 @@ void convolve(int filter[],char tempName[],uint8_t filterlen,int divider) {
      d42:	0e 94 ea 0d 	call	0x1bd4	; 0x1bd4 <_ZN5SDLib4FileC1Ev>
 			
 	if(fname_temp[0]=='S'){target = SD.open("temp.bin", FILE_READ);}
-     d46:	80 91 93 02 	lds	r24, 0x0293	; 0x800293 <fname_temp>
+     d46:	80 91 71 02 	lds	r24, 0x0271	; 0x800271 <fname_temp>
      d4a:	83 35       	cpi	r24, 0x53	; 83
      d4c:	09 f0       	breq	.+2      	; 0xd50 <_Z8convolvePiPchi+0x88>
      d4e:	4f c0       	rjmp	.+158    	; 0xdee <_Z8convolvePiPchi+0x126>
      d50:	21 e0       	ldi	r18, 0x01	; 1
-     d52:	41 ed       	ldi	r20, 0xD1	; 209
+     d52:	4f ea       	ldi	r20, 0xAF	; 175
      d54:	51 e0       	ldi	r21, 0x01	; 1
-     d56:	6b ea       	ldi	r22, 0xAB	; 171
+     d56:	69 e8       	ldi	r22, 0x89	; 137
      d58:	72 e0       	ldi	r23, 0x02	; 2
      d5a:	ce 01       	movw	r24, r28
      d5c:	8e 5a       	subi	r24, 0xAE	; 174
@@ -2430,7 +2430,7 @@ namespace SDLib {
 	else{target = SD.open(tempName, FILE_READ);}
      dee:	21 e0       	ldi	r18, 0x01	; 1
      df0:	a6 01       	movw	r20, r12
-     df2:	6b ea       	ldi	r22, 0xAB	; 171
+     df2:	69 e8       	ldi	r22, 0x89	; 137
      df4:	72 e0       	ldi	r23, 0x02	; 2
      df6:	ce 01       	movw	r24, r28
      df8:	c7 96       	adiw	r24, 0x37	; 55
@@ -2501,9 +2501,9 @@ namespace SDLib {
      e7c:	d0 40       	sbci	r29, 0x00	; 0
 	File out = SD.open(fname_temp, FILE_WRITE);	
      e7e:	27 e1       	ldi	r18, 0x17	; 23
-     e80:	43 e9       	ldi	r20, 0x93	; 147
+     e80:	41 e7       	ldi	r20, 0x71	; 113
      e82:	52 e0       	ldi	r21, 0x02	; 2
-     e84:	6b ea       	ldi	r22, 0xAB	; 171
+     e84:	69 e8       	ldi	r22, 0x89	; 137
      e86:	72 e0       	ldi	r23, 0x02	; 2
      e88:	ce 01       	movw	r24, r28
      e8a:	8d 52       	subi	r24, 0x2D	; 45
@@ -2541,7 +2541,7 @@ namespace SDLib {
      ecc:	9d a3       	std	Y+37, r25	; 0x25
      ece:	ae a3       	std	Y+38, r26	; 0x26
      ed0:	bf a3       	std	Y+39, r27	; 0x27
-     ed2:	84 e5       	ldi	r24, 0x54	; 84
+     ed2:	82 e3       	ldi	r24, 0x32	; 50
      ed4:	92 e0       	ldi	r25, 0x02	; 2
      ed6:	9d 8f       	std	Y+29, r25	; 0x1d
      ed8:	8c 8f       	std	Y+28, r24	; 0x1c
@@ -2968,7 +2968,7 @@ namespace SDLib {
     11ce:	9a 87       	std	Y+10, r25	; 0x0a
     11d0:	ab 87       	std	Y+11, r26	; 0x0b
     11d2:	bc 87       	std	Y+12, r27	; 0x0c
-    11d4:	84 e5       	ldi	r24, 0x54	; 84
+    11d4:	82 e3       	ldi	r24, 0x32	; 50
     11d6:	92 e0       	ldi	r25, 0x02	; 2
     11d8:	9a 83       	std	Y+2, r25	; 0x02
     11da:	89 83       	std	Y+1, r24	; 0x01
@@ -3013,16 +3013,16 @@ namespace SDLib {
     121c:	0e 94 66 0e 	call	0x1ccc	; 0x1ccc <_ZN5SDLib4File5closeEv>
 			
 	if(SD.exists("temp.bin")){SD.remove("temp.bin");}	
-    1220:	61 ed       	ldi	r22, 0xD1	; 209
+    1220:	6f ea       	ldi	r22, 0xAF	; 175
     1222:	71 e0       	ldi	r23, 0x01	; 1
-    1224:	8b ea       	ldi	r24, 0xAB	; 171
+    1224:	89 e8       	ldi	r24, 0x89	; 137
     1226:	92 e0       	ldi	r25, 0x02	; 2
     1228:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
     122c:	88 23       	and	r24, r24
     122e:	31 f0       	breq	.+12     	; 0x123c <_Z8convolvePiPchi+0x574>
-    1230:	61 ed       	ldi	r22, 0xD1	; 209
+    1230:	6f ea       	ldi	r22, 0xAF	; 175
     1232:	71 e0       	ldi	r23, 0x01	; 1
-    1234:	8b ea       	ldi	r24, 0xAB	; 171
+    1234:	89 e8       	ldi	r24, 0x89	; 137
     1236:	92 e0       	ldi	r25, 0x02	; 2
     1238:	0e 94 ef 11 	call	0x23de	; 0x23de <_ZN5SDLib7SDClass6removeEPKc>
 }
@@ -3075,7 +3075,7 @@ void pickFilter(char M){
     1288:	df 93       	push	r29
     128a:	cd b7       	in	r28, 0x3d	; 61
     128c:	de b7       	in	r29, 0x3e	; 62
-    128e:	ea 97       	sbiw	r28, 0x3a	; 58
+    128e:	6e 97       	sbiw	r28, 0x1e	; 30
     1290:	0f b6       	in	r0, 0x3f	; 63
     1292:	f8 94       	cli
     1294:	de bf       	out	0x3e, r29	; 62
@@ -3099,14 +3099,14 @@ void pickFilter(char M){
     12b4:	9c 83       	std	Y+4, r25	; 0x04
     12b6:	86 e5       	ldi	r24, 0x56	; 86
     12b8:	8d 83       	std	Y+5, r24	; 0x05
-    12ba:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+    12ba:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
     12be:	f0 e0       	ldi	r31, 0x00	; 0
-    12c0:	e4 56       	subi	r30, 0x64	; 100
+    12c0:	e6 58       	subi	r30, 0x86	; 134
     12c2:	fd 4f       	sbci	r31, 0xFD	; 253
     12c4:	40 81       	ld	r20, Z
     12c6:	49 83       	std	Y+1, r20	; 0x01
 	fname_temp[0] = M;fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
-    12c8:	e3 e9       	ldi	r30, 0x93	; 147
+    12c8:	e1 e7       	ldi	r30, 0x71	; 113
     12ca:	f2 e0       	ldi	r31, 0x02	; 2
     12cc:	10 83       	st	Z, r17
     12ce:	41 83       	std	Z+1, r20	; 0x01
@@ -3117,7 +3117,7 @@ void pickFilter(char M){
 	
 	if(!SD.exists(fname_temp)){
     12d8:	bf 01       	movw	r22, r30
-    12da:	8b ea       	ldi	r24, 0xAB	; 171
+    12da:	89 e8       	ldi	r24, 0x89	; 137
     12dc:	92 e0       	ldi	r25, 0x02	; 2
     12de:	0e 94 e3 11 	call	0x23c6	; 0x23c6 <_ZN5SDLib7SDClass6existsEPKc>
     12e2:	81 11       	cpse	r24, r1
@@ -3127,8 +3127,9 @@ void pickFilter(char M){
     12e8:	11 f0       	breq	.+4      	; 0x12ee <_Z10pickFilterc+0x6a>
     12ea:	18 34       	cpi	r17, 0x48	; 72
     12ec:	29 f5       	brne	.+74     	; 0x1338 <_Z10pickFilterc+0xb4>
-			//int filter[14] =	{3,-10,-30,-58,-103,-199,-637,637,199,103,58,30,10,-3};//rectangular 14
-			int filter[11] ={-36,-70,-103,-131,-150,823,-150,-131,-103,-70,-36};//rect 1000fc 
+
+			//int filter[11] ={-18,-47,-83,-121,-148,833,-148,-121,-83,-47,-18};//kaiser 100fc beta1.8
+			int filter[11] =	{-18,-46,-83,-120,-148,834,-148,-120,-83,-46,-18};//kaiser 1000fc beta1.84
     12ee:	86 e1       	ldi	r24, 0x16	; 22
     12f0:	e9 e3       	ldi	r30, 0x39	; 57
     12f2:	f1 e0       	ldi	r31, 0x01	; 1
@@ -3145,9 +3146,9 @@ void pickFilter(char M){
     1304:	ce 01       	movw	r24, r28
     1306:	01 96       	adiw	r24, 0x01	; 1
     1308:	0e 94 d4 05 	call	0xba8	; 0xba8 <_Z13sig_freqShiftPc>
-				convolve(filter,tempName,11,1000);
-    130c:	28 ee       	ldi	r18, 0xE8	; 232
-    130e:	33 e0       	ldi	r19, 0x03	; 3
+				convolve(filter,tempName,11,500);
+    130c:	24 ef       	ldi	r18, 0xF4	; 244
+    130e:	31 e0       	ldi	r19, 0x01	; 1
     1310:	4b e0       	ldi	r20, 0x0B	; 11
     1312:	be 01       	movw	r22, r28
     1314:	6f 5f       	subi	r22, 0xFF	; 255
@@ -3176,8 +3177,10 @@ void pickFilter(char M){
 		else if(M=='B'){
     1338:	12 34       	cpi	r17, 0x42	; 66
     133a:	a1 f4       	brne	.+40     	; 0x1364 <_Z10pickFilterc+0xe0>
-			int filter[26] ={0,0,0,5,19,29,10,-44,-106,-121,-50,77,181,181,77,-50,-121,-106,-44,10,29,19,5,0,0,0};//bandpass Bar-hann
-    133c:	84 e3       	ldi	r24, 0x34	; 52
+			//int filter[26] ={0,0,0,5,19,29,10,-44,-106,-121,-50,77,181,181,77,-50,-121,-106,-44,10,29,19,5,0,0,0};//bandpass Bar-hann 
+			//int filter[15] ={14,-10,-71,-127,-107,12,164,233,164,12,-107,-127,-71,-10,14};//kaiser beta3 good
+			int filter[11] =	{-69,-128,-109,13,170,242,170,13,-109,-128,-69};//kaiser beta1.9
+    133c:	86 e1       	ldi	r24, 0x16	; 22
     133e:	ef e4       	ldi	r30, 0x4F	; 79
     1340:	f1 e0       	ldi	r31, 0x01	; 1
     1342:	de 01       	movw	r26, r28
@@ -3186,11 +3189,10 @@ void pickFilter(char M){
     1348:	0d 92       	st	X+, r0
     134a:	8a 95       	dec	r24
     134c:	e1 f7       	brne	.-8      	; 0x1346 <_Z10pickFilterc+0xc2>
-			//int filter[11] =	{-112,-153,-106,11,132,183,132,11,-106,-153,-112};//KAISER
-			convolve(filter,tempName,26,500);		
+			convolve(filter,tempName,11,500);		
     134e:	24 ef       	ldi	r18, 0xF4	; 244
     1350:	31 e0       	ldi	r19, 0x01	; 1
-    1352:	4a e1       	ldi	r20, 0x1A	; 26
+    1352:	4b e0       	ldi	r20, 0x0B	; 11
     1354:	be 01       	movw	r22, r28
     1356:	6f 5f       	subi	r22, 0xFF	; 255
     1358:	7f 4f       	sbci	r23, 0xFF	; 255
@@ -3202,9 +3204,10 @@ void pickFilter(char M){
 		else if(M=='L'){
     1364:	1c 34       	cpi	r17, 0x4C	; 76
     1366:	99 f4       	brne	.+38     	; 0x138e <_Z10pickFilterc+0x10a>
-			int filter[14] ={66,68,70,72,73,74,74,74,74,73,72,70,68,66};
-    1368:	8c e1       	ldi	r24, 0x1C	; 28
-    136a:	e3 e8       	ldi	r30, 0x83	; 131
+			//int filter[14] ={66,68,70,72,73,74,74,74,74,73,72,70,68,66};
+			int filter[12] =	{37,57,77,96,111,119,119,111,96,77,57,37};//KAISER BETA=-2
+    1368:	88 e1       	ldi	r24, 0x18	; 24
+    136a:	e5 e6       	ldi	r30, 0x65	; 101
     136c:	f1 e0       	ldi	r31, 0x01	; 1
     136e:	de 01       	movw	r26, r28
     1370:	17 96       	adiw	r26, 0x07	; 7
@@ -3212,10 +3215,10 @@ void pickFilter(char M){
     1374:	0d 92       	st	X+, r0
     1376:	8a 95       	dec	r24
     1378:	e1 f7       	brne	.-8      	; 0x1372 <_Z10pickFilterc+0xee>
-			convolve(filter,tempName,14,250);
-    137a:	2a ef       	ldi	r18, 0xFA	; 250
-    137c:	30 e0       	ldi	r19, 0x00	; 0
-    137e:	4e e0       	ldi	r20, 0x0E	; 14
+			convolve(filter,tempName,12,1000);
+    137a:	28 ee       	ldi	r18, 0xE8	; 232
+    137c:	33 e0       	ldi	r19, 0x03	; 3
+    137e:	4c e0       	ldi	r20, 0x0C	; 12
     1380:	be 01       	movw	r22, r28
     1382:	6f 5f       	subi	r22, 0xFF	; 255
     1384:	7f 4f       	sbci	r23, 0xFF	; 255
@@ -3225,7 +3228,7 @@ void pickFilter(char M){
 		}
 	}
 }
-    138e:	ea 96       	adiw	r28, 0x3a	; 58
+    138e:	6e 96       	adiw	r28, 0x1e	; 30
     1390:	0f b6       	in	r0, 0x3f	; 63
     1392:	f8 94       	cli
     1394:	de bf       	out	0x3e, r29	; 62
@@ -3256,7 +3259,7 @@ void checkChanges() {
      This function checks for frequency change requirements
   */
 	clrDisplay("SCL M");
-    13b4:	8a ed       	ldi	r24, 0xDA	; 218
+    13b4:	88 eb       	ldi	r24, 0xB8	; 184
     13b6:	91 e0       	ldi	r25, 0x01	; 1
     13b8:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 	
@@ -3413,7 +3416,7 @@ void checkChanges() {
 	
 	if(fshift!='X'){
 		  clrDisplay("Processing");
-    143a:	80 ee       	ldi	r24, 0xE0	; 224
+    143a:	8e eb       	ldi	r24, 0xBE	; 190
     143c:	91 e0       	ldi	r25, 0x01	; 1
     143e:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 		  pickFilter(fshift);
@@ -3457,15 +3460,15 @@ void playTrack()
   checkChanges();//check for frequency change requirements
     1474:	0e 94 d1 09 	call	0x13a2	; 0x13a2 <_Z12checkChangesv>
 clrDisplay("Playing");
-    1478:	8b ee       	ldi	r24, 0xEB	; 235
+    1478:	89 ec       	ldi	r24, 0xC9	; 201
     147a:	91 e0       	ldi	r25, 0x01	; 1
     147c:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 
   File test_File = SD.open(fname_temp);
     1480:	21 e0       	ldi	r18, 0x01	; 1
-    1482:	43 e9       	ldi	r20, 0x93	; 147
+    1482:	41 e7       	ldi	r20, 0x71	; 113
     1484:	52 e0       	ldi	r21, 0x02	; 2
-    1486:	6b ea       	ldi	r22, 0xAB	; 171
+    1486:	69 e8       	ldi	r22, 0x89	; 137
     1488:	72 e0       	ldi	r23, 0x02	; 2
     148a:	ce 01       	movw	r24, r28
     148c:	01 96       	adiw	r24, 0x01	; 1
@@ -3479,7 +3482,7 @@ clrDisplay("Playing");
     149c:	0e c0       	rjmp	.+28     	; 0x14ba <_Z9playTrackv+0x5c>
     // if the file didn't open, print an error:
     secondLine("Error");
-    149e:	83 ef       	ldi	r24, 0xF3	; 243
+    149e:	81 ed       	ldi	r24, 0xD1	; 209
     14a0:	91 e0       	ldi	r25, 0x01	; 1
     14a2:	0e 94 41 04 	call	0x882	; 0x882 <_Z10secondLinePKc>
 	#else
@@ -3511,7 +3514,7 @@ clrDisplay("Playing");
     14c6:	0e 94 08 0e 	call	0x1c10	; 0x1c10 <_ZN5SDLib4File4seekEm>
     
     secondLine(fname_temp);
-    14ca:	83 e9       	ldi	r24, 0x93	; 147
+    14ca:	81 e7       	ldi	r24, 0x71	; 113
     14cc:	92 e0       	ldi	r25, 0x02	; 2
     14ce:	0e 94 41 04 	call	0x882	; 0x882 <_Z10secondLinePKc>
 
@@ -3633,7 +3636,7 @@ clrDisplay("Playing");
     155e:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
     1562:	10 92 88 00 	sts	0x0088, r1	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
     secondLine("End of play");
-    1566:	89 ef       	ldi	r24, 0xF9	; 249
+    1566:	87 ed       	ldi	r24, 0xD7	; 215
     1568:	91 e0       	ldi	r25, 0x01	; 1
     156a:	0e 94 41 04 	call	0x882	; 0x882 <_Z10secondLinePKc>
     test_File.close();
@@ -3659,12 +3662,12 @@ clrDisplay("Playing");
   }
   _delay_ms(1000);
    fname_temp[0] = tracks[fcount];fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';fname_temp[5] = NULL;
-    1588:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+    1588:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
     158c:	f0 e0       	ldi	r31, 0x00	; 0
-    158e:	e4 56       	subi	r30, 0x64	; 100
+    158e:	e6 58       	subi	r30, 0x86	; 134
     1590:	fd 4f       	sbci	r31, 0xFD	; 253
     1592:	80 81       	ld	r24, Z
-    1594:	e3 e9       	ldi	r30, 0x93	; 147
+    1594:	e1 e7       	ldi	r30, 0x71	; 113
     1596:	f2 e0       	ldi	r31, 0x02	; 2
     1598:	80 83       	st	Z, r24
     159a:	8e e2       	ldi	r24, 0x2E	; 46
@@ -3748,9 +3751,9 @@ void record() {
     1604:	0e 94 b1 04 	call	0x962	; 0x962 <_Z15checkDuplicatesv>
 	  File test_File = SD.open(fname_temp, FILE_WRITE);
     1608:	27 e1       	ldi	r18, 0x17	; 23
-    160a:	43 e9       	ldi	r20, 0x93	; 147
+    160a:	41 e7       	ldi	r20, 0x71	; 113
     160c:	52 e0       	ldi	r21, 0x02	; 2
-    160e:	6b ea       	ldi	r22, 0xAB	; 171
+    160e:	69 e8       	ldi	r22, 0x89	; 137
     1610:	72 e0       	ldi	r23, 0x02	; 2
     1612:	ce 01       	movw	r24, r28
     1614:	c7 96       	adiw	r24, 0x37	; 55
@@ -3763,15 +3766,15 @@ void record() {
     1622:	81 11       	cpse	r24, r1
     1624:	05 c0       	rjmp	.+10     	; 0x1630 <_Z6recordv+0x44>
 		clrDisplay("Error");
-    1626:	83 ef       	ldi	r24, 0xF3	; 243
+    1626:	81 ed       	ldi	r24, 0xD1	; 209
     1628:	91 e0       	ldi	r25, 0x01	; 1
     162a:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     162e:	80 c0       	rjmp	.+256    	; 0x1730 <_Z6recordv+0x144>
 	  }
 	  else {
 		clrDisplay("Recording");
-    1630:	85 e0       	ldi	r24, 0x05	; 5
-    1632:	92 e0       	ldi	r25, 0x02	; 2
+    1630:	83 ee       	ldi	r24, 0xE3	; 227
+    1632:	91 e0       	ldi	r25, 0x01	; 1
     1634:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     1638:	89 ad       	ldd	r24, Y+57	; 0x39
     163a:	9a ad       	ldd	r25, Y+58	; 0x3a
@@ -3795,7 +3798,7 @@ void record() {
     165e:	9d a3       	std	Y+37, r25	; 0x25
     1660:	ae a3       	std	Y+38, r26	; 0x26
     1662:	bf a3       	std	Y+39, r27	; 0x27
-    1664:	84 e5       	ldi	r24, 0x54	; 84
+    1664:	82 e3       	ldi	r24, 0x32	; 50
     1666:	92 e0       	ldi	r25, 0x02	; 2
     1668:	9d 8f       	std	Y+29, r25	; 0x1d
     166a:	8c 8f       	std	Y+28, r24	; 0x1c
@@ -3876,7 +3879,7 @@ void record() {
     16e0:	9a 87       	std	Y+10, r25	; 0x0a
     16e2:	ab 87       	std	Y+11, r26	; 0x0b
     16e4:	bc 87       	std	Y+12, r27	; 0x0c
-    16e6:	84 e5       	ldi	r24, 0x54	; 84
+    16e6:	82 e3       	ldi	r24, 0x32	; 50
     16e8:	92 e0       	ldi	r25, 0x02	; 2
     16ea:	9a 83       	std	Y+2, r25	; 0x02
     16ec:	89 83       	std	Y+1, r24	; 0x01
@@ -3904,8 +3907,8 @@ void record() {
     1710:	01 96       	adiw	r24, 0x01	; 1
     1712:	0e 94 7c 05 	call	0xaf8	; 0xaf8 <_Z12finalizeWaveN5SDLib4FileE>
 		clrDisplay("Saved");
-    1716:	8f e0       	ldi	r24, 0x0F	; 15
-    1718:	92 e0       	ldi	r25, 0x02	; 2
+    1716:	8d ee       	ldi	r24, 0xED	; 237
+    1718:	91 e0       	ldi	r25, 0x01	; 1
     171a:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 	#else
 		//round up by default
@@ -4071,7 +4074,7 @@ int main(void)
 	//sei();
 
 	fname_temp[1] = '.';fname_temp[2] = 'W';fname_temp[3] = 'A';fname_temp[4] = 'V';
-    17c8:	e3 e9       	ldi	r30, 0x93	; 147
+    17c8:	e1 e7       	ldi	r30, 0x71	; 113
     17ca:	f2 e0       	ldi	r31, 0x02	; 2
     17cc:	8e e2       	ldi	r24, 0x2E	; 46
     17ce:	81 83       	std	Z+1, r24	; 0x01
@@ -4108,21 +4111,21 @@ int main(void)
 	
 	//BEGIN THE LCD
 	lcd.begin();
-    17f6:	8b e8       	ldi	r24, 0x8B	; 139
+    17f6:	89 e6       	ldi	r24, 0x69	; 105
     17f8:	92 e0       	ldi	r25, 0x02	; 2
     17fa:	0e 94 94 03 	call	0x728	; 0x728 <_ZN9LCDScreen5beginEv>
 	
 	//INITIALIZING THE SD CARD
 	if (!SD.begin(sdcard))
     17fe:	6a e0       	ldi	r22, 0x0A	; 10
-    1800:	8b ea       	ldi	r24, 0xAB	; 171
+    1800:	89 e8       	ldi	r24, 0x89	; 137
     1802:	92 e0       	ldi	r25, 0x02	; 2
     1804:	0e 94 a6 0f 	call	0x1f4c	; 0x1f4c <_ZN5SDLib7SDClass5beginEh>
     1808:	81 11       	cpse	r24, r1
     180a:	05 c0       	rjmp	.+10     	; 0x1816 <main+0x52>
 	{
 		clrDisplay("Error");
-    180c:	83 ef       	ldi	r24, 0xF3	; 243
+    180c:	81 ed       	ldi	r24, 0xD1	; 209
     180e:	91 e0       	ldi	r25, 0x01	; 1
     1810:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     1814:	ff cf       	rjmp	.-2      	; 0x1814 <main+0x50>
@@ -4184,7 +4187,7 @@ int main(void)
 			  Press 'record/stop' in track loaded mode to exit player mode
 			*/
 			if (files == 0)
-    1866:	80 91 9b 02 	lds	r24, 0x029B	; 0x80029b <files>
+    1866:	80 91 79 02 	lds	r24, 0x0279	; 0x800279 <files>
     186a:	81 11       	cpse	r24, r1
     186c:	11 c0       	rjmp	.+34     	; 0x1890 <main+0xcc>
 			{
@@ -4192,8 +4195,8 @@ int main(void)
     186e:	8a e6       	ldi	r24, 0x6A	; 106
     1870:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <mode_>
 			  clrDisplay("No Tracks");
-    1874:	85 e1       	ldi	r24, 0x15	; 21
-    1876:	92 e0       	ldi	r25, 0x02	; 2
+    1874:	83 ef       	ldi	r24, 0xF3	; 243
+    1876:	91 e0       	ldi	r25, 0x01	; 1
     1878:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     187c:	2f ef       	ldi	r18, 0xFF	; 255
     187e:	83 ed       	ldi	r24, 0xD3	; 211
@@ -4210,8 +4213,8 @@ int main(void)
 			else
 			{
 				clrDisplay("Ready to Play");
-    1890:	8f e1       	ldi	r24, 0x1F	; 31
-    1892:	92 e0       	ldi	r25, 0x02	; 2
+    1890:	8d ef       	ldi	r24, 0xFD	; 253
+    1892:	91 e0       	ldi	r25, 0x01	; 1
     1894:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     1898:	2f ef       	ldi	r18, 0xFF	; 255
     189a:	83 ed       	ldi	r24, 0xD3	; 211
@@ -4226,14 +4229,14 @@ int main(void)
 			  _delay_ms(1000);
 			  
 			  fname_temp[0] = tracks[fcount];
-    18aa:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+    18aa:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
     18ae:	f0 e0       	ldi	r31, 0x00	; 0
-    18b0:	e4 56       	subi	r30, 0x64	; 100
+    18b0:	e6 58       	subi	r30, 0x86	; 134
     18b2:	fd 4f       	sbci	r31, 0xFD	; 253
     18b4:	80 81       	ld	r24, Z
-    18b6:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+    18b6:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
 			  secondLine(fname_temp);
-    18ba:	83 e9       	ldi	r24, 0x93	; 147
+    18ba:	81 e7       	ldi	r24, 0x71	; 113
     18bc:	92 e0       	ldi	r25, 0x02	; 2
     18be:	0e 94 41 04 	call	0x882	; 0x882 <_Z10secondLinePKc>
 			}
@@ -4267,8 +4270,8 @@ int main(void)
     18dc:	0e 94 2f 0a 	call	0x145e	; 0x145e <_Z9playTrackv>
 			  
 			  clrDisplay("Ready to Play");
-    18e0:	8f e1       	ldi	r24, 0x1F	; 31
-    18e2:	92 e0       	ldi	r25, 0x02	; 2
+    18e0:	8d ef       	ldi	r24, 0xFD	; 253
+    18e2:	91 e0       	ldi	r25, 0x01	; 1
     18e4:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     18e8:	69 c0       	rjmp	.+210    	; 0x19bc <main+0x1f8>
 
@@ -4311,7 +4314,7 @@ int main(void)
 			{
 						  //This mode deletes the track loaded in payer
 						  clrDisplay("Delete?");
-    1916:	8d e2       	ldi	r24, 0x2D	; 45
+    1916:	8b e0       	ldi	r24, 0x0B	; 11
     1918:	92 e0       	ldi	r25, 0x02	; 2
     191a:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 						  //secondLine("DELETE");
@@ -4327,20 +4330,20 @@ int main(void)
 								  deleteTrack();
     1926:	0e 94 c4 04 	call	0x988	; 0x988 <_Z11deleteTrackv>
 								  clrDisplay("Deleted");
-    192a:	89 e3       	ldi	r24, 0x39	; 57
+    192a:	87 e1       	ldi	r24, 0x17	; 23
     192c:	92 e0       	ldi	r25, 0x02	; 2
     192e:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 								  getTrackList();
     1932:	0e 94 52 04 	call	0x8a4	; 0x8a4 <_Z12getTrackListv>
 								  
 								  if(fcount == files){
-    1936:	80 91 9a 02 	lds	r24, 0x029A	; 0x80029a <fcount>
-    193a:	90 91 9b 02 	lds	r25, 0x029B	; 0x80029b <files>
+    1936:	80 91 78 02 	lds	r24, 0x0278	; 0x800278 <fcount>
+    193a:	90 91 79 02 	lds	r25, 0x0279	; 0x800279 <files>
     193e:	89 13       	cpse	r24, r25
     1940:	03 c0       	rjmp	.+6      	; 0x1948 <main+0x184>
 									  fcount--;
     1942:	81 50       	subi	r24, 0x01	; 1
-    1944:	80 93 9a 02 	sts	0x029A, r24	; 0x80029a <fcount>
+    1944:	80 93 78 02 	sts	0x0278, r24	; 0x800278 <fcount>
     1948:	2f ef       	ldi	r18, 0xFF	; 255
     194a:	83 ed       	ldi	r24, 0xD3	; 211
     194c:	90 e3       	ldi	r25, 0x30	; 48
@@ -4361,7 +4364,7 @@ int main(void)
     195e:	f9 f6       	brne	.-66     	; 0x191e <main+0x15a>
 							  {
 								  clrDisplay("Not Deleted");
-    1960:	85 e3       	ldi	r24, 0x35	; 53
+    1960:	83 e1       	ldi	r24, 0x13	; 19
     1962:	92 e0       	ldi	r25, 0x02	; 2
     1964:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     1968:	2f ef       	ldi	r18, 0xFF	; 255
@@ -4379,13 +4382,13 @@ int main(void)
 						  }
 
 						  if (files == 0)
-    197a:	80 91 9b 02 	lds	r24, 0x029B	; 0x80029b <files>
+    197a:	80 91 79 02 	lds	r24, 0x0279	; 0x800279 <files>
     197e:	81 11       	cpse	r24, r1
     1980:	11 c0       	rjmp	.+34     	; 0x19a4 <main+0x1e0>
 						  {
 							  clrDisplay("No Tracks");
-    1982:	85 e1       	ldi	r24, 0x15	; 21
-    1984:	92 e0       	ldi	r25, 0x02	; 2
+    1982:	83 ef       	ldi	r24, 0xF3	; 243
+    1984:	91 e0       	ldi	r25, 0x01	; 1
     1986:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
     198a:	2f ef       	ldi	r18, 0xFF	; 255
     198c:	83 ed       	ldi	r24, 0xD3	; 211
@@ -4404,21 +4407,21 @@ int main(void)
 						  }
 						  else{
 							  clrDisplay("Ready to Play");
-    19a4:	8f e1       	ldi	r24, 0x1F	; 31
-    19a6:	92 e0       	ldi	r25, 0x02	; 2
+    19a4:	8d ef       	ldi	r24, 0xFD	; 253
+    19a6:	91 e0       	ldi	r25, 0x01	; 1
     19a8:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 
 							  fname_temp[0] = tracks[fcount];
-    19ac:	e0 91 9a 02 	lds	r30, 0x029A	; 0x80029a <fcount>
+    19ac:	e0 91 78 02 	lds	r30, 0x0278	; 0x800278 <fcount>
     19b0:	f0 e0       	ldi	r31, 0x00	; 0
-    19b2:	e4 56       	subi	r30, 0x64	; 100
+    19b2:	e6 58       	subi	r30, 0x86	; 134
     19b4:	fd 4f       	sbci	r31, 0xFD	; 253
     19b6:	80 81       	ld	r24, Z
-    19b8:	80 93 93 02 	sts	0x0293, r24	; 0x800293 <fname_temp>
+    19b8:	80 93 71 02 	sts	0x0271, r24	; 0x800271 <fname_temp>
 						  }
 			}
 			secondLine(fname_temp);
-    19bc:	83 e9       	ldi	r24, 0x93	; 147
+    19bc:	81 e7       	ldi	r24, 0x71	; 113
     19be:	92 e0       	ldi	r25, 0x02	; 2
     19c0:	0e 94 41 04 	call	0x882	; 0x882 <_Z10secondLinePKc>
 			mode = 'i';
@@ -4437,7 +4440,7 @@ int main(void)
     19dc:	27 cf       	rjmp	.-434    	; 0x182c <main+0x68>
 		  {
 			clrDisplay("Voice Recorder");
-    19de:	81 e4       	ldi	r24, 0x41	; 65
+    19de:	8f e1       	ldi	r24, 0x1F	; 31
     19e0:	92 e0       	ldi	r25, 0x02	; 2
     19e2:	0e 94 2c 04 	call	0x858	; 0x858 <_Z10clrDisplayPKc>
 			while (1)
@@ -4678,7 +4681,7 @@ boolean File::isDirectory(void) {
     1b8a:	9d 83       	std	Y+5, r25	; 0x05
     1b8c:	ae 83       	std	Y+6, r26	; 0x06
     1b8e:	bf 83       	std	Y+7, r27	; 0x07
-    1b90:	84 e5       	ldi	r24, 0x54	; 84
+    1b90:	82 e3       	ldi	r24, 0x32	; 50
     1b92:	92 e0       	ldi	r25, 0x02	; 2
     1b94:	99 83       	std	Y+1, r25	; 0x01
     1b96:	88 83       	st	Y, r24
@@ -4723,7 +4726,7 @@ boolean File::isDirectory(void) {
     1be4:	95 83       	std	Z+5, r25	; 0x05
     1be6:	a6 83       	std	Z+6, r26	; 0x06
     1be8:	b7 83       	std	Z+7, r27	; 0x07
-    1bea:	84 e5       	ldi	r24, 0x54	; 84
+    1bea:	82 e3       	ldi	r24, 0x32	; 50
     1bec:	92 e0       	ldi	r25, 0x02	; 2
     1bee:	91 83       	std	Z+1, r25	; 0x01
     1bf0:	80 83       	st	Z, r24
@@ -5017,7 +5020,7 @@ File::operator bool() {
     1d14:	6f 3f       	cpi	r22, 0xFF	; 255
     1d16:	7f 4f       	sbci	r23, 0xFF	; 255
     1d18:	b1 f4       	brne	.+44     	; 0x1d46 <_Z41__static_initialization_and_destruction_0ii+0x36>
-    1d1a:	eb ea       	ldi	r30, 0xAB	; 171
+    1d1a:	e9 e8       	ldi	r30, 0x89	; 137
     1d1c:	f2 e0       	ldi	r31, 0x02	; 2
     1d1e:	15 82       	std	Z+5, r1	; 0x05
     1d20:	16 82       	std	Z+6, r1	; 0x06
@@ -5034,7 +5037,7 @@ File::operator bool() {
     1d36:	13 a2       	std	Z+35, r1	; 0x23
     1d38:	15 a6       	std	Z+45, r1	; 0x2d
     1d3a:	14 a6       	std	Z+44, r1	; 0x2c
-    1d3c:	88 e6       	ldi	r24, 0x68	; 104
+    1d3c:	86 e4       	ldi	r24, 0x46	; 70
     1d3e:	92 e0       	ldi	r25, 0x02	; 2
     1d40:	93 a7       	std	Z+43, r25	; 0x2b
     1d42:	82 a7       	std	Z+42, r24	; 0x2a
@@ -5056,7 +5059,7 @@ File::operator bool() {
     1d5e:	ab 01       	movw	r20, r22
     1d60:	1c 82       	std	Y+4, r1	; 0x04
     1d62:	1b 82       	std	Y+3, r1	; 0x03
-    1d64:	28 e6       	ldi	r18, 0x68	; 104
+    1d64:	26 e4       	ldi	r18, 0x46	; 70
     1d66:	32 e0       	ldi	r19, 0x02	; 2
     1d68:	3a 83       	std	Y+2, r19	; 0x02
     1d6a:	29 83       	std	Y+1, r18	; 0x01
@@ -5191,7 +5194,7 @@ File::operator bool() {
     1e66:	59 01       	movw	r10, r18
     1e68:	1c 82       	std	Y+4, r1	; 0x04
     1e6a:	1b 82       	std	Y+3, r1	; 0x03
-    1e6c:	88 e6       	ldi	r24, 0x68	; 104
+    1e6c:	86 e4       	ldi	r24, 0x46	; 70
     1e6e:	92 e0       	ldi	r25, 0x02	; 2
     1e70:	9a 83       	std	Y+2, r25	; 0x02
     1e72:	89 83       	std	Y+1, r24	; 0x01
@@ -5385,7 +5388,7 @@ File::operator bool() {
     1ff6:	29 01       	movw	r4, r18
     1ff8:	1c 82       	std	Y+4, r1	; 0x04
     1ffa:	1b 82       	std	Y+3, r1	; 0x03
-    1ffc:	88 e6       	ldi	r24, 0x68	; 104
+    1ffc:	86 e4       	ldi	r24, 0x46	; 70
     1ffe:	92 e0       	ldi	r25, 0x02	; 2
     2000:	9a 83       	std	Y+2, r25	; 0x02
     2002:	89 83       	std	Y+1, r24	; 0x01
@@ -5456,7 +5459,7 @@ File::operator bool() {
     208e:	f4 01       	movw	r30, r8
     2090:	13 82       	std	Z+3, r1	; 0x03
     2092:	12 82       	std	Z+2, r1	; 0x02
-    2094:	88 e6       	ldi	r24, 0x68	; 104
+    2094:	86 e4       	ldi	r24, 0x46	; 70
     2096:	92 e0       	ldi	r25, 0x02	; 2
     2098:	91 83       	std	Z+1, r25	; 0x01
     209a:	80 83       	st	Z, r24
@@ -5477,7 +5480,7 @@ File::operator bool() {
     20ba:	f2 01       	movw	r30, r4
     20bc:	f1 82       	std	Z+1, r15	; 0x01
     20be:	e0 82       	st	Z, r14
-    20c0:	83 ea       	ldi	r24, 0xA3	; 163
+    20c0:	81 e8       	ldi	r24, 0x81	; 129
     20c2:	91 e0       	ldi	r25, 0x01	; 1
     20c4:	f4 01       	movw	r30, r8
     20c6:	91 83       	std	Z+1, r25	; 0x01
@@ -5488,7 +5491,7 @@ File::operator bool() {
     20d0:	f4 01       	movw	r30, r8
     20d2:	93 83       	std	Z+3, r25	; 0x03
     20d4:	82 83       	std	Z+2, r24	; 0x02
-    20d6:	88 e6       	ldi	r24, 0x68	; 104
+    20d6:	86 e4       	ldi	r24, 0x46	; 70
     20d8:	92 e0       	ldi	r25, 0x02	; 2
     20da:	91 83       	std	Z+1, r25	; 0x01
     20dc:	80 83       	st	Z, r24
@@ -5626,7 +5629,7 @@ File::operator bool() {
     21e2:	21 97       	sbiw	r28, 0x01	; 1
     21e4:	99 a3       	std	Y+33, r25	; 0x21
     21e6:	88 a3       	std	Y+32, r24	; 0x20
-    21e8:	88 e6       	ldi	r24, 0x68	; 104
+    21e8:	86 e4       	ldi	r24, 0x46	; 70
     21ea:	92 e0       	ldi	r25, 0x02	; 2
     21ec:	9f 8f       	std	Y+31, r25	; 0x1f
     21ee:	8e 8f       	std	Y+30, r24	; 0x1e
@@ -5698,7 +5701,7 @@ File::operator bool() {
     2272:	6a 97       	sbiw	r28, 0x1a	; 26
     2274:	9a af       	std	Y+58, r25	; 0x3a
     2276:	89 af       	std	Y+57, r24	; 0x39
-    2278:	42 e6       	ldi	r20, 0x62	; 98
+    2278:	40 e4       	ldi	r20, 0x40	; 64
     227a:	52 e0       	ldi	r21, 0x02	; 2
     227c:	be 01       	movw	r22, r28
     227e:	62 5e       	subi	r22, 0xE2	; 226
@@ -5710,7 +5713,7 @@ File::operator bool() {
     228c:	1f ae       	std	Y+63, r1	; 0x3f
     228e:	1e ae       	std	Y+62, r1	; 0x3e
     2290:	6e 97       	sbiw	r28, 0x1e	; 30
-    2292:	88 e6       	ldi	r24, 0x68	; 104
+    2292:	86 e4       	ldi	r24, 0x46	; 70
     2294:	92 e0       	ldi	r25, 0x02	; 2
     2296:	6c 96       	adiw	r28, 0x1c	; 28
     2298:	9f af       	std	Y+63, r25	; 0x3f
@@ -5764,7 +5767,7 @@ File::operator bool() {
     2302:	6e 97       	sbiw	r28, 0x1e	; 30
     2304:	9c 83       	std	Y+4, r25	; 0x04
     2306:	8b 83       	std	Y+3, r24	; 0x03
-    2308:	88 e6       	ldi	r24, 0x68	; 104
+    2308:	86 e4       	ldi	r24, 0x46	; 70
     230a:	92 e0       	ldi	r25, 0x02	; 2
     230c:	9a 83       	std	Y+2, r25	; 0x02
     230e:	89 83       	std	Y+1, r24	; 0x01
@@ -5928,7 +5931,7 @@ fail:
     2426:	6f 3f       	cpi	r22, 0xFF	; 255
     2428:	7f 4f       	sbci	r23, 0xFF	; 255
     242a:	29 f4       	brne	.+10     	; 0x2436 <_Z41__static_initialization_and_destruction_0ii+0x14>
-    242c:	e5 ef       	ldi	r30, 0xF5	; 245
+    242c:	e3 ed       	ldi	r30, 0xD3	; 211
     242e:	f2 e0       	ldi	r31, 0x02	; 2
     2430:	80 e5       	ldi	r24, 0x50	; 80
     2432:	80 83       	st	Z, r24
@@ -5940,52 +5943,52 @@ fail:
     243a:	fc 01       	movw	r30, r24
     243c:	84 81       	ldd	r24, Z+4	; 0x04
     243e:	0e 94 a2 02 	call	0x544	; 0x544 <digitalWrite>
-    2442:	80 91 f4 02 	lds	r24, 0x02F4	; 0x8002f4 <_ZL20chip_select_asserted>
+    2442:	80 91 d2 02 	lds	r24, 0x02D2	; 0x8002d2 <_ZL20chip_select_asserted>
     2446:	88 23       	and	r24, r24
     2448:	a1 f0       	breq	.+40     	; 0x2472 <_ZN7Sd2Card14chipSelectHighEv+0x3a>
-    244a:	10 92 f4 02 	sts	0x02F4, r1	; 0x8002f4 <_ZL20chip_select_asserted>
-    244e:	80 91 02 05 	lds	r24, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    244a:	10 92 d2 02 	sts	0x02D2, r1	; 0x8002d2 <_ZL20chip_select_asserted>
+    244e:	80 91 e0 04 	lds	r24, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     2452:	88 23       	and	r24, r24
     2454:	71 f0       	breq	.+28     	; 0x2472 <_ZN7Sd2Card14chipSelectHighEv+0x3a>
     2456:	9f b7       	in	r25, 0x3f	; 63
     2458:	f8 94       	cli
-    245a:	80 91 02 05 	lds	r24, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    245a:	80 91 e0 04 	lds	r24, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     245e:	81 30       	cpi	r24, 0x01	; 1
     2460:	29 f4       	brne	.+10     	; 0x246c <_ZN7Sd2Card14chipSelectHighEv+0x34>
-    2462:	80 91 00 05 	lds	r24, 0x0500	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    2462:	80 91 de 04 	lds	r24, 0x04DE	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     2466:	8d bb       	out	0x1d, r24	; 29
     2468:	9f bf       	out	0x3f, r25	; 63
     246a:	08 95       	ret
-    246c:	80 91 00 05 	lds	r24, 0x0500	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    246c:	80 91 de 04 	lds	r24, 0x04DE	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     2470:	8f bf       	out	0x3f, r24	; 63
     2472:	08 95       	ret
 
 00002474 <_ZN7Sd2Card13chipSelectLowEv>:
-    2474:	20 91 f4 02 	lds	r18, 0x02F4	; 0x8002f4 <_ZL20chip_select_asserted>
+    2474:	20 91 d2 02 	lds	r18, 0x02D2	; 0x8002d2 <_ZL20chip_select_asserted>
     2478:	21 11       	cpse	r18, r1
     247a:	20 c0       	rjmp	.+64     	; 0x24bc <_ZN7Sd2Card13chipSelectLowEv+0x48>
     247c:	21 e0       	ldi	r18, 0x01	; 1
-    247e:	20 93 f4 02 	sts	0x02F4, r18	; 0x8002f4 <_ZL20chip_select_asserted>
-    2482:	30 91 f5 02 	lds	r19, 0x02F5	; 0x8002f5 <_ZL8settings>
-    2486:	20 91 f6 02 	lds	r18, 0x02F6	; 0x8002f6 <_ZL8settings+0x1>
-    248a:	40 91 02 05 	lds	r20, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    247e:	20 93 d2 02 	sts	0x02D2, r18	; 0x8002d2 <_ZL20chip_select_asserted>
+    2482:	30 91 d3 02 	lds	r19, 0x02D3	; 0x8002d3 <_ZL8settings>
+    2486:	20 91 d4 02 	lds	r18, 0x02D4	; 0x8002d4 <_ZL8settings+0x1>
+    248a:	40 91 e0 04 	lds	r20, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     248e:	44 23       	and	r20, r20
     2490:	99 f0       	breq	.+38     	; 0x24b8 <_ZN7Sd2Card13chipSelectLowEv+0x44>
     2492:	4f b7       	in	r20, 0x3f	; 63
     2494:	f8 94       	cli
-    2496:	50 91 02 05 	lds	r21, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    2496:	50 91 e0 04 	lds	r21, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     249a:	51 30       	cpi	r21, 0x01	; 1
     249c:	59 f4       	brne	.+22     	; 0x24b4 <_ZN7Sd2Card13chipSelectLowEv+0x40>
     249e:	5d b3       	in	r21, 0x1d	; 29
-    24a0:	50 93 00 05 	sts	0x0500, r21	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    24a0:	50 93 de 04 	sts	0x04DE, r21	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     24a4:	6d b3       	in	r22, 0x1d	; 29
-    24a6:	50 91 01 05 	lds	r21, 0x0501	; 0x800501 <_ZN8SPIClass13interruptMaskE>
+    24a6:	50 91 df 04 	lds	r21, 0x04DF	; 0x8004df <_ZN8SPIClass13interruptMaskE>
     24aa:	50 95       	com	r21
     24ac:	56 23       	and	r21, r22
     24ae:	5d bb       	out	0x1d, r21	; 29
     24b0:	4f bf       	out	0x3f, r20	; 63
     24b2:	02 c0       	rjmp	.+4      	; 0x24b8 <_ZN7Sd2Card13chipSelectLowEv+0x44>
-    24b4:	40 93 00 05 	sts	0x0500, r20	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    24b4:	40 93 de 04 	sts	0x04DE, r20	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     24b8:	3c bd       	out	0x2c, r19	; 44
     24ba:	2d bd       	out	0x2d, r18	; 45
     24bc:	60 e0       	ldi	r22, 0x00	; 0
@@ -6043,38 +6046,38 @@ fail:
     2522:	21 f1       	breq	.+72     	; 0x256c <_ZN7Sd2Card10setSckRateEh+0x70>
     2524:	2a c0       	rjmp	.+84     	; 0x257a <_ZN7Sd2Card10setSckRateEh+0x7e>
     2526:	80 e5       	ldi	r24, 0x50	; 80
-    2528:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
+    2528:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
     252c:	81 e0       	ldi	r24, 0x01	; 1
-    252e:	80 93 f6 02 	sts	0x02F6, r24	; 0x8002f6 <_ZL8settings+0x1>
+    252e:	80 93 d4 02 	sts	0x02D4, r24	; 0x8002d4 <_ZL8settings+0x1>
     2532:	08 95       	ret
     2534:	80 e5       	ldi	r24, 0x50	; 80
-    2536:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
-    253a:	10 92 f6 02 	sts	0x02F6, r1	; 0x8002f6 <_ZL8settings+0x1>
+    2536:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
+    253a:	10 92 d4 02 	sts	0x02D4, r1	; 0x8002d4 <_ZL8settings+0x1>
     253e:	81 e0       	ldi	r24, 0x01	; 1
     2540:	08 95       	ret
     2542:	81 e5       	ldi	r24, 0x51	; 81
-    2544:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
+    2544:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
     2548:	81 e0       	ldi	r24, 0x01	; 1
-    254a:	80 93 f6 02 	sts	0x02F6, r24	; 0x8002f6 <_ZL8settings+0x1>
+    254a:	80 93 d4 02 	sts	0x02D4, r24	; 0x8002d4 <_ZL8settings+0x1>
     254e:	08 95       	ret
     2550:	81 e5       	ldi	r24, 0x51	; 81
-    2552:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
-    2556:	10 92 f6 02 	sts	0x02F6, r1	; 0x8002f6 <_ZL8settings+0x1>
+    2552:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
+    2556:	10 92 d4 02 	sts	0x02D4, r1	; 0x8002d4 <_ZL8settings+0x1>
     255a:	81 e0       	ldi	r24, 0x01	; 1
     255c:	08 95       	ret
     255e:	82 e5       	ldi	r24, 0x52	; 82
-    2560:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
+    2560:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
     2564:	81 e0       	ldi	r24, 0x01	; 1
-    2566:	80 93 f6 02 	sts	0x02F6, r24	; 0x8002f6 <_ZL8settings+0x1>
+    2566:	80 93 d4 02 	sts	0x02D4, r24	; 0x8002d4 <_ZL8settings+0x1>
     256a:	08 95       	ret
     256c:	82 e5       	ldi	r24, 0x52	; 82
-    256e:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
-    2572:	10 92 f6 02 	sts	0x02F6, r1	; 0x8002f6 <_ZL8settings+0x1>
+    256e:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
+    2572:	10 92 d4 02 	sts	0x02D4, r1	; 0x8002d4 <_ZL8settings+0x1>
     2576:	81 e0       	ldi	r24, 0x01	; 1
     2578:	08 95       	ret
     257a:	83 e5       	ldi	r24, 0x53	; 83
-    257c:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
-    2580:	10 92 f6 02 	sts	0x02F6, r1	; 0x8002f6 <_ZL8settings+0x1>
+    257c:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
+    2580:	10 92 d4 02 	sts	0x02D4, r1	; 0x8002d4 <_ZL8settings+0x1>
     2584:	81 e0       	ldi	r24, 0x01	; 1
     2586:	08 95       	ret
 
@@ -6207,26 +6210,26 @@ fail:
     2692:	0e 94 a2 02 	call	0x544	; 0x544 <digitalWrite>
     2696:	0e 94 59 23 	call	0x46b2	; 0x46b2 <_ZN8SPIClass5beginEv>
     269a:	82 e5       	ldi	r24, 0x52	; 82
-    269c:	80 93 f5 02 	sts	0x02F5, r24	; 0x8002f5 <_ZL8settings>
-    26a0:	10 92 f6 02 	sts	0x02F6, r1	; 0x8002f6 <_ZL8settings+0x1>
-    26a4:	80 91 02 05 	lds	r24, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    269c:	80 93 d3 02 	sts	0x02D3, r24	; 0x8002d3 <_ZL8settings>
+    26a0:	10 92 d4 02 	sts	0x02D4, r1	; 0x8002d4 <_ZL8settings+0x1>
+    26a4:	80 91 e0 04 	lds	r24, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     26a8:	88 23       	and	r24, r24
     26aa:	99 f0       	breq	.+38     	; 0x26d2 <_ZN7Sd2Card4initEhh+0x74>
     26ac:	8f b7       	in	r24, 0x3f	; 63
     26ae:	f8 94       	cli
-    26b0:	90 91 02 05 	lds	r25, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    26b0:	90 91 e0 04 	lds	r25, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     26b4:	91 30       	cpi	r25, 0x01	; 1
     26b6:	59 f4       	brne	.+22     	; 0x26ce <_ZN7Sd2Card4initEhh+0x70>
     26b8:	9d b3       	in	r25, 0x1d	; 29
-    26ba:	90 93 00 05 	sts	0x0500, r25	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    26ba:	90 93 de 04 	sts	0x04DE, r25	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     26be:	2d b3       	in	r18, 0x1d	; 29
-    26c0:	90 91 01 05 	lds	r25, 0x0501	; 0x800501 <_ZN8SPIClass13interruptMaskE>
+    26c0:	90 91 df 04 	lds	r25, 0x04DF	; 0x8004df <_ZN8SPIClass13interruptMaskE>
     26c4:	90 95       	com	r25
     26c6:	92 23       	and	r25, r18
     26c8:	9d bb       	out	0x1d, r25	; 29
     26ca:	8f bf       	out	0x3f, r24	; 63
     26cc:	02 c0       	rjmp	.+4      	; 0x26d2 <_ZN7Sd2Card4initEhh+0x74>
-    26ce:	80 93 00 05 	sts	0x0500, r24	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    26ce:	80 93 de 04 	sts	0x04DE, r24	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     26d2:	82 e5       	ldi	r24, 0x52	; 82
     26d4:	8c bd       	out	0x2c, r24	; 44
     26d6:	1d bc       	out	0x2d, r1	; 45
@@ -6238,19 +6241,19 @@ fail:
     26e2:	0e 94 02 12 	call	0x2404	; 0x2404 <_ZL7spiSendh>
     26e6:	f3 94       	inc	r15
     26e8:	f8 cf       	rjmp	.-16     	; 0x26da <_ZN7Sd2Card4initEhh+0x7c>
-    26ea:	80 91 02 05 	lds	r24, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    26ea:	80 91 e0 04 	lds	r24, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     26ee:	88 23       	and	r24, r24
     26f0:	71 f0       	breq	.+28     	; 0x270e <_ZN7Sd2Card4initEhh+0xb0>
     26f2:	9f b7       	in	r25, 0x3f	; 63
     26f4:	f8 94       	cli
-    26f6:	80 91 02 05 	lds	r24, 0x0502	; 0x800502 <_ZN8SPIClass13interruptModeE>
+    26f6:	80 91 e0 04 	lds	r24, 0x04E0	; 0x8004e0 <_ZN8SPIClass13interruptModeE>
     26fa:	81 30       	cpi	r24, 0x01	; 1
     26fc:	29 f4       	brne	.+10     	; 0x2708 <_ZN7Sd2Card4initEhh+0xaa>
-    26fe:	80 91 00 05 	lds	r24, 0x0500	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    26fe:	80 91 de 04 	lds	r24, 0x04DE	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     2702:	8d bb       	out	0x1d, r24	; 29
     2704:	9f bf       	out	0x3f, r25	; 63
     2706:	03 c0       	rjmp	.+6      	; 0x270e <_ZN7Sd2Card4initEhh+0xb0>
-    2708:	80 91 00 05 	lds	r24, 0x0500	; 0x800500 <_ZN8SPIClass13interruptSaveE>
+    2708:	80 91 de 04 	lds	r24, 0x04DE	; 0x8004de <_ZN8SPIClass13interruptSaveE>
     270c:	8f bf       	out	0x3f, r24	; 63
     270e:	ce 01       	movw	r24, r28
     2710:	0e 94 3a 12 	call	0x2474	; 0x2474 <_ZN7Sd2Card13chipSelectLowEv>
@@ -6920,7 +6923,7 @@ uint8_t Sd2Card::isBusy(void) {
     2c50:	82 9f       	mul	r24, r18
     2c52:	c0 01       	movw	r24, r0
     2c54:	11 24       	eor	r1, r1
-    2c56:	80 50       	subi	r24, 0x00	; 0
+    2c56:	82 52       	subi	r24, 0x22	; 34
     2c58:	9d 4f       	sbci	r25, 0xFD	; 253
     2c5a:	02 c0       	rjmp	.+4      	; 0x2c60 <_ZN6SdFile13cacheDirEntryEh+0x2c>
     2c5c:	80 e0       	ldi	r24, 0x00	; 0
@@ -7340,8 +7343,8 @@ uint8_t Sd2Card::isBusy(void) {
     2f98:	92 01       	movw	r18, r4
     2f9a:	ab 01       	movw	r20, r22
     2f9c:	bc 01       	movw	r22, r24
-    2f9e:	80 91 fe 02 	lds	r24, 0x02FE	; 0x8002fe <_ZN8SdVolume7sdCard_E>
-    2fa2:	90 91 ff 02 	lds	r25, 0x02FF	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
+    2f9e:	80 91 dc 02 	lds	r24, 0x02DC	; 0x8002dc <_ZN8SdVolume7sdCard_E>
+    2fa2:	90 91 dd 02 	lds	r25, 0x02DD	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
     2fa6:	0e 94 3c 14 	call	0x2878	; 0x2878 <_ZN7Sd2Card8readDataEmjjPh>
     2faa:	88 23       	and	r24, r24
     2fac:	e1 f1       	breq	.+120    	; 0x3026 <_ZN6SdFile4readEPvj+0x268>
@@ -7353,7 +7356,7 @@ uint8_t Sd2Card::isBusy(void) {
     2fba:	88 23       	and	r24, r24
     2fbc:	b9 f1       	breq	.+110    	; 0x302c <_ZN6SdFile4readEPvj+0x26e>
     2fbe:	82 01       	movw	r16, r4
-    2fc0:	00 50       	subi	r16, 0x00	; 0
+    2fc0:	02 52       	subi	r16, 0x22	; 34
     2fc2:	1d 4f       	sbci	r17, 0xFD	; 253
     2fc4:	1c 83       	std	Y+4, r17	; 0x04
     2fc6:	0b 83       	std	Y+3, r16	; 0x03
@@ -7492,7 +7495,7 @@ uint8_t Sd2Card::isBusy(void) {
     30ce:	ff 9e       	mul	r15, r31
     30d0:	c0 01       	movw	r24, r0
     30d2:	11 24       	eor	r1, r1
-    30d4:	80 50       	subi	r24, 0x00	; 0
+    30d4:	82 52       	subi	r24, 0x22	; 34
     30d6:	9d 4f       	sbci	r25, 0xFD	; 253
     30d8:	05 c0       	rjmp	.+10     	; 0x30e4 <_ZN6SdFile12readDirCacheEv+0x88>
     30da:	80 e0       	ldi	r24, 0x00	; 0
@@ -7717,8 +7720,8 @@ uint8_t Sd2Card::isBusy(void) {
     328c:	ba 8d       	ldd	r27, Y+26	; 0x1a
     328e:	b5 8b       	std	Z+21, r27	; 0x15
     3290:	a4 8b       	std	Z+20, r26	; 0x14
-    3292:	e0 91 f7 02 	lds	r30, 0x02F7	; 0x8002f7 <_ZN6SdFile9dateTime_E>
-    3296:	f0 91 f8 02 	lds	r31, 0x02F8	; 0x8002f8 <_ZN6SdFile9dateTime_E+0x1>
+    3292:	e0 91 d5 02 	lds	r30, 0x02D5	; 0x8002d5 <_ZN6SdFile9dateTime_E>
+    3296:	f0 91 d6 02 	lds	r31, 0x02D6	; 0x8002d6 <_ZN6SdFile9dateTime_E+0x1>
     329a:	30 97       	sbiw	r30, 0x00	; 0
     329c:	59 f0       	breq	.+22     	; 0x32b4 <_ZN6SdFile4syncEh+0x80>
     329e:	b8 01       	movw	r22, r16
@@ -7803,8 +7806,8 @@ uint8_t Sd2Card::isBusy(void) {
     3338:	0e 94 79 18 	call	0x30f2	; 0x30f2 <_ZN6SdFile7seekSetEm>
     333c:	88 23       	and	r24, r24
     333e:	b9 f1       	breq	.+110    	; 0x33ae <_ZN6SdFile17availableForWriteEv+0xba>
-    3340:	80 91 fe 02 	lds	r24, 0x02FE	; 0x8002fe <_ZN8SdVolume7sdCard_E>
-    3344:	90 91 ff 02 	lds	r25, 0x02FF	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
+    3340:	80 91 dc 02 	lds	r24, 0x02DC	; 0x8002dc <_ZN8SdVolume7sdCard_E>
+    3344:	90 91 dd 02 	lds	r25, 0x02DD	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
     3348:	0e 94 6c 15 	call	0x2ad8	; 0x2ad8 <_ZN7Sd2Card6isBusyEv>
     334c:	81 11       	cpse	r24, r1
     334e:	32 c0       	rjmp	.+100    	; 0x33b4 <_ZN6SdFile17availableForWriteEv+0xc0>
@@ -7820,10 +7823,10 @@ uint8_t Sd2Card::isBusy(void) {
     3364:	80 e0       	ldi	r24, 0x00	; 0
     3366:	90 e0       	ldi	r25, 0x00	; 0
     3368:	27 c0       	rjmp	.+78     	; 0x33b8 <_ZN6SdFile17availableForWriteEv+0xc4>
-    336a:	40 91 f9 02 	lds	r20, 0x02F9	; 0x8002f9 <_ZN8SdVolume17cacheMirrorBlock_E>
-    336e:	50 91 fa 02 	lds	r21, 0x02FA	; 0x8002fa <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
-    3372:	60 91 fb 02 	lds	r22, 0x02FB	; 0x8002fb <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
-    3376:	70 91 fc 02 	lds	r23, 0x02FC	; 0x8002fc <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
+    336a:	40 91 d7 02 	lds	r20, 0x02D7	; 0x8002d7 <_ZN8SdVolume17cacheMirrorBlock_E>
+    336e:	50 91 d8 02 	lds	r21, 0x02D8	; 0x8002d8 <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
+    3372:	60 91 d9 02 	lds	r22, 0x02D9	; 0x8002d9 <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
+    3376:	70 91 da 02 	lds	r23, 0x02DA	; 0x8002da <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
     337a:	45 2b       	or	r20, r21
     337c:	46 2b       	or	r20, r22
     337e:	47 2b       	or	r20, r23
@@ -8071,7 +8074,7 @@ uint8_t Sd2Card::isBusy(void) {
     356a:	68 9f       	mul	r22, r24
     356c:	f0 01       	movw	r30, r0
     356e:	11 24       	eor	r1, r1
-    3570:	e0 50       	subi	r30, 0x00	; 0
+    3570:	e2 52       	subi	r30, 0x22	; 34
     3572:	fd 4f       	sbci	r31, 0xFD	; 253
     3574:	93 85       	ldd	r25, Z+11	; 0x0b
     3576:	91 71       	andi	r25, 0x11	; 17
@@ -8321,8 +8324,8 @@ uint8_t Sd2Card::isBusy(void) {
     377a:	43 c0       	rjmp	.+134    	; 0x3802 <_ZN6SdFile4openEPS_PKch+0x1c6>
     377c:	f7 01       	movw	r30, r14
     377e:	12 8a       	std	Z+18, r1	; 0x12
-    3780:	00 e0       	ldi	r16, 0x00	; 0
-    3782:	13 e0       	ldi	r17, 0x03	; 3
+    3780:	0e ed       	ldi	r16, 0xDE	; 222
+    3782:	12 e0       	ldi	r17, 0x02	; 2
     3784:	80 e2       	ldi	r24, 0x20	; 32
     3786:	f8 01       	movw	r30, r16
     3788:	11 92       	st	Z+, r1
@@ -8336,8 +8339,8 @@ uint8_t Sd2Card::isBusy(void) {
     3798:	0d 92       	st	X+, r0
     379a:	8a 95       	dec	r24
     379c:	e1 f7       	brne	.-8      	; 0x3796 <_ZN6SdFile4openEPS_PKch+0x15a>
-    379e:	e0 91 f7 02 	lds	r30, 0x02F7	; 0x8002f7 <_ZN6SdFile9dateTime_E>
-    37a2:	f0 91 f8 02 	lds	r31, 0x02F8	; 0x8002f8 <_ZN6SdFile9dateTime_E+0x1>
+    379e:	e0 91 d5 02 	lds	r30, 0x02D5	; 0x8002d5 <_ZN6SdFile9dateTime_E>
+    37a2:	f0 91 d6 02 	lds	r31, 0x02D6	; 0x8002d6 <_ZN6SdFile9dateTime_E+0x1>
     37a6:	30 97       	sbiw	r30, 0x00	; 0
     37a8:	39 f0       	breq	.+14     	; 0x37b8 <_ZN6SdFile4openEPS_PKch+0x17c>
     37aa:	b8 01       	movw	r22, r16
@@ -8442,7 +8445,7 @@ uint8_t Sd2Card::isBusy(void) {
     3872:	ab 01       	movw	r20, r22
     3874:	1c 82       	std	Y+4, r1	; 0x04
     3876:	1b 82       	std	Y+3, r1	; 0x03
-    3878:	28 e6       	ldi	r18, 0x68	; 104
+    3878:	26 e4       	ldi	r18, 0x46	; 70
     387a:	32 e0       	ldi	r19, 0x02	; 2
     387c:	3a 83       	std	Y+2, r19	; 0x02
     387e:	29 83       	std	Y+1, r18	; 0x01
@@ -8839,8 +8842,8 @@ size_t SdFile::write(const void* buf, uint16_t nbyte) {
     3abc:	97 01       	movw	r18, r14
     3abe:	b3 01       	movw	r22, r6
     3ac0:	a2 01       	movw	r20, r4
-    3ac2:	80 91 fe 02 	lds	r24, 0x02FE	; 0x8002fe <_ZN8SdVolume7sdCard_E>
-    3ac6:	90 91 ff 02 	lds	r25, 0x02FF	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
+    3ac2:	80 91 dc 02 	lds	r24, 0x02DC	; 0x8002dc <_ZN8SdVolume7sdCard_E>
+    3ac6:	90 91 dd 02 	lds	r25, 0x02DD	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
     3aca:	0e 94 0e 15 	call	0x2a1c	; 0x2a1c <_ZN7Sd2Card10writeBlockEmPKhh>
       }
       if (!vol_->writeBlock(block, src, blocking)) {
@@ -8896,9 +8899,9 @@ size_t SdFile::write(const void* buf, uint16_t nbyte) {
     static uint8_t cacheRawBlock(uint32_t blockNumber, uint8_t action);
     static void cacheSetDirty(void) {
       cacheDirty_ |= CACHE_FOR_WRITE;
-    3b20:	80 91 fd 02 	lds	r24, 0x02FD	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3b20:	80 91 db 02 	lds	r24, 0x02DB	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
     3b24:	81 60       	ori	r24, 0x01	; 1
-    3b26:	80 93 fd 02 	sts	0x02FD, r24	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3b26:	80 93 db 02 	sts	0x02DB, r24	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
     3b2a:	08 c0       	rjmp	.+16     	; 0x3b3c <_ZN6SdFile5writeEPKvj+0x290>
         SdVolume::cacheSetDirty();
       } else {
@@ -8916,7 +8919,7 @@ size_t SdFile::write(const void* buf, uint16_t nbyte) {
       }
       uint8_t* dst = SdVolume::cacheBuffer_.data + blockOffset;
     3b3c:	f8 01       	movw	r30, r16
-    3b3e:	e0 50       	subi	r30, 0x00	; 0
+    3b3e:	e2 52       	subi	r30, 0x22	; 34
     3b40:	fd 4f       	sbci	r31, 0xFD	; 253
       uint8_t* end = dst + n;
     3b42:	9f 01       	movw	r18, r30
@@ -9001,8 +9004,8 @@ size_t SdFile::write(const void* buf, uint16_t nbyte) {
     3ba8:	84 83       	std	Z+4, r24	; 0x04
     3baa:	0d c0       	rjmp	.+26     	; 0x3bc6 <_ZN6SdFile5writeEPKvj+0x31a>
   } else if (dateTime_ && nbyte) {
-    3bac:	80 91 f7 02 	lds	r24, 0x02F7	; 0x8002f7 <_ZN6SdFile9dateTime_E>
-    3bb0:	90 91 f8 02 	lds	r25, 0x02F8	; 0x8002f8 <_ZN6SdFile9dateTime_E+0x1>
+    3bac:	80 91 d5 02 	lds	r24, 0x02D5	; 0x8002d5 <_ZN6SdFile9dateTime_E>
+    3bb0:	90 91 d6 02 	lds	r25, 0x02D6	; 0x8002d6 <_ZN6SdFile9dateTime_E+0x1>
     3bb4:	89 2b       	or	r24, r25
     3bb6:	39 f0       	breq	.+14     	; 0x3bc6 <_ZN6SdFile5writeEPKvj+0x31a>
     3bb8:	2d 81       	ldd	r18, Y+5	; 0x05
@@ -9126,10 +9129,10 @@ size_t SdFile::write(uint8_t b) {
 uint8_t SdVolume::cacheMirrorBlockFlush(uint8_t blocking) {
     3c4a:	0f 93       	push	r16
   if (cacheMirrorBlock_) {
-    3c4c:	40 91 f9 02 	lds	r20, 0x02F9	; 0x8002f9 <_ZN8SdVolume17cacheMirrorBlock_E>
-    3c50:	50 91 fa 02 	lds	r21, 0x02FA	; 0x8002fa <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
-    3c54:	60 91 fb 02 	lds	r22, 0x02FB	; 0x8002fb <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
-    3c58:	70 91 fc 02 	lds	r23, 0x02FC	; 0x8002fc <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
+    3c4c:	40 91 d7 02 	lds	r20, 0x02D7	; 0x8002d7 <_ZN8SdVolume17cacheMirrorBlock_E>
+    3c50:	50 91 d8 02 	lds	r21, 0x02D8	; 0x8002d8 <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
+    3c54:	60 91 d9 02 	lds	r22, 0x02D9	; 0x8002d9 <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
+    3c58:	70 91 da 02 	lds	r23, 0x02DA	; 0x8002da <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
     3c5c:	41 15       	cp	r20, r1
     3c5e:	51 05       	cpc	r21, r1
     3c60:	61 05       	cpc	r22, r1
@@ -9137,20 +9140,20 @@ uint8_t SdVolume::cacheMirrorBlockFlush(uint8_t blocking) {
     3c64:	a9 f0       	breq	.+42     	; 0x3c90 <_ZN8SdVolume21cacheMirrorBlockFlushEh+0x46>
     3c66:	08 2f       	mov	r16, r24
     if (!sdCard_->writeBlock(cacheMirrorBlock_, cacheBuffer_.data, blocking)) {
-    3c68:	20 e0       	ldi	r18, 0x00	; 0
-    3c6a:	33 e0       	ldi	r19, 0x03	; 3
-    3c6c:	80 91 fe 02 	lds	r24, 0x02FE	; 0x8002fe <_ZN8SdVolume7sdCard_E>
-    3c70:	90 91 ff 02 	lds	r25, 0x02FF	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
+    3c68:	2e ed       	ldi	r18, 0xDE	; 222
+    3c6a:	32 e0       	ldi	r19, 0x02	; 2
+    3c6c:	80 91 dc 02 	lds	r24, 0x02DC	; 0x8002dc <_ZN8SdVolume7sdCard_E>
+    3c70:	90 91 dd 02 	lds	r25, 0x02DD	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
     3c74:	0e 94 0e 15 	call	0x2a1c	; 0x2a1c <_ZN7Sd2Card10writeBlockEmPKhh>
     3c78:	88 23       	and	r24, r24
     3c7a:	59 f0       	breq	.+22     	; 0x3c92 <_ZN8SdVolume21cacheMirrorBlockFlushEh+0x48>
       return false;
     }
     cacheMirrorBlock_ = 0;
-    3c7c:	10 92 f9 02 	sts	0x02F9, r1	; 0x8002f9 <_ZN8SdVolume17cacheMirrorBlock_E>
-    3c80:	10 92 fa 02 	sts	0x02FA, r1	; 0x8002fa <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
-    3c84:	10 92 fb 02 	sts	0x02FB, r1	; 0x8002fb <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
-    3c88:	10 92 fc 02 	sts	0x02FC, r1	; 0x8002fc <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
+    3c7c:	10 92 d7 02 	sts	0x02D7, r1	; 0x8002d7 <_ZN8SdVolume17cacheMirrorBlock_E>
+    3c80:	10 92 d8 02 	sts	0x02D8, r1	; 0x8002d8 <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
+    3c84:	10 92 d9 02 	sts	0x02D9, r1	; 0x8002d9 <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
+    3c88:	10 92 da 02 	sts	0x02DA, r1	; 0x8002da <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
   }
   return true;
     3c8c:	81 e0       	ldi	r24, 0x01	; 1
@@ -9170,7 +9173,7 @@ uint8_t SdVolume::cacheFlush(uint8_t blocking) {
     3c96:	0f 93       	push	r16
     3c98:	cf 93       	push	r28
   if (cacheDirty_) {
-    3c9a:	90 91 fd 02 	lds	r25, 0x02FD	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3c9a:	90 91 db 02 	lds	r25, 0x02DB	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
     3c9e:	99 23       	and	r25, r25
     3ca0:	f9 f0       	breq	.+62     	; 0x3ce0 <_ZN8SdVolume10cacheFlushEh+0x4a>
     3ca2:	c8 2f       	mov	r28, r24
@@ -9180,10 +9183,10 @@ uint8_t SdVolume::cacheFlush(uint8_t blocking) {
     3cac:	60 91 0b 01 	lds	r22, 0x010B	; 0x80010b <_ZN8SdVolume17cacheBlockNumber_E+0x2>
     3cb0:	70 91 0c 01 	lds	r23, 0x010C	; 0x80010c <_ZN8SdVolume17cacheBlockNumber_E+0x3>
     3cb4:	08 2f       	mov	r16, r24
-    3cb6:	20 e0       	ldi	r18, 0x00	; 0
-    3cb8:	33 e0       	ldi	r19, 0x03	; 3
-    3cba:	80 91 fe 02 	lds	r24, 0x02FE	; 0x8002fe <_ZN8SdVolume7sdCard_E>
-    3cbe:	90 91 ff 02 	lds	r25, 0x02FF	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
+    3cb6:	2e ed       	ldi	r18, 0xDE	; 222
+    3cb8:	32 e0       	ldi	r19, 0x02	; 2
+    3cba:	80 91 dc 02 	lds	r24, 0x02DC	; 0x8002dc <_ZN8SdVolume7sdCard_E>
+    3cbe:	90 91 dd 02 	lds	r25, 0x02DD	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
     3cc2:	0e 94 0e 15 	call	0x2a1c	; 0x2a1c <_ZN7Sd2Card10writeBlockEmPKhh>
     3cc6:	88 23       	and	r24, r24
     3cc8:	71 f0       	breq	.+28     	; 0x3ce6 <_ZN8SdVolume10cacheFlushEh+0x50>
@@ -9205,7 +9208,7 @@ uint8_t SdVolume::cacheFlush(uint8_t blocking) {
       return false;
     }
     cacheDirty_ = 0;
-    3cd8:	10 92 fd 02 	sts	0x02FD, r1	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3cd8:	10 92 db 02 	sts	0x02DB, r1	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
   }
   return true;
     3cdc:	81 e0       	ldi	r24, 0x01	; 1
@@ -9262,12 +9265,12 @@ uint8_t SdVolume::cacheRawBlock(uint32_t blockNumber, uint8_t action) {
       return false;
     }
     if (!sdCard_->readBlock(blockNumber, cacheBuffer_.data)) {
-    3d20:	20 e0       	ldi	r18, 0x00	; 0
-    3d22:	33 e0       	ldi	r19, 0x03	; 3
+    3d20:	2e ed       	ldi	r18, 0xDE	; 222
+    3d22:	32 e0       	ldi	r19, 0x02	; 2
     3d24:	b7 01       	movw	r22, r14
     3d26:	a6 01       	movw	r20, r12
-    3d28:	80 91 fe 02 	lds	r24, 0x02FE	; 0x8002fe <_ZN8SdVolume7sdCard_E>
-    3d2c:	90 91 ff 02 	lds	r25, 0x02FF	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
+    3d28:	80 91 dc 02 	lds	r24, 0x02DC	; 0x8002dc <_ZN8SdVolume7sdCard_E>
+    3d2c:	90 91 dd 02 	lds	r25, 0x02DD	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
     3d30:	0e 94 c9 14 	call	0x2992	; 0x2992 <_ZN7Sd2Card9readBlockEmPh>
     3d34:	88 23       	and	r24, r24
     3d36:	71 f0       	breq	.+28     	; 0x3d54 <_ZN8SdVolume13cacheRawBlockEmh+0x68>
@@ -9280,9 +9283,9 @@ uint8_t SdVolume::cacheRawBlock(uint32_t blockNumber, uint8_t action) {
     3d44:	f0 92 0c 01 	sts	0x010C, r15	; 0x80010c <_ZN8SdVolume17cacheBlockNumber_E+0x3>
   }
   cacheDirty_ |= action;
-    3d48:	80 91 fd 02 	lds	r24, 0x02FD	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3d48:	80 91 db 02 	lds	r24, 0x02DB	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
     3d4c:	c8 2b       	or	r28, r24
-    3d4e:	c0 93 fd 02 	sts	0x02FD, r28	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3d4e:	c0 93 db 02 	sts	0x02DB, r28	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
   return true;
     3d52:	81 e0       	ldi	r24, 0x01	; 1
 }
@@ -9321,7 +9324,7 @@ uint8_t SdVolume::cacheZeroBlock(uint32_t blockNumber) {
     3d80:	30 f4       	brcc	.+12     	; 0x3d8e <_ZN8SdVolume14cacheZeroBlockEm+0x2e>
     cacheBuffer_.data[i] = 0;
     3d82:	fc 01       	movw	r30, r24
-    3d84:	e0 50       	subi	r30, 0x00	; 0
+    3d84:	e2 52       	subi	r30, 0x22	; 34
     3d86:	fd 4f       	sbci	r31, 0xFD	; 253
     3d88:	10 82       	st	Z, r1
   if (!cacheFlush()) {
@@ -9339,9 +9342,9 @@ uint8_t SdVolume::cacheZeroBlock(uint32_t blockNumber) {
     3d92:	d0 92 0a 01 	sts	0x010A, r13	; 0x80010a <_ZN8SdVolume17cacheBlockNumber_E+0x1>
     3d96:	e0 92 0b 01 	sts	0x010B, r14	; 0x80010b <_ZN8SdVolume17cacheBlockNumber_E+0x2>
     3d9a:	f0 92 0c 01 	sts	0x010C, r15	; 0x80010c <_ZN8SdVolume17cacheBlockNumber_E+0x3>
-    3d9e:	80 91 fd 02 	lds	r24, 0x02FD	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3d9e:	80 91 db 02 	lds	r24, 0x02DB	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
     3da2:	81 60       	ori	r24, 0x01	; 1
-    3da4:	80 93 fd 02 	sts	0x02FD, r24	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    3da4:	80 93 db 02 	sts	0x02DB, r24	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
   cacheSetDirty();
   return true;
     3da8:	81 e0       	ldi	r24, 0x01	; 1
@@ -9455,7 +9458,7 @@ uint8_t SdVolume::fatGet(uint32_t cluster, uint32_t* value) const {
     3e60:	44 0f       	add	r20, r20
     3e62:	55 1f       	adc	r21, r21
     3e64:	fa 01       	movw	r30, r20
-    3e66:	e0 50       	subi	r30, 0x00	; 0
+    3e66:	e2 52       	subi	r30, 0x22	; 34
     3e68:	fd 4f       	sbci	r31, 0xFD	; 253
     3e6a:	80 81       	ld	r24, Z
     3e6c:	91 81       	ldd	r25, Z+1	; 0x01
@@ -9488,7 +9491,7 @@ uint8_t SdVolume::fatGet(uint32_t cluster, uint32_t* value) const {
     3e8e:	44 0f       	add	r20, r20
     3e90:	55 1f       	adc	r21, r21
     3e92:	fa 01       	movw	r30, r20
-    3e94:	e0 50       	subi	r30, 0x00	; 0
+    3e94:	e2 52       	subi	r30, 0x22	; 34
     3e96:	fd 4f       	sbci	r31, 0xFD	; 253
     3e98:	80 81       	ld	r24, Z
     3e9a:	91 81       	ldd	r25, Z+1	; 0x01
@@ -9797,7 +9800,7 @@ uint8_t SdVolume::fatPut(uint32_t cluster, uint32_t value) {
     4066:	44 0f       	add	r20, r20
     4068:	55 1f       	adc	r21, r21
     406a:	fa 01       	movw	r30, r20
-    406c:	e0 50       	subi	r30, 0x00	; 0
+    406c:	e2 52       	subi	r30, 0x22	; 34
     406e:	fd 4f       	sbci	r31, 0xFD	; 253
     4070:	89 81       	ldd	r24, Y+1	; 0x01
     4072:	9a 81       	ldd	r25, Y+2	; 0x02
@@ -9817,7 +9820,7 @@ uint8_t SdVolume::fatPut(uint32_t cluster, uint32_t value) {
     408a:	44 0f       	add	r20, r20
     408c:	55 1f       	adc	r21, r21
     408e:	fa 01       	movw	r30, r20
-    4090:	e0 50       	subi	r30, 0x00	; 0
+    4090:	e2 52       	subi	r30, 0x22	; 34
     4092:	fd 4f       	sbci	r31, 0xFD	; 253
     4094:	89 81       	ldd	r24, Y+1	; 0x01
     4096:	9a 81       	ldd	r25, Y+2	; 0x02
@@ -9833,9 +9836,9 @@ uint8_t SdVolume::fatPut(uint32_t cluster, uint32_t value) {
     static uint8_t cacheRawBlock(uint32_t blockNumber, uint8_t action);
     static void cacheSetDirty(void) {
       cacheDirty_ |= CACHE_FOR_WRITE;
-    40a4:	80 91 fd 02 	lds	r24, 0x02FD	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    40a4:	80 91 db 02 	lds	r24, 0x02DB	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
     40a8:	81 60       	ori	r24, 0x01	; 1
-    40aa:	80 93 fd 02 	sts	0x02FD, r24	; 0x8002fd <_ZN8SdVolume11cacheDirty_E>
+    40aa:	80 93 db 02 	sts	0x02DB, r24	; 0x8002db <_ZN8SdVolume11cacheDirty_E>
   }
   cacheSetDirty();
 
@@ -9859,10 +9862,10 @@ uint8_t SdVolume::fatPut(uint32_t cluster, uint32_t value) {
     40ca:	59 1e       	adc	r5, r25
     40cc:	6a 1e       	adc	r6, r26
     40ce:	7b 1e       	adc	r7, r27
-    40d0:	40 92 f9 02 	sts	0x02F9, r4	; 0x8002f9 <_ZN8SdVolume17cacheMirrorBlock_E>
-    40d4:	50 92 fa 02 	sts	0x02FA, r5	; 0x8002fa <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
-    40d8:	60 92 fb 02 	sts	0x02FB, r6	; 0x8002fb <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
-    40dc:	70 92 fc 02 	sts	0x02FC, r7	; 0x8002fc <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
+    40d0:	40 92 d7 02 	sts	0x02D7, r4	; 0x8002d7 <_ZN8SdVolume17cacheMirrorBlock_E>
+    40d4:	50 92 d8 02 	sts	0x02D8, r5	; 0x8002d8 <_ZN8SdVolume17cacheMirrorBlock_E+0x1>
+    40d8:	60 92 d9 02 	sts	0x02D9, r6	; 0x8002d9 <_ZN8SdVolume17cacheMirrorBlock_E+0x2>
+    40dc:	70 92 da 02 	sts	0x02DA, r7	; 0x8002da <_ZN8SdVolume17cacheMirrorBlock_E+0x3>
   }
   return true;
     40e0:	81 e0       	ldi	r24, 0x01	; 1
@@ -10456,8 +10459,8 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     4412:	c4 2f       	mov	r28, r20
   uint32_t volumeStartBlock = 0;
   sdCard_ = dev;
-    4414:	70 93 ff 02 	sts	0x02FF, r23	; 0x8002ff <_ZN8SdVolume7sdCard_E+0x1>
-    4418:	60 93 fe 02 	sts	0x02FE, r22	; 0x8002fe <_ZN8SdVolume7sdCard_E>
+    4414:	70 93 dd 02 	sts	0x02DD, r23	; 0x8002dd <_ZN8SdVolume7sdCard_E+0x1>
+    4418:	60 93 dc 02 	sts	0x02DC, r22	; 0x8002dc <_ZN8SdVolume7sdCard_E>
   // if part == 0 assume super floppy with FAT boot sector in block zero
   // if part > 0 assume mbr volume with partition table
   if (part) {
@@ -10494,7 +10497,7 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     444a:	fe 27       	eor	r31, r30
     444c:	e0 7f       	andi	r30, 0xF0	; 240
     444e:	fe 27       	eor	r31, r30
-    4450:	e2 54       	subi	r30, 0x42	; 66
+    4450:	e4 56       	subi	r30, 0x64	; 100
     4452:	fb 4f       	sbci	r31, 0xFB	; 251
     4454:	80 81       	ld	r24, Z
     4456:	8f 77       	andi	r24, 0x7F	; 127
@@ -10508,7 +10511,7 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     4464:	fe 27       	eor	r31, r30
     4466:	e0 7f       	andi	r30, 0xF0	; 240
     4468:	fe 27       	eor	r31, r30
-    446a:	e6 53       	subi	r30, 0x36	; 54
+    446a:	e8 55       	subi	r30, 0x58	; 88
     446c:	fb 4f       	sbci	r31, 0xFB	; 251
     446e:	c0 80       	ld	r12, Z
     4470:	d1 80       	ldd	r13, Z+1	; 0x01
@@ -10536,7 +10539,7 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     448c:	40 7f       	andi	r20, 0xF0	; 240
     448e:	54 27       	eor	r21, r20
     4490:	fa 01       	movw	r30, r20
-    4492:	ea 53       	subi	r30, 0x3A	; 58
+    4492:	ec 55       	subi	r30, 0x5C	; 92
     4494:	fb 4f       	sbci	r31, 0xFB	; 251
     4496:	c0 80       	ld	r12, Z
     4498:	d1 80       	ldd	r13, Z+1	; 0x01
@@ -10580,14 +10583,14 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
   }
   bpb_t* bpb = &cacheBuffer_.fbs.bpb;
   if (bpb->bytesPerSector != 512 ||
-    44c0:	80 91 0b 03 	lds	r24, 0x030B	; 0x80030b <_ZN8SdVolume12cacheBuffer_E+0xb>
-    44c4:	90 91 0c 03 	lds	r25, 0x030C	; 0x80030c <_ZN8SdVolume12cacheBuffer_E+0xc>
+    44c0:	80 91 e9 02 	lds	r24, 0x02E9	; 0x8002e9 <_ZN8SdVolume12cacheBuffer_E+0xb>
+    44c4:	90 91 ea 02 	lds	r25, 0x02EA	; 0x8002ea <_ZN8SdVolume12cacheBuffer_E+0xc>
     44c8:	81 15       	cp	r24, r1
     44ca:	92 40       	sbci	r25, 0x02	; 2
     44cc:	09 f0       	breq	.+2      	; 0x44d0 <_ZN8SdVolume4initEP7Sd2Cardh+0xe0>
     44ce:	d9 c0       	rjmp	.+434    	; 0x4682 <_ZN8SdVolume4initEP7Sd2Cardh+0x292>
       bpb->fatCount == 0 ||
-    44d0:	80 91 10 03 	lds	r24, 0x0310	; 0x800310 <_ZN8SdVolume12cacheBuffer_E+0x10>
+    44d0:	80 91 ee 02 	lds	r24, 0x02EE	; 0x8002ee <_ZN8SdVolume12cacheBuffer_E+0x10>
   }
   if (!cacheRawBlock(volumeStartBlock, CACHE_FOR_READ)) {
     return false;
@@ -10599,8 +10602,8 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     44d8:	db c0       	rjmp	.+438    	; 0x4690 <_ZN8SdVolume4initEP7Sd2Cardh+0x2a0>
       bpb->fatCount == 0 ||
       bpb->reservedSectorCount == 0 ||
-    44da:	20 91 0e 03 	lds	r18, 0x030E	; 0x80030e <_ZN8SdVolume12cacheBuffer_E+0xe>
-    44de:	30 91 0f 03 	lds	r19, 0x030F	; 0x80030f <_ZN8SdVolume12cacheBuffer_E+0xf>
+    44da:	20 91 ec 02 	lds	r18, 0x02EC	; 0x8002ec <_ZN8SdVolume12cacheBuffer_E+0xe>
+    44de:	30 91 ed 02 	lds	r19, 0x02ED	; 0x8002ed <_ZN8SdVolume12cacheBuffer_E+0xf>
   if (!cacheRawBlock(volumeStartBlock, CACHE_FOR_READ)) {
     return false;
   }
@@ -10612,7 +10615,7 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     44e6:	cf c0       	rjmp	.+414    	; 0x4686 <_ZN8SdVolume4initEP7Sd2Cardh+0x296>
       bpb->reservedSectorCount == 0 ||
       bpb->sectorsPerCluster == 0) {
-    44e8:	60 91 0d 03 	lds	r22, 0x030D	; 0x80030d <_ZN8SdVolume12cacheBuffer_E+0xd>
+    44e8:	60 91 eb 02 	lds	r22, 0x02EB	; 0x8002eb <_ZN8SdVolume12cacheBuffer_E+0xd>
     return false;
   }
   bpb_t* bpb = &cacheBuffer_.fbs.bpb;
@@ -10666,8 +10669,8 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     }
   }
   blocksPerFat_ = bpb->sectorsPerFat16 ?
-    452a:	20 91 16 03 	lds	r18, 0x0316	; 0x800316 <_ZN8SdVolume12cacheBuffer_E+0x16>
-    452e:	30 91 17 03 	lds	r19, 0x0317	; 0x800317 <_ZN8SdVolume12cacheBuffer_E+0x17>
+    452a:	20 91 f4 02 	lds	r18, 0x02F4	; 0x8002f4 <_ZN8SdVolume12cacheBuffer_E+0x16>
+    452e:	30 91 f5 02 	lds	r19, 0x02F5	; 0x8002f5 <_ZN8SdVolume12cacheBuffer_E+0x17>
                   bpb->sectorsPerFat16 : bpb->sectorsPerFat32;
     4532:	21 15       	cp	r18, r1
     4534:	31 05       	cpc	r19, r1
@@ -10675,10 +10678,10 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     4538:	40 e0       	ldi	r20, 0x00	; 0
     453a:	50 e0       	ldi	r21, 0x00	; 0
     453c:	08 c0       	rjmp	.+16     	; 0x454e <_ZN8SdVolume4initEP7Sd2Cardh+0x15e>
-    453e:	20 91 24 03 	lds	r18, 0x0324	; 0x800324 <_ZN8SdVolume12cacheBuffer_E+0x24>
-    4542:	30 91 25 03 	lds	r19, 0x0325	; 0x800325 <_ZN8SdVolume12cacheBuffer_E+0x25>
-    4546:	40 91 26 03 	lds	r20, 0x0326	; 0x800326 <_ZN8SdVolume12cacheBuffer_E+0x26>
-    454a:	50 91 27 03 	lds	r21, 0x0327	; 0x800327 <_ZN8SdVolume12cacheBuffer_E+0x27>
+    453e:	20 91 02 03 	lds	r18, 0x0302	; 0x800302 <_ZN8SdVolume12cacheBuffer_E+0x24>
+    4542:	30 91 03 03 	lds	r19, 0x0303	; 0x800303 <_ZN8SdVolume12cacheBuffer_E+0x25>
+    4546:	40 91 04 03 	lds	r20, 0x0304	; 0x800304 <_ZN8SdVolume12cacheBuffer_E+0x26>
+    454a:	50 91 05 03 	lds	r21, 0x0305	; 0x800305 <_ZN8SdVolume12cacheBuffer_E+0x27>
     454e:	e8 01       	movw	r28, r16
     4550:	2d 83       	std	Y+5, r18	; 0x05
     4552:	3e 83       	std	Y+6, r19	; 0x06
@@ -10687,9 +10690,9 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
 
   fatStartBlock_ = volumeStartBlock + bpb->reservedSectorCount;
     4558:	0f 2e       	mov	r0, r31
-    455a:	f0 e0       	ldi	r31, 0x00	; 0
+    455a:	fe ed       	ldi	r31, 0xDE	; 222
     455c:	af 2e       	mov	r10, r31
-    455e:	f3 e0       	ldi	r31, 0x03	; 3
+    455e:	f2 e0       	ldi	r31, 0x02	; 2
     4560:	bf 2e       	mov	r11, r31
     4562:	f0 2d       	mov	r31, r0
     4564:	d5 01       	movw	r26, r10
@@ -10773,10 +10776,10 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     45e8:	61 2c       	mov	r6, r1
     45ea:	71 2c       	mov	r7, r1
     45ec:	08 c0       	rjmp	.+16     	; 0x45fe <_ZN8SdVolume4initEP7Sd2Cardh+0x20e>
-    45ee:	40 90 20 03 	lds	r4, 0x0320	; 0x800320 <_ZN8SdVolume12cacheBuffer_E+0x20>
-    45f2:	50 90 21 03 	lds	r5, 0x0321	; 0x800321 <_ZN8SdVolume12cacheBuffer_E+0x21>
-    45f6:	60 90 22 03 	lds	r6, 0x0322	; 0x800322 <_ZN8SdVolume12cacheBuffer_E+0x22>
-    45fa:	70 90 23 03 	lds	r7, 0x0323	; 0x800323 <_ZN8SdVolume12cacheBuffer_E+0x23>
+    45ee:	40 90 fe 02 	lds	r4, 0x02FE	; 0x8002fe <_ZN8SdVolume12cacheBuffer_E+0x20>
+    45f2:	50 90 ff 02 	lds	r5, 0x02FF	; 0x8002ff <_ZN8SdVolume12cacheBuffer_E+0x21>
+    45f6:	60 90 00 03 	lds	r6, 0x0300	; 0x800300 <_ZN8SdVolume12cacheBuffer_E+0x22>
+    45fa:	70 90 01 03 	lds	r7, 0x0301	; 0x800301 <_ZN8SdVolume12cacheBuffer_E+0x23>
   // total data blocks
   clusterCount_ = totalBlocks - (dataStartBlock_ - volumeStartBlock);
     45fe:	c8 1a       	sub	r12, r24
@@ -10855,10 +10858,10 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part) {
     fatType_ = 16;
   } else {
     rootDirStart_ = bpb->fat32RootCluster;
-    4658:	80 91 2c 03 	lds	r24, 0x032C	; 0x80032c <_ZN8SdVolume12cacheBuffer_E+0x2c>
-    465c:	90 91 2d 03 	lds	r25, 0x032D	; 0x80032d <_ZN8SdVolume12cacheBuffer_E+0x2d>
-    4660:	a0 91 2e 03 	lds	r26, 0x032E	; 0x80032e <_ZN8SdVolume12cacheBuffer_E+0x2e>
-    4664:	b0 91 2f 03 	lds	r27, 0x032F	; 0x80032f <_ZN8SdVolume12cacheBuffer_E+0x2f>
+    4658:	80 91 0a 03 	lds	r24, 0x030A	; 0x80030a <_ZN8SdVolume12cacheBuffer_E+0x2c>
+    465c:	90 91 0b 03 	lds	r25, 0x030B	; 0x80030b <_ZN8SdVolume12cacheBuffer_E+0x2d>
+    4660:	a0 91 0c 03 	lds	r26, 0x030C	; 0x80030c <_ZN8SdVolume12cacheBuffer_E+0x2e>
+    4664:	b0 91 0d 03 	lds	r27, 0x030D	; 0x80030d <_ZN8SdVolume12cacheBuffer_E+0x2f>
     4668:	f8 01       	movw	r30, r16
     466a:	82 8f       	std	Z+26, r24	; 0x1a
     466c:	93 8f       	std	Z+27, r25	; 0x1b
@@ -10943,7 +10946,7 @@ void SPIClass::begin()
   noInterrupts(); // Protect from a scheduler and prevent transactionBegin
     46b6:	f8 94       	cli
   if (!initialized) {
-    46b8:	80 91 03 05 	lds	r24, 0x0503	; 0x800503 <_ZN8SPIClass11initializedE>
+    46b8:	80 91 e1 04 	lds	r24, 0x04E1	; 0x8004e1 <_ZN8SPIClass11initializedE>
     46bc:	81 11       	cpse	r24, r1
     46be:	27 c0       	rjmp	.+78     	; 0x470e <_ZN8SPIClass5beginEv+0x5c>
     // Set SS to high so a connected chip will be "deselected" by default
@@ -11011,9 +11014,9 @@ void SPIClass::begin()
     470a:	0e 94 63 02 	call	0x4c6	; 0x4c6 <pinMode>
   }
   initialized++; // reference count
-    470e:	80 91 03 05 	lds	r24, 0x0503	; 0x800503 <_ZN8SPIClass11initializedE>
+    470e:	80 91 e1 04 	lds	r24, 0x04E1	; 0x8004e1 <_ZN8SPIClass11initializedE>
     4712:	8f 5f       	subi	r24, 0xFF	; 255
-    4714:	80 93 03 05 	sts	0x0503, r24	; 0x800503 <_ZN8SPIClass11initializedE>
+    4714:	80 93 e1 04 	sts	0x04E1, r24	; 0x8004e1 <_ZN8SPIClass11initializedE>
   SREG = sreg;
     4718:	cf bf       	out	0x3f, r28	; 63
 }
@@ -11027,10 +11030,10 @@ void SPIClass::begin()
   }
   return(flag);
 }
-    471e:	10 92 77 05 	sts	0x0577, r1	; 0x800577 <twi_state>
+    471e:	10 92 55 05 	sts	0x0555, r1	; 0x800555 <twi_state>
     4722:	81 e0       	ldi	r24, 0x01	; 1
-    4724:	80 93 75 05 	sts	0x0575, r24	; 0x800575 <twi_sendStop>
-    4728:	10 92 74 05 	sts	0x0574, r1	; 0x800574 <twi_inRepStart>
+    4724:	80 93 53 05 	sts	0x0553, r24	; 0x800553 <twi_sendStop>
+    4728:	10 92 52 05 	sts	0x0552, r1	; 0x800552 <twi_inRepStart>
     472c:	61 e0       	ldi	r22, 0x01	; 1
     472e:	82 e1       	ldi	r24, 0x12	; 18
     4730:	0e 94 a2 02 	call	0x544	; 0x544 <digitalWrite>
@@ -11067,7 +11070,7 @@ void SPIClass::begin()
 
 00004776 <twi_transmit>:
     4776:	ac 01       	movw	r20, r24
-    4778:	90 91 26 05 	lds	r25, 0x0526	; 0x800526 <twi_txBufferLength>
+    4778:	90 91 04 05 	lds	r25, 0x0504	; 0x800504 <twi_txBufferLength>
     477c:	26 2f       	mov	r18, r22
     477e:	30 e0       	ldi	r19, 0x00	; 0
     4780:	29 0f       	add	r18, r25
@@ -11075,12 +11078,12 @@ void SPIClass::begin()
     4784:	21 32       	cpi	r18, 0x21	; 33
     4786:	31 05       	cpc	r19, r1
     4788:	f4 f4       	brge	.+60     	; 0x47c6 <twi_transmit+0x50>
-    478a:	80 91 77 05 	lds	r24, 0x0577	; 0x800577 <twi_state>
+    478a:	80 91 55 05 	lds	r24, 0x0555	; 0x800555 <twi_state>
     478e:	84 30       	cpi	r24, 0x04	; 4
     4790:	e1 f4       	brne	.+56     	; 0x47ca <twi_transmit+0x54>
     4792:	90 e0       	ldi	r25, 0x00	; 0
     4794:	0f c0       	rjmp	.+30     	; 0x47b4 <twi_transmit+0x3e>
-    4796:	80 91 26 05 	lds	r24, 0x0526	; 0x800526 <twi_txBufferLength>
+    4796:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_txBufferLength>
     479a:	29 2f       	mov	r18, r25
     479c:	30 e0       	ldi	r19, 0x00	; 0
     479e:	f9 01       	movw	r30, r18
@@ -11090,15 +11093,15 @@ void SPIClass::begin()
     47a6:	a2 0f       	add	r26, r18
     47a8:	b3 1f       	adc	r27, r19
     47aa:	8c 91       	ld	r24, X
-    47ac:	e8 5d       	subi	r30, 0xD8	; 216
+    47ac:	ea 5f       	subi	r30, 0xFA	; 250
     47ae:	fa 4f       	sbci	r31, 0xFA	; 250
     47b0:	80 83       	st	Z, r24
     47b2:	9f 5f       	subi	r25, 0xFF	; 255
     47b4:	96 17       	cp	r25, r22
     47b6:	78 f3       	brcs	.-34     	; 0x4796 <twi_transmit+0x20>
-    47b8:	80 91 26 05 	lds	r24, 0x0526	; 0x800526 <twi_txBufferLength>
+    47b8:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_txBufferLength>
     47bc:	68 0f       	add	r22, r24
-    47be:	60 93 26 05 	sts	0x0526, r22	; 0x800526 <twi_txBufferLength>
+    47be:	60 93 04 05 	sts	0x0504, r22	; 0x800504 <twi_txBufferLength>
     47c2:	80 e0       	ldi	r24, 0x00	; 0
     47c4:	08 95       	ret
     47c6:	81 e0       	ldi	r24, 0x01	; 1
@@ -11107,13 +11110,13 @@ void SPIClass::begin()
     47cc:	08 95       	ret
 
 000047ce <twi_attachSlaveRxEvent>:
-    47ce:	90 93 6b 05 	sts	0x056B, r25	; 0x80056b <twi_onSlaveReceive+0x1>
-    47d2:	80 93 6a 05 	sts	0x056A, r24	; 0x80056a <twi_onSlaveReceive>
+    47ce:	90 93 49 05 	sts	0x0549, r25	; 0x800549 <twi_onSlaveReceive+0x1>
+    47d2:	80 93 48 05 	sts	0x0548, r24	; 0x800548 <twi_onSlaveReceive>
     47d6:	08 95       	ret
 
 000047d8 <twi_attachSlaveTxEvent>:
-    47d8:	90 93 6d 05 	sts	0x056D, r25	; 0x80056d <twi_onSlaveTransmit+0x1>
-    47dc:	80 93 6c 05 	sts	0x056C, r24	; 0x80056c <twi_onSlaveTransmit>
+    47d8:	90 93 4b 05 	sts	0x054B, r25	; 0x80054b <twi_onSlaveTransmit+0x1>
+    47dc:	80 93 4a 05 	sts	0x054A, r24	; 0x80054a <twi_onSlaveTransmit>
     47e0:	08 95       	ret
 
 000047e2 <twi_reply>:
@@ -11129,7 +11132,7 @@ void SPIClass::begin()
 000047f6 <twi_releaseBus>:
     47f6:	85 ec       	ldi	r24, 0xC5	; 197
     47f8:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
-    47fc:	10 92 77 05 	sts	0x0577, r1	; 0x800577 <twi_state>
+    47fc:	10 92 55 05 	sts	0x0555, r1	; 0x800555 <twi_state>
     4800:	08 95       	ret
 
 00004802 <twi_handleTimeout>:
@@ -11140,7 +11143,7 @@ void SPIClass::begin()
     480a:	cf 93       	push	r28
     480c:	df 93       	push	r29
     480e:	91 e0       	ldi	r25, 0x01	; 1
-    4810:	90 93 6f 05 	sts	0x056F, r25	; 0x80056f <twi_timed_out_flag>
+    4810:	90 93 4d 05 	sts	0x054D, r25	; 0x80054d <twi_timed_out_flag>
     4814:	88 23       	and	r24, r24
     4816:	71 f0       	breq	.+28     	; 0x4834 <twi_handleTimeout+0x32>
     4818:	c8 eb       	ldi	r28, 0xB8	; 184
@@ -11190,10 +11193,10 @@ void SPIClass::begin()
     4872:	4b 01       	movw	r8, r22
     4874:	5c 01       	movw	r10, r24
     4876:	27 c0       	rjmp	.+78     	; 0x48c6 <twi_writeTo+0x84>
-    4878:	80 91 70 05 	lds	r24, 0x0570	; 0x800570 <twi_timeout_us>
-    487c:	90 91 71 05 	lds	r25, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    4880:	a0 91 72 05 	lds	r26, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    4884:	b0 91 73 05 	lds	r27, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    4878:	80 91 4e 05 	lds	r24, 0x054E	; 0x80054e <twi_timeout_us>
+    487c:	90 91 4f 05 	lds	r25, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    4880:	a0 91 50 05 	lds	r26, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    4884:	b0 91 51 05 	lds	r27, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     4888:	89 2b       	or	r24, r25
     488a:	8a 2b       	or	r24, r26
     488c:	8b 2b       	or	r24, r27
@@ -11205,29 +11208,29 @@ void SPIClass::begin()
     489a:	99 09       	sbc	r25, r9
     489c:	aa 09       	sbc	r26, r10
     489e:	bb 09       	sbc	r27, r11
-    48a0:	40 90 70 05 	lds	r4, 0x0570	; 0x800570 <twi_timeout_us>
-    48a4:	50 90 71 05 	lds	r5, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    48a8:	60 90 72 05 	lds	r6, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    48ac:	70 90 73 05 	lds	r7, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    48a0:	40 90 4e 05 	lds	r4, 0x054E	; 0x80054e <twi_timeout_us>
+    48a4:	50 90 4f 05 	lds	r5, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    48a8:	60 90 50 05 	lds	r6, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    48ac:	70 90 51 05 	lds	r7, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     48b0:	48 16       	cp	r4, r24
     48b2:	59 06       	cpc	r5, r25
     48b4:	6a 06       	cpc	r6, r26
     48b6:	7b 06       	cpc	r7, r27
     48b8:	30 f4       	brcc	.+12     	; 0x48c6 <twi_writeTo+0x84>
-    48ba:	80 91 6e 05 	lds	r24, 0x056E	; 0x80056e <twi_do_reset_on_timeout>
+    48ba:	80 91 4c 05 	lds	r24, 0x054C	; 0x80054c <twi_do_reset_on_timeout>
     48be:	0e 94 01 24 	call	0x4802	; 0x4802 <twi_handleTimeout>
     48c2:	c5 e0       	ldi	r28, 0x05	; 5
     48c4:	ae c0       	rjmp	.+348    	; 0x4a22 <twi_writeTo+0x1e0>
-    48c6:	c0 91 77 05 	lds	r28, 0x0577	; 0x800577 <twi_state>
+    48c6:	c0 91 55 05 	lds	r28, 0x0555	; 0x800555 <twi_state>
     48ca:	c1 11       	cpse	r28, r1
     48cc:	d5 cf       	rjmp	.-86     	; 0x4878 <twi_writeTo+0x36>
     48ce:	82 e0       	ldi	r24, 0x02	; 2
-    48d0:	80 93 77 05 	sts	0x0577, r24	; 0x800577 <twi_state>
-    48d4:	00 93 75 05 	sts	0x0575, r16	; 0x800575 <twi_sendStop>
+    48d0:	80 93 55 05 	sts	0x0555, r24	; 0x800555 <twi_state>
+    48d4:	00 93 53 05 	sts	0x0553, r16	; 0x800553 <twi_sendStop>
     48d8:	8f ef       	ldi	r24, 0xFF	; 255
-    48da:	80 93 04 05 	sts	0x0504, r24	; 0x800504 <twi_error>
-    48de:	10 92 49 05 	sts	0x0549, r1	; 0x800549 <twi_masterBufferIndex>
-    48e2:	d0 93 48 05 	sts	0x0548, r29	; 0x800548 <twi_masterBufferLength>
+    48da:	80 93 e2 04 	sts	0x04E2, r24	; 0x8004e2 <twi_error>
+    48de:	10 92 27 05 	sts	0x0527, r1	; 0x800527 <twi_masterBufferIndex>
+    48e2:	d0 93 26 05 	sts	0x0526, r29	; 0x800526 <twi_masterBufferLength>
     48e6:	90 e0       	ldi	r25, 0x00	; 0
     48e8:	0a c0       	rjmp	.+20     	; 0x48fe <twi_writeTo+0xbc>
     48ea:	e9 2f       	mov	r30, r25
@@ -11236,33 +11239,33 @@ void SPIClass::begin()
     48f0:	ae 0f       	add	r26, r30
     48f2:	bf 1f       	adc	r27, r31
     48f4:	3c 91       	ld	r19, X
-    48f6:	e6 5b       	subi	r30, 0xB6	; 182
+    48f6:	e8 5d       	subi	r30, 0xD8	; 216
     48f8:	fa 4f       	sbci	r31, 0xFA	; 250
     48fa:	30 83       	st	Z, r19
     48fc:	9f 5f       	subi	r25, 0xFF	; 255
     48fe:	9d 17       	cp	r25, r29
     4900:	a0 f3       	brcs	.-24     	; 0x48ea <twi_writeTo+0xa8>
-    4902:	10 92 76 05 	sts	0x0576, r1	; 0x800576 <twi_slarw>
+    4902:	10 92 54 05 	sts	0x0554, r1	; 0x800554 <twi_slarw>
     4906:	8d 2d       	mov	r24, r13
     4908:	90 e0       	ldi	r25, 0x00	; 0
     490a:	88 0f       	add	r24, r24
     490c:	99 1f       	adc	r25, r25
-    490e:	d0 90 76 05 	lds	r13, 0x0576	; 0x800576 <twi_slarw>
+    490e:	d0 90 54 05 	lds	r13, 0x0554	; 0x800554 <twi_slarw>
     4912:	8d 29       	or	r24, r13
-    4914:	80 93 76 05 	sts	0x0576, r24	; 0x800576 <twi_slarw>
-    4918:	80 91 74 05 	lds	r24, 0x0574	; 0x800574 <twi_inRepStart>
+    4914:	80 93 54 05 	sts	0x0554, r24	; 0x800554 <twi_slarw>
+    4918:	80 91 52 05 	lds	r24, 0x0552	; 0x800552 <twi_inRepStart>
     491c:	81 30       	cpi	r24, 0x01	; 1
     491e:	c9 f5       	brne	.+114    	; 0x4992 <twi_writeTo+0x150>
-    4920:	10 92 74 05 	sts	0x0574, r1	; 0x800574 <twi_inRepStart>
+    4920:	10 92 52 05 	sts	0x0552, r1	; 0x800552 <twi_inRepStart>
     4924:	0e 94 0e 02 	call	0x41c	; 0x41c <micros>
     4928:	4b 01       	movw	r8, r22
     492a:	5c 01       	movw	r10, r24
-    492c:	80 91 76 05 	lds	r24, 0x0576	; 0x800576 <twi_slarw>
+    492c:	80 91 54 05 	lds	r24, 0x0554	; 0x800554 <twi_slarw>
     4930:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
-    4934:	80 91 70 05 	lds	r24, 0x0570	; 0x800570 <twi_timeout_us>
-    4938:	90 91 71 05 	lds	r25, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    493c:	a0 91 72 05 	lds	r26, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    4940:	b0 91 73 05 	lds	r27, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    4934:	80 91 4e 05 	lds	r24, 0x054E	; 0x80054e <twi_timeout_us>
+    4938:	90 91 4f 05 	lds	r25, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    493c:	a0 91 50 05 	lds	r26, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    4940:	b0 91 51 05 	lds	r27, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     4944:	89 2b       	or	r24, r25
     4946:	8a 2b       	or	r24, r26
     4948:	8b 2b       	or	r24, r27
@@ -11274,16 +11277,16 @@ void SPIClass::begin()
     4956:	99 09       	sbc	r25, r9
     4958:	aa 09       	sbc	r26, r10
     495a:	bb 09       	sbc	r27, r11
-    495c:	40 90 70 05 	lds	r4, 0x0570	; 0x800570 <twi_timeout_us>
-    4960:	50 90 71 05 	lds	r5, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    4964:	60 90 72 05 	lds	r6, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    4968:	70 90 73 05 	lds	r7, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    495c:	40 90 4e 05 	lds	r4, 0x054E	; 0x80054e <twi_timeout_us>
+    4960:	50 90 4f 05 	lds	r5, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    4964:	60 90 50 05 	lds	r6, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    4968:	70 90 51 05 	lds	r7, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     496c:	48 16       	cp	r4, r24
     496e:	59 06       	cpc	r5, r25
     4970:	6a 06       	cpc	r6, r26
     4972:	7b 06       	cpc	r7, r27
     4974:	30 f4       	brcc	.+12     	; 0x4982 <twi_writeTo+0x140>
-    4976:	80 91 6e 05 	lds	r24, 0x056E	; 0x80056e <twi_do_reset_on_timeout>
+    4976:	80 91 4c 05 	lds	r24, 0x054C	; 0x80054c <twi_do_reset_on_timeout>
     497a:	0e 94 01 24 	call	0x4802	; 0x4802 <twi_handleTimeout>
     497e:	c5 e0       	ldi	r28, 0x05	; 5
     4980:	50 c0       	rjmp	.+160    	; 0x4a22 <twi_writeTo+0x1e0>
@@ -11299,10 +11302,10 @@ void SPIClass::begin()
     499c:	4b 01       	movw	r8, r22
     499e:	5c 01       	movw	r10, r24
     49a0:	27 c0       	rjmp	.+78     	; 0x49f0 <twi_writeTo+0x1ae>
-    49a2:	80 91 70 05 	lds	r24, 0x0570	; 0x800570 <twi_timeout_us>
-    49a6:	90 91 71 05 	lds	r25, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    49aa:	a0 91 72 05 	lds	r26, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    49ae:	b0 91 73 05 	lds	r27, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    49a2:	80 91 4e 05 	lds	r24, 0x054E	; 0x80054e <twi_timeout_us>
+    49a6:	90 91 4f 05 	lds	r25, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    49aa:	a0 91 50 05 	lds	r26, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    49ae:	b0 91 51 05 	lds	r27, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     49b2:	89 2b       	or	r24, r25
     49b4:	8a 2b       	or	r24, r26
     49b6:	8b 2b       	or	r24, r27
@@ -11314,31 +11317,31 @@ void SPIClass::begin()
     49c4:	99 09       	sbc	r25, r9
     49c6:	aa 09       	sbc	r26, r10
     49c8:	bb 09       	sbc	r27, r11
-    49ca:	40 90 70 05 	lds	r4, 0x0570	; 0x800570 <twi_timeout_us>
-    49ce:	50 90 71 05 	lds	r5, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    49d2:	60 90 72 05 	lds	r6, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    49d6:	70 90 73 05 	lds	r7, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    49ca:	40 90 4e 05 	lds	r4, 0x054E	; 0x80054e <twi_timeout_us>
+    49ce:	50 90 4f 05 	lds	r5, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    49d2:	60 90 50 05 	lds	r6, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    49d6:	70 90 51 05 	lds	r7, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     49da:	48 16       	cp	r4, r24
     49dc:	59 06       	cpc	r5, r25
     49de:	6a 06       	cpc	r6, r26
     49e0:	7b 06       	cpc	r7, r27
     49e2:	30 f4       	brcc	.+12     	; 0x49f0 <twi_writeTo+0x1ae>
-    49e4:	80 91 6e 05 	lds	r24, 0x056E	; 0x80056e <twi_do_reset_on_timeout>
+    49e4:	80 91 4c 05 	lds	r24, 0x054C	; 0x80054c <twi_do_reset_on_timeout>
     49e8:	0e 94 01 24 	call	0x4802	; 0x4802 <twi_handleTimeout>
     49ec:	c5 e0       	ldi	r28, 0x05	; 5
     49ee:	19 c0       	rjmp	.+50     	; 0x4a22 <twi_writeTo+0x1e0>
     49f0:	11 23       	and	r17, r17
     49f2:	21 f0       	breq	.+8      	; 0x49fc <twi_writeTo+0x1ba>
-    49f4:	80 91 77 05 	lds	r24, 0x0577	; 0x800577 <twi_state>
+    49f4:	80 91 55 05 	lds	r24, 0x0555	; 0x800555 <twi_state>
     49f8:	82 30       	cpi	r24, 0x02	; 2
     49fa:	99 f2       	breq	.-90     	; 0x49a2 <twi_writeTo+0x160>
-    49fc:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_error>
+    49fc:	80 91 e2 04 	lds	r24, 0x04E2	; 0x8004e2 <twi_error>
     4a00:	8f 3f       	cpi	r24, 0xFF	; 255
     4a02:	79 f0       	breq	.+30     	; 0x4a22 <twi_writeTo+0x1e0>
-    4a04:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_error>
+    4a04:	80 91 e2 04 	lds	r24, 0x04E2	; 0x8004e2 <twi_error>
     4a08:	80 32       	cpi	r24, 0x20	; 32
     4a0a:	41 f0       	breq	.+16     	; 0x4a1c <twi_writeTo+0x1da>
-    4a0c:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_error>
+    4a0c:	80 91 e2 04 	lds	r24, 0x04E2	; 0x8004e2 <twi_error>
     4a10:	80 33       	cpi	r24, 0x30	; 48
     4a12:	31 f4       	brne	.+12     	; 0x4a20 <twi_writeTo+0x1de>
     4a14:	c3 e0       	ldi	r28, 0x03	; 3
@@ -11369,10 +11372,10 @@ void SPIClass::begin()
 00004a44 <twi_stop>:
     4a44:	85 ed       	ldi	r24, 0xD5	; 213
     4a46:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
-    4a4a:	40 91 70 05 	lds	r20, 0x0570	; 0x800570 <twi_timeout_us>
-    4a4e:	50 91 71 05 	lds	r21, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    4a52:	60 91 72 05 	lds	r22, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    4a56:	70 91 73 05 	lds	r23, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    4a4a:	40 91 4e 05 	lds	r20, 0x054E	; 0x80054e <twi_timeout_us>
+    4a4e:	50 91 4f 05 	lds	r21, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    4a52:	60 91 50 05 	lds	r22, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    4a56:	70 91 51 05 	lds	r23, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     4a5a:	49 5f       	subi	r20, 0xF9	; 249
     4a5c:	5f 4f       	sbci	r21, 0xFF	; 255
     4a5e:	6f 4f       	sbci	r22, 0xFF	; 255
@@ -11386,10 +11389,10 @@ void SPIClass::begin()
     4a6e:	16 94       	lsr	r1
     4a70:	d1 f7       	brne	.-12     	; 0x4a66 <twi_stop+0x22>
     4a72:	1f c0       	rjmp	.+62     	; 0x4ab2 <twi_stop+0x6e>
-    4a74:	80 91 70 05 	lds	r24, 0x0570	; 0x800570 <twi_timeout_us>
-    4a78:	90 91 71 05 	lds	r25, 0x0571	; 0x800571 <twi_timeout_us+0x1>
-    4a7c:	a0 91 72 05 	lds	r26, 0x0572	; 0x800572 <twi_timeout_us+0x2>
-    4a80:	b0 91 73 05 	lds	r27, 0x0573	; 0x800573 <twi_timeout_us+0x3>
+    4a74:	80 91 4e 05 	lds	r24, 0x054E	; 0x80054e <twi_timeout_us>
+    4a78:	90 91 4f 05 	lds	r25, 0x054F	; 0x80054f <twi_timeout_us+0x1>
+    4a7c:	a0 91 50 05 	lds	r26, 0x0550	; 0x800550 <twi_timeout_us+0x2>
+    4a80:	b0 91 51 05 	lds	r27, 0x0551	; 0x800551 <twi_timeout_us+0x3>
     4a84:	89 2b       	or	r24, r25
     4a86:	8a 2b       	or	r24, r26
     4a88:	8b 2b       	or	r24, r27
@@ -11408,13 +11411,13 @@ void SPIClass::begin()
     4aa2:	61 09       	sbc	r22, r1
     4aa4:	71 09       	sbc	r23, r1
     4aa6:	05 c0       	rjmp	.+10     	; 0x4ab2 <twi_stop+0x6e>
-    4aa8:	80 91 6e 05 	lds	r24, 0x056E	; 0x80056e <twi_do_reset_on_timeout>
+    4aa8:	80 91 4c 05 	lds	r24, 0x054C	; 0x80054c <twi_do_reset_on_timeout>
     4aac:	0e 94 01 24 	call	0x4802	; 0x4802 <twi_handleTimeout>
     4ab0:	08 95       	ret
     4ab2:	80 91 bc 00 	lds	r24, 0x00BC	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
     4ab6:	84 fd       	sbrc	r24, 4
     4ab8:	dd cf       	rjmp	.-70     	; 0x4a74 <twi_stop+0x30>
-    4aba:	10 92 77 05 	sts	0x0577, r1	; 0x800577 <twi_state>
+    4aba:	10 92 55 05 	sts	0x0555, r1	; 0x800555 <twi_state>
     4abe:	08 95       	ret
 
 00004ac0 <__vector_24>:
@@ -11457,7 +11460,7 @@ ISR(TWI_vect)
     case TW_REP_START: // sent repeated start condition
       // copy device address and r/w bit to output register and ack
       TWDR = twi_slarw;
-    4b00:	80 91 76 05 	lds	r24, 0x0576	; 0x800576 <twi_slarw>
+    4b00:	80 91 54 05 	lds	r24, 0x0554	; 0x800554 <twi_slarw>
     4b04:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
       twi_reply(1);
     4b08:	81 e0       	ldi	r24, 0x01	; 1
@@ -11470,18 +11473,18 @@ ISR(TWI_vect)
     case TW_MT_DATA_ACK: // slave receiver acked data
       // if there is data to send, send it, otherwise stop 
       if(twi_masterBufferIndex < twi_masterBufferLength){
-    4b10:	90 91 49 05 	lds	r25, 0x0549	; 0x800549 <twi_masterBufferIndex>
-    4b14:	80 91 48 05 	lds	r24, 0x0548	; 0x800548 <twi_masterBufferLength>
+    4b10:	90 91 27 05 	lds	r25, 0x0527	; 0x800527 <twi_masterBufferIndex>
+    4b14:	80 91 26 05 	lds	r24, 0x0526	; 0x800526 <twi_masterBufferLength>
     4b18:	98 17       	cp	r25, r24
     4b1a:	80 f4       	brcc	.+32     	; 0x4b3c <__vector_24+0x7c>
         // copy data to output register and ack
         TWDR = twi_masterBuffer[twi_masterBufferIndex++];
-    4b1c:	e0 91 49 05 	lds	r30, 0x0549	; 0x800549 <twi_masterBufferIndex>
+    4b1c:	e0 91 27 05 	lds	r30, 0x0527	; 0x800527 <twi_masterBufferIndex>
     4b20:	81 e0       	ldi	r24, 0x01	; 1
     4b22:	8e 0f       	add	r24, r30
-    4b24:	80 93 49 05 	sts	0x0549, r24	; 0x800549 <twi_masterBufferIndex>
+    4b24:	80 93 27 05 	sts	0x0527, r24	; 0x800527 <twi_masterBufferIndex>
     4b28:	f0 e0       	ldi	r31, 0x00	; 0
-    4b2a:	e6 5b       	subi	r30, 0xB6	; 182
+    4b2a:	e8 5d       	subi	r30, 0xD8	; 216
     4b2c:	fa 4f       	sbci	r31, 0xFA	; 250
     4b2e:	80 81       	ld	r24, Z
     4b30:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
@@ -11491,7 +11494,7 @@ ISR(TWI_vect)
     4b3a:	d2 c0       	rjmp	.+420    	; 0x4ce0 <__vector_24+0x220>
       }else{
         if (twi_sendStop){
-    4b3c:	80 91 75 05 	lds	r24, 0x0575	; 0x800575 <twi_sendStop>
+    4b3c:	80 91 53 05 	lds	r24, 0x0553	; 0x800553 <twi_sendStop>
     4b40:	88 23       	and	r24, r24
     4b42:	19 f0       	breq	.+6      	; 0x4b4a <__vector_24+0x8a>
           twi_stop();
@@ -11500,7 +11503,7 @@ ISR(TWI_vect)
        } else {
          twi_inRepStart = true;	// we're gonna send the START
     4b4a:	81 e0       	ldi	r24, 0x01	; 1
-    4b4c:	80 93 74 05 	sts	0x0574, r24	; 0x800574 <twi_inRepStart>
+    4b4c:	80 93 52 05 	sts	0x0552, r24	; 0x800552 <twi_inRepStart>
          // don't enable the interrupt. We'll generate the start, but we
          // avoid handling the interrupt until we're in the next transaction,
          // at the point where we would normally issue the start.
@@ -11508,7 +11511,7 @@ ISR(TWI_vect)
     4b50:	84 ea       	ldi	r24, 0xA4	; 164
     4b52:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
          twi_state = TWI_READY;
-    4b56:	10 92 77 05 	sts	0x0577, r1	; 0x800577 <twi_state>
+    4b56:	10 92 55 05 	sts	0x0555, r1	; 0x800555 <twi_state>
     4b5a:	c2 c0       	rjmp	.+388    	; 0x4ce0 <__vector_24+0x220>
         }
       }
@@ -11516,7 +11519,7 @@ ISR(TWI_vect)
     case TW_MT_SLA_NACK:  // address sent, nack received
       twi_error = TW_MT_SLA_NACK;
     4b5c:	80 e2       	ldi	r24, 0x20	; 32
-    4b5e:	80 93 04 05 	sts	0x0504, r24	; 0x800504 <twi_error>
+    4b5e:	80 93 e2 04 	sts	0x04E2, r24	; 0x8004e2 <twi_error>
       twi_stop();
     4b62:	0e 94 22 25 	call	0x4a44	; 0x4a44 <twi_stop>
       break;
@@ -11524,7 +11527,7 @@ ISR(TWI_vect)
     case TW_MT_DATA_NACK: // data sent, nack received
       twi_error = TW_MT_DATA_NACK;
     4b68:	80 e3       	ldi	r24, 0x30	; 48
-    4b6a:	80 93 04 05 	sts	0x0504, r24	; 0x800504 <twi_error>
+    4b6a:	80 93 e2 04 	sts	0x04E2, r24	; 0x8004e2 <twi_error>
       twi_stop();
     4b6e:	0e 94 22 25 	call	0x4a44	; 0x4a44 <twi_stop>
       break;
@@ -11532,7 +11535,7 @@ ISR(TWI_vect)
     case TW_MT_ARB_LOST: // lost bus arbitration
       twi_error = TW_MT_ARB_LOST;
     4b74:	88 e3       	ldi	r24, 0x38	; 56
-    4b76:	80 93 04 05 	sts	0x0504, r24	; 0x800504 <twi_error>
+    4b76:	80 93 e2 04 	sts	0x04E2, r24	; 0x8004e2 <twi_error>
       twi_releaseBus();
     4b7a:	0e 94 fb 23 	call	0x47f6	; 0x47f6 <twi_releaseBus>
       break;
@@ -11542,21 +11545,21 @@ ISR(TWI_vect)
     case TW_MR_DATA_ACK: // data received, ack sent
       // put byte into buffer
       twi_masterBuffer[twi_masterBufferIndex++] = TWDR;
-    4b80:	e0 91 49 05 	lds	r30, 0x0549	; 0x800549 <twi_masterBufferIndex>
+    4b80:	e0 91 27 05 	lds	r30, 0x0527	; 0x800527 <twi_masterBufferIndex>
     4b84:	81 e0       	ldi	r24, 0x01	; 1
     4b86:	8e 0f       	add	r24, r30
-    4b88:	80 93 49 05 	sts	0x0549, r24	; 0x800549 <twi_masterBufferIndex>
+    4b88:	80 93 27 05 	sts	0x0527, r24	; 0x800527 <twi_masterBufferIndex>
     4b8c:	f0 e0       	ldi	r31, 0x00	; 0
     4b8e:	80 91 bb 00 	lds	r24, 0x00BB	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
-    4b92:	e6 5b       	subi	r30, 0xB6	; 182
+    4b92:	e8 5d       	subi	r30, 0xD8	; 216
     4b94:	fa 4f       	sbci	r31, 0xFA	; 250
     4b96:	80 83       	st	Z, r24
       __attribute__ ((fallthrough));
     case TW_MR_SLA_ACK:  // address sent, ack received
       // ack if more bytes are expected, otherwise nack
       if(twi_masterBufferIndex < twi_masterBufferLength){
-    4b98:	90 91 49 05 	lds	r25, 0x0549	; 0x800549 <twi_masterBufferIndex>
-    4b9c:	80 91 48 05 	lds	r24, 0x0548	; 0x800548 <twi_masterBufferLength>
+    4b98:	90 91 27 05 	lds	r25, 0x0527	; 0x800527 <twi_masterBufferIndex>
+    4b9c:	80 91 26 05 	lds	r24, 0x0526	; 0x800526 <twi_masterBufferLength>
     4ba0:	98 17       	cp	r25, r24
     4ba2:	20 f4       	brcc	.+8      	; 0x4bac <__vector_24+0xec>
         twi_reply(1);
@@ -11573,17 +11576,17 @@ ISR(TWI_vect)
     case TW_MR_DATA_NACK: // data received, nack sent
       // put final byte into buffer
       twi_masterBuffer[twi_masterBufferIndex++] = TWDR;
-    4bb4:	e0 91 49 05 	lds	r30, 0x0549	; 0x800549 <twi_masterBufferIndex>
+    4bb4:	e0 91 27 05 	lds	r30, 0x0527	; 0x800527 <twi_masterBufferIndex>
     4bb8:	81 e0       	ldi	r24, 0x01	; 1
     4bba:	8e 0f       	add	r24, r30
-    4bbc:	80 93 49 05 	sts	0x0549, r24	; 0x800549 <twi_masterBufferIndex>
+    4bbc:	80 93 27 05 	sts	0x0527, r24	; 0x800527 <twi_masterBufferIndex>
     4bc0:	f0 e0       	ldi	r31, 0x00	; 0
     4bc2:	80 91 bb 00 	lds	r24, 0x00BB	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
-    4bc6:	e6 5b       	subi	r30, 0xB6	; 182
+    4bc6:	e8 5d       	subi	r30, 0xD8	; 216
     4bc8:	fa 4f       	sbci	r31, 0xFA	; 250
     4bca:	80 83       	st	Z, r24
       if (twi_sendStop){
-    4bcc:	80 91 75 05 	lds	r24, 0x0575	; 0x800575 <twi_sendStop>
+    4bcc:	80 91 53 05 	lds	r24, 0x0553	; 0x800553 <twi_sendStop>
     4bd0:	88 23       	and	r24, r24
     4bd2:	19 f0       	breq	.+6      	; 0x4bda <__vector_24+0x11a>
         twi_stop();
@@ -11592,7 +11595,7 @@ ISR(TWI_vect)
       } else {
         twi_inRepStart = true;	// we're gonna send the START
     4bda:	81 e0       	ldi	r24, 0x01	; 1
-    4bdc:	80 93 74 05 	sts	0x0574, r24	; 0x800574 <twi_inRepStart>
+    4bdc:	80 93 52 05 	sts	0x0552, r24	; 0x800552 <twi_inRepStart>
         // don't enable the interrupt. We'll generate the start, but we
         // avoid handling the interrupt until we're in the next transaction,
         // at the point where we would normally issue the start.
@@ -11600,7 +11603,7 @@ ISR(TWI_vect)
     4be0:	84 ea       	ldi	r24, 0xA4	; 164
     4be2:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7f80bc>
         twi_state = TWI_READY;
-    4be6:	10 92 77 05 	sts	0x0577, r1	; 0x800577 <twi_state>
+    4be6:	10 92 55 05 	sts	0x0555, r1	; 0x800555 <twi_state>
     4bea:	7a c0       	rjmp	.+244    	; 0x4ce0 <__vector_24+0x220>
       }
       break;
@@ -11616,10 +11619,10 @@ ISR(TWI_vect)
       // enter slave receiver mode
       twi_state = TWI_SRX;
     4bf2:	83 e0       	ldi	r24, 0x03	; 3
-    4bf4:	80 93 77 05 	sts	0x0577, r24	; 0x800577 <twi_state>
+    4bf4:	80 93 55 05 	sts	0x0555, r24	; 0x800555 <twi_state>
       // indicate that rx buffer can be overwritten and ack
       twi_rxBufferIndex = 0;
-    4bf8:	10 92 05 05 	sts	0x0505, r1	; 0x800505 <twi_rxBufferIndex>
+    4bf8:	10 92 e3 04 	sts	0x04E3, r1	; 0x8004e3 <twi_rxBufferIndex>
       twi_reply(1);
     4bfc:	81 e0       	ldi	r24, 0x01	; 1
     4bfe:	0e 94 f1 23 	call	0x47e2	; 0x47e2 <twi_reply>
@@ -11629,19 +11632,19 @@ ISR(TWI_vect)
     case TW_SR_GCALL_DATA_ACK: // data received generally, returned ack
       // if there is still room in the rx buffer
       if(twi_rxBufferIndex < TWI_BUFFER_LENGTH){
-    4c04:	80 91 05 05 	lds	r24, 0x0505	; 0x800505 <twi_rxBufferIndex>
+    4c04:	80 91 e3 04 	lds	r24, 0x04E3	; 0x8004e3 <twi_rxBufferIndex>
     4c08:	80 32       	cpi	r24, 0x20	; 32
     4c0a:	80 f4       	brcc	.+32     	; 0x4c2c <__vector_24+0x16c>
         // put byte in buffer and ack
         twi_rxBuffer[twi_rxBufferIndex++] = TWDR;
-    4c0c:	e0 91 05 05 	lds	r30, 0x0505	; 0x800505 <twi_rxBufferIndex>
+    4c0c:	e0 91 e3 04 	lds	r30, 0x04E3	; 0x8004e3 <twi_rxBufferIndex>
     4c10:	81 e0       	ldi	r24, 0x01	; 1
     4c12:	8e 0f       	add	r24, r30
-    4c14:	80 93 05 05 	sts	0x0505, r24	; 0x800505 <twi_rxBufferIndex>
+    4c14:	80 93 e3 04 	sts	0x04E3, r24	; 0x8004e3 <twi_rxBufferIndex>
     4c18:	f0 e0       	ldi	r31, 0x00	; 0
     4c1a:	80 91 bb 00 	lds	r24, 0x00BB	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
-    4c1e:	ea 5f       	subi	r30, 0xFA	; 250
-    4c20:	fa 4f       	sbci	r31, 0xFA	; 250
+    4c1e:	ec 51       	subi	r30, 0x1C	; 28
+    4c20:	fb 4f       	sbci	r31, 0xFB	; 251
     4c22:	80 83       	st	Z, r24
         twi_reply(1);
     4c24:	81 e0       	ldi	r24, 0x01	; 1
@@ -11661,28 +11664,28 @@ ISR(TWI_vect)
     4c34:	0e 94 fb 23 	call	0x47f6	; 0x47f6 <twi_releaseBus>
       // put a null char after data if there's room
       if(twi_rxBufferIndex < TWI_BUFFER_LENGTH){
-    4c38:	80 91 05 05 	lds	r24, 0x0505	; 0x800505 <twi_rxBufferIndex>
+    4c38:	80 91 e3 04 	lds	r24, 0x04E3	; 0x8004e3 <twi_rxBufferIndex>
     4c3c:	80 32       	cpi	r24, 0x20	; 32
     4c3e:	30 f4       	brcc	.+12     	; 0x4c4c <__vector_24+0x18c>
         twi_rxBuffer[twi_rxBufferIndex] = '\0';
-    4c40:	e0 91 05 05 	lds	r30, 0x0505	; 0x800505 <twi_rxBufferIndex>
+    4c40:	e0 91 e3 04 	lds	r30, 0x04E3	; 0x8004e3 <twi_rxBufferIndex>
     4c44:	f0 e0       	ldi	r31, 0x00	; 0
-    4c46:	ea 5f       	subi	r30, 0xFA	; 250
-    4c48:	fa 4f       	sbci	r31, 0xFA	; 250
+    4c46:	ec 51       	subi	r30, 0x1C	; 28
+    4c48:	fb 4f       	sbci	r31, 0xFB	; 251
     4c4a:	10 82       	st	Z, r1
       }
       // callback to user defined callback
       twi_onSlaveReceive(twi_rxBuffer, twi_rxBufferIndex);
-    4c4c:	60 91 05 05 	lds	r22, 0x0505	; 0x800505 <twi_rxBufferIndex>
+    4c4c:	60 91 e3 04 	lds	r22, 0x04E3	; 0x8004e3 <twi_rxBufferIndex>
     4c50:	70 e0       	ldi	r23, 0x00	; 0
-    4c52:	e0 91 6a 05 	lds	r30, 0x056A	; 0x80056a <twi_onSlaveReceive>
-    4c56:	f0 91 6b 05 	lds	r31, 0x056B	; 0x80056b <twi_onSlaveReceive+0x1>
-    4c5a:	86 e0       	ldi	r24, 0x06	; 6
-    4c5c:	95 e0       	ldi	r25, 0x05	; 5
+    4c52:	e0 91 48 05 	lds	r30, 0x0548	; 0x800548 <twi_onSlaveReceive>
+    4c56:	f0 91 49 05 	lds	r31, 0x0549	; 0x800549 <twi_onSlaveReceive+0x1>
+    4c5a:	84 ee       	ldi	r24, 0xE4	; 228
+    4c5c:	94 e0       	ldi	r25, 0x04	; 4
     4c5e:	09 95       	icall
       // since we submit rx buffer to "wire" library, we can reset it
       twi_rxBufferIndex = 0;
-    4c60:	10 92 05 05 	sts	0x0505, r1	; 0x800505 <twi_rxBufferIndex>
+    4c60:	10 92 e3 04 	sts	0x04E3, r1	; 0x8004e3 <twi_rxBufferIndex>
       break;
     4c64:	3d c0       	rjmp	.+122    	; 0x4ce0 <__vector_24+0x220>
     case TW_SR_DATA_NACK:       // data received, returned nack
@@ -11700,48 +11703,48 @@ ISR(TWI_vect)
       // enter slave transmitter mode
       twi_state = TWI_STX;
     4c6e:	84 e0       	ldi	r24, 0x04	; 4
-    4c70:	80 93 77 05 	sts	0x0577, r24	; 0x800577 <twi_state>
+    4c70:	80 93 55 05 	sts	0x0555, r24	; 0x800555 <twi_state>
       // ready the tx buffer index for iteration
       twi_txBufferIndex = 0;
-    4c74:	10 92 27 05 	sts	0x0527, r1	; 0x800527 <twi_txBufferIndex>
+    4c74:	10 92 05 05 	sts	0x0505, r1	; 0x800505 <twi_txBufferIndex>
       // set tx buffer length to be zero, to verify if user changes it
       twi_txBufferLength = 0;
-    4c78:	10 92 26 05 	sts	0x0526, r1	; 0x800526 <twi_txBufferLength>
+    4c78:	10 92 04 05 	sts	0x0504, r1	; 0x800504 <twi_txBufferLength>
       // request for txBuffer to be filled and length to be set
       // note: user must call twi_transmit(bytes, length) to do this
       twi_onSlaveTransmit();
-    4c7c:	e0 91 6c 05 	lds	r30, 0x056C	; 0x80056c <twi_onSlaveTransmit>
-    4c80:	f0 91 6d 05 	lds	r31, 0x056D	; 0x80056d <twi_onSlaveTransmit+0x1>
+    4c7c:	e0 91 4a 05 	lds	r30, 0x054A	; 0x80054a <twi_onSlaveTransmit>
+    4c80:	f0 91 4b 05 	lds	r31, 0x054B	; 0x80054b <twi_onSlaveTransmit+0x1>
     4c84:	09 95       	icall
       // if they didn't change buffer & length, initialize it
       if(0 == twi_txBufferLength){
-    4c86:	80 91 26 05 	lds	r24, 0x0526	; 0x800526 <twi_txBufferLength>
+    4c86:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_txBufferLength>
     4c8a:	81 11       	cpse	r24, r1
     4c8c:	05 c0       	rjmp	.+10     	; 0x4c98 <__vector_24+0x1d8>
         twi_txBufferLength = 1;
     4c8e:	81 e0       	ldi	r24, 0x01	; 1
-    4c90:	80 93 26 05 	sts	0x0526, r24	; 0x800526 <twi_txBufferLength>
+    4c90:	80 93 04 05 	sts	0x0504, r24	; 0x800504 <twi_txBufferLength>
         twi_txBuffer[0] = 0x00;
-    4c94:	10 92 28 05 	sts	0x0528, r1	; 0x800528 <twi_txBuffer>
+    4c94:	10 92 06 05 	sts	0x0506, r1	; 0x800506 <twi_txBuffer>
       }
       __attribute__ ((fallthrough));		  
       // transmit first byte from buffer, fall
     case TW_ST_DATA_ACK: // byte sent, ack returned
       // copy data to output register
       TWDR = twi_txBuffer[twi_txBufferIndex++];
-    4c98:	e0 91 27 05 	lds	r30, 0x0527	; 0x800527 <twi_txBufferIndex>
+    4c98:	e0 91 05 05 	lds	r30, 0x0505	; 0x800505 <twi_txBufferIndex>
     4c9c:	81 e0       	ldi	r24, 0x01	; 1
     4c9e:	8e 0f       	add	r24, r30
-    4ca0:	80 93 27 05 	sts	0x0527, r24	; 0x800527 <twi_txBufferIndex>
+    4ca0:	80 93 05 05 	sts	0x0505, r24	; 0x800505 <twi_txBufferIndex>
     4ca4:	f0 e0       	ldi	r31, 0x00	; 0
-    4ca6:	e8 5d       	subi	r30, 0xD8	; 216
+    4ca6:	ea 5f       	subi	r30, 0xFA	; 250
     4ca8:	fa 4f       	sbci	r31, 0xFA	; 250
     4caa:	80 81       	ld	r24, Z
     4cac:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7f80bb>
       // if there is more to send, ack, otherwise nack
       if(twi_txBufferIndex < twi_txBufferLength){
-    4cb0:	90 91 27 05 	lds	r25, 0x0527	; 0x800527 <twi_txBufferIndex>
-    4cb4:	80 91 26 05 	lds	r24, 0x0526	; 0x800526 <twi_txBufferLength>
+    4cb0:	90 91 05 05 	lds	r25, 0x0505	; 0x800505 <twi_txBufferIndex>
+    4cb4:	80 91 04 05 	lds	r24, 0x0504	; 0x800504 <twi_txBufferLength>
     4cb8:	98 17       	cp	r25, r24
     4cba:	20 f4       	brcc	.+8      	; 0x4cc4 <__vector_24+0x204>
         twi_reply(1);
@@ -11763,7 +11766,7 @@ ISR(TWI_vect)
     4cce:	0e 94 f1 23 	call	0x47e2	; 0x47e2 <twi_reply>
       // leave slave receiver state
       twi_state = TWI_READY;
-    4cd2:	10 92 77 05 	sts	0x0577, r1	; 0x800577 <twi_state>
+    4cd2:	10 92 55 05 	sts	0x0555, r1	; 0x800555 <twi_state>
       break;
     4cd6:	04 c0       	rjmp	.+8      	; 0x4ce0 <__vector_24+0x220>
 
@@ -11772,7 +11775,7 @@ ISR(TWI_vect)
       break;
     case TW_BUS_ERROR: // bus error, illegal stop/start
       twi_error = TW_BUS_ERROR;
-    4cd8:	10 92 04 05 	sts	0x0504, r1	; 0x800504 <twi_error>
+    4cd8:	10 92 e2 04 	sts	0x04E2, r1	; 0x8004e2 <twi_error>
       twi_stop();
     4cdc:	0e 94 22 25 	call	0x4a44	; 0x4a44 <twi_stop>
       break;
@@ -11803,26 +11806,26 @@ ISR(TWI_vect)
 void TwoWire::onRequest( void (*function)(void) )
 {
   user_onRequest = function;
-    4d02:	80 91 ac 05 	lds	r24, 0x05AC	; 0x8005ac <_ZN7TwoWire14rxBufferLengthE>
+    4d02:	80 91 8a 05 	lds	r24, 0x058A	; 0x80058a <_ZN7TwoWire14rxBufferLengthE>
     4d06:	90 e0       	ldi	r25, 0x00	; 0
-    4d08:	20 91 ad 05 	lds	r18, 0x05AD	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
+    4d08:	20 91 8b 05 	lds	r18, 0x058B	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
     4d0c:	82 1b       	sub	r24, r18
     4d0e:	91 09       	sbc	r25, r1
     4d10:	08 95       	ret
 
 00004d12 <_ZN7TwoWire4readEv>:
-    4d12:	90 91 ad 05 	lds	r25, 0x05AD	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
-    4d16:	80 91 ac 05 	lds	r24, 0x05AC	; 0x8005ac <_ZN7TwoWire14rxBufferLengthE>
+    4d12:	90 91 8b 05 	lds	r25, 0x058B	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
+    4d16:	80 91 8a 05 	lds	r24, 0x058A	; 0x80058a <_ZN7TwoWire14rxBufferLengthE>
     4d1a:	98 17       	cp	r25, r24
     4d1c:	50 f4       	brcc	.+20     	; 0x4d32 <_ZN7TwoWire4readEv+0x20>
     4d1e:	e9 2f       	mov	r30, r25
     4d20:	f0 e0       	ldi	r31, 0x00	; 0
-    4d22:	e2 55       	subi	r30, 0x52	; 82
+    4d22:	e4 57       	subi	r30, 0x74	; 116
     4d24:	fa 4f       	sbci	r31, 0xFA	; 250
     4d26:	20 81       	ld	r18, Z
     4d28:	30 e0       	ldi	r19, 0x00	; 0
     4d2a:	9f 5f       	subi	r25, 0xFF	; 255
-    4d2c:	90 93 ad 05 	sts	0x05AD, r25	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
+    4d2c:	90 93 8b 05 	sts	0x058B, r25	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
     4d30:	02 c0       	rjmp	.+4      	; 0x4d36 <_ZN7TwoWire4readEv+0x24>
     4d32:	2f ef       	ldi	r18, 0xFF	; 255
     4d34:	3f ef       	ldi	r19, 0xFF	; 255
@@ -11830,12 +11833,12 @@ void TwoWire::onRequest( void (*function)(void) )
     4d38:	08 95       	ret
 
 00004d3a <_ZN7TwoWire4peekEv>:
-    4d3a:	e0 91 ad 05 	lds	r30, 0x05AD	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
-    4d3e:	80 91 ac 05 	lds	r24, 0x05AC	; 0x8005ac <_ZN7TwoWire14rxBufferLengthE>
+    4d3a:	e0 91 8b 05 	lds	r30, 0x058B	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
+    4d3e:	80 91 8a 05 	lds	r24, 0x058A	; 0x80058a <_ZN7TwoWire14rxBufferLengthE>
     4d42:	e8 17       	cp	r30, r24
     4d44:	30 f4       	brcc	.+12     	; 0x4d52 <_ZN7TwoWire4peekEv+0x18>
     4d46:	f0 e0       	ldi	r31, 0x00	; 0
-    4d48:	e2 55       	subi	r30, 0x52	; 82
+    4d48:	e4 57       	subi	r30, 0x74	; 116
     4d4a:	fa 4f       	sbci	r31, 0xFA	; 250
     4d4c:	80 81       	ld	r24, Z
     4d4e:	90 e0       	ldi	r25, 0x00	; 0
@@ -11851,12 +11854,12 @@ void TwoWire::onRequest( void (*function)(void) )
     4d5a:	cf 93       	push	r28
     4d5c:	df 93       	push	r29
     4d5e:	ec 01       	movw	r28, r24
-    4d60:	e0 91 84 05 	lds	r30, 0x0584	; 0x800584 <_ZN7TwoWire14user_onReceiveE>
-    4d64:	f0 91 85 05 	lds	r31, 0x0585	; 0x800585 <_ZN7TwoWire14user_onReceiveE+0x1>
+    4d60:	e0 91 62 05 	lds	r30, 0x0562	; 0x800562 <_ZN7TwoWire14user_onReceiveE>
+    4d64:	f0 91 63 05 	lds	r31, 0x0563	; 0x800563 <_ZN7TwoWire14user_onReceiveE+0x1>
     4d68:	30 97       	sbiw	r30, 0x00	; 0
     4d6a:	e1 f0       	breq	.+56     	; 0x4da4 <_ZN7TwoWire16onReceiveServiceEPhi+0x4a>
-    4d6c:	90 91 ad 05 	lds	r25, 0x05AD	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
-    4d70:	80 91 ac 05 	lds	r24, 0x05AC	; 0x8005ac <_ZN7TwoWire14rxBufferLengthE>
+    4d6c:	90 91 8b 05 	lds	r25, 0x058B	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
+    4d70:	80 91 8a 05 	lds	r24, 0x058A	; 0x80058a <_ZN7TwoWire14rxBufferLengthE>
     4d74:	98 17       	cp	r25, r24
     4d76:	b0 f0       	brcs	.+44     	; 0x4da4 <_ZN7TwoWire16onReceiveServiceEPhi+0x4a>
     4d78:	90 e0       	ldi	r25, 0x00	; 0
@@ -11870,26 +11873,26 @@ void TwoWire::onRequest( void (*function)(void) )
     4d88:	b1 1d       	adc	r27, r1
     4d8a:	4c 91       	ld	r20, X
     4d8c:	d9 01       	movw	r26, r18
-    4d8e:	a2 55       	subi	r26, 0x52	; 82
+    4d8e:	a4 57       	subi	r26, 0x74	; 116
     4d90:	ba 4f       	sbci	r27, 0xFA	; 250
     4d92:	4c 93       	st	X, r20
     4d94:	9f 5f       	subi	r25, 0xFF	; 255
     4d96:	f1 cf       	rjmp	.-30     	; 0x4d7a <_ZN7TwoWire16onReceiveServiceEPhi+0x20>
     4d98:	cb 01       	movw	r24, r22
-    4d9a:	10 92 ad 05 	sts	0x05AD, r1	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
-    4d9e:	60 93 ac 05 	sts	0x05AC, r22	; 0x8005ac <_ZN7TwoWire14rxBufferLengthE>
+    4d9a:	10 92 8b 05 	sts	0x058B, r1	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
+    4d9e:	60 93 8a 05 	sts	0x058A, r22	; 0x80058a <_ZN7TwoWire14rxBufferLengthE>
     4da2:	09 95       	icall
     4da4:	df 91       	pop	r29
     4da6:	cf 91       	pop	r28
     4da8:	08 95       	ret
 
 00004daa <_ZN7TwoWire16onRequestServiceEv>:
-    4daa:	e0 91 86 05 	lds	r30, 0x0586	; 0x800586 <_ZN7TwoWire14user_onRequestE>
-    4dae:	f0 91 87 05 	lds	r31, 0x0587	; 0x800587 <_ZN7TwoWire14user_onRequestE+0x1>
+    4daa:	e0 91 64 05 	lds	r30, 0x0564	; 0x800564 <_ZN7TwoWire14user_onRequestE>
+    4dae:	f0 91 65 05 	lds	r31, 0x0565	; 0x800565 <_ZN7TwoWire14user_onRequestE+0x1>
     4db2:	30 97       	sbiw	r30, 0x00	; 0
     4db4:	29 f0       	breq	.+10     	; 0x4dc0 <_ZN7TwoWire16onRequestServiceEv+0x16>
-    4db6:	10 92 8a 05 	sts	0x058A, r1	; 0x80058a <_ZN7TwoWire13txBufferIndexE>
-    4dba:	10 92 89 05 	sts	0x0589, r1	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
+    4db6:	10 92 68 05 	sts	0x0568, r1	; 0x800568 <_ZN7TwoWire13txBufferIndexE>
+    4dba:	10 92 67 05 	sts	0x0567, r1	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
     4dbe:	09 95       	icall
     4dc0:	08 95       	ret
 
@@ -11905,7 +11908,7 @@ void TwoWire::onRequest( void (*function)(void) )
     4dd2:	8c 01       	movw	r16, r24
     4dd4:	6b 01       	movw	r12, r22
     4dd6:	7a 01       	movw	r14, r20
-    4dd8:	80 91 88 05 	lds	r24, 0x0588	; 0x800588 <_ZN7TwoWire12transmittingE>
+    4dd8:	80 91 66 05 	lds	r24, 0x0566	; 0x800566 <_ZN7TwoWire12transmittingE>
     4ddc:	88 23       	and	r24, r24
     4dde:	99 f0       	breq	.+38     	; 0x4e06 <_ZN7TwoWire5writeEPKhj+0x44>
     4de0:	c0 e0       	ldi	r28, 0x00	; 0
@@ -11949,10 +11952,10 @@ void TwoWire::onRequest( void (*function)(void) )
     4e2a:	de b7       	in	r29, 0x3e	; 62
     4e2c:	fc 01       	movw	r30, r24
     4e2e:	69 83       	std	Y+1, r22	; 0x01
-    4e30:	90 91 88 05 	lds	r25, 0x0588	; 0x800588 <_ZN7TwoWire12transmittingE>
+    4e30:	90 91 66 05 	lds	r25, 0x0566	; 0x800566 <_ZN7TwoWire12transmittingE>
     4e34:	99 23       	and	r25, r25
     4e36:	d9 f0       	breq	.+54     	; 0x4e6e <_ZN7TwoWire5writeEh+0x4c>
-    4e38:	90 91 89 05 	lds	r25, 0x0589	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
+    4e38:	90 91 67 05 	lds	r25, 0x0567	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
     4e3c:	90 32       	cpi	r25, 0x20	; 32
     4e3e:	38 f0       	brcs	.+14     	; 0x4e4e <_ZN7TwoWire5writeEh+0x2c>
     4e40:	81 e0       	ldi	r24, 0x01	; 1
@@ -11962,16 +11965,16 @@ void TwoWire::onRequest( void (*function)(void) )
     4e48:	80 e0       	ldi	r24, 0x00	; 0
     4e4a:	90 e0       	ldi	r25, 0x00	; 0
     4e4c:	17 c0       	rjmp	.+46     	; 0x4e7c <_ZN7TwoWire5writeEh+0x5a>
-    4e4e:	80 91 8a 05 	lds	r24, 0x058A	; 0x80058a <_ZN7TwoWire13txBufferIndexE>
+    4e4e:	80 91 68 05 	lds	r24, 0x0568	; 0x800568 <_ZN7TwoWire13txBufferIndexE>
     4e52:	e8 2f       	mov	r30, r24
     4e54:	f0 e0       	ldi	r31, 0x00	; 0
-    4e56:	e5 57       	subi	r30, 0x75	; 117
+    4e56:	e7 59       	subi	r30, 0x97	; 151
     4e58:	fa 4f       	sbci	r31, 0xFA	; 250
     4e5a:	99 81       	ldd	r25, Y+1	; 0x01
     4e5c:	90 83       	st	Z, r25
     4e5e:	8f 5f       	subi	r24, 0xFF	; 255
-    4e60:	80 93 8a 05 	sts	0x058A, r24	; 0x80058a <_ZN7TwoWire13txBufferIndexE>
-    4e64:	80 93 89 05 	sts	0x0589, r24	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
+    4e60:	80 93 68 05 	sts	0x0568, r24	; 0x800568 <_ZN7TwoWire13txBufferIndexE>
+    4e64:	80 93 67 05 	sts	0x0567, r24	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
     4e68:	81 e0       	ldi	r24, 0x01	; 1
     4e6a:	90 e0       	ldi	r25, 0x00	; 0
     4e6c:	07 c0       	rjmp	.+14     	; 0x4e7c <_ZN7TwoWire5writeEh+0x5a>
@@ -11998,7 +12001,7 @@ void TwoWire::onRequest( void (*function)(void) )
     4e94:	95 83       	std	Z+5, r25	; 0x05
     4e96:	a6 83       	std	Z+6, r26	; 0x06
     4e98:	b7 83       	std	Z+7, r27	; 0x07
-    4e9a:	84 e7       	ldi	r24, 0x74	; 116
+    4e9a:	82 e5       	ldi	r24, 0x52	; 82
     4e9c:	92 e0       	ldi	r25, 0x02	; 2
     4e9e:	91 83       	std	Z+1, r25	; 0x01
     4ea0:	80 83       	st	Z, r24
@@ -12010,16 +12013,16 @@ void TwoWire::onRequest( void (*function)(void) )
     4ea8:	6f 3f       	cpi	r22, 0xFF	; 255
     4eaa:	7f 4f       	sbci	r23, 0xFF	; 255
     4eac:	21 f4       	brne	.+8      	; 0x4eb6 <_Z41__static_initialization_and_destruction_0ii+0x12>
-    4eae:	88 e7       	ldi	r24, 0x78	; 120
+    4eae:	86 e5       	ldi	r24, 0x56	; 86
     4eb0:	95 e0       	ldi	r25, 0x05	; 5
     4eb2:	0e 94 42 27 	call	0x4e84	; 0x4e84 <_ZN7TwoWireC1Ev>
     4eb6:	08 95       	ret
 
 00004eb8 <_ZN7TwoWire5beginEv>:
-    4eb8:	10 92 ad 05 	sts	0x05AD, r1	; 0x8005ad <_ZN7TwoWire13rxBufferIndexE>
-    4ebc:	10 92 ac 05 	sts	0x05AC, r1	; 0x8005ac <_ZN7TwoWire14rxBufferLengthE>
-    4ec0:	10 92 8a 05 	sts	0x058A, r1	; 0x80058a <_ZN7TwoWire13txBufferIndexE>
-    4ec4:	10 92 89 05 	sts	0x0589, r1	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
+    4eb8:	10 92 8b 05 	sts	0x058B, r1	; 0x80058b <_ZN7TwoWire13rxBufferIndexE>
+    4ebc:	10 92 8a 05 	sts	0x058A, r1	; 0x80058a <_ZN7TwoWire14rxBufferLengthE>
+    4ec0:	10 92 68 05 	sts	0x0568, r1	; 0x800568 <_ZN7TwoWire13txBufferIndexE>
+    4ec4:	10 92 67 05 	sts	0x0567, r1	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
     4ec8:	0e 94 8f 23 	call	0x471e	; 0x471e <twi_init>
     4ecc:	85 ed       	ldi	r24, 0xD5	; 213
     4ece:	96 e2       	ldi	r25, 0x26	; 38
@@ -12031,24 +12034,24 @@ void TwoWire::onRequest( void (*function)(void) )
 
 00004ede <_ZN7TwoWire17beginTransmissionEh>:
     4ede:	81 e0       	ldi	r24, 0x01	; 1
-    4ee0:	80 93 88 05 	sts	0x0588, r24	; 0x800588 <_ZN7TwoWire12transmittingE>
-    4ee4:	60 93 ab 05 	sts	0x05AB, r22	; 0x8005ab <_ZN7TwoWire9txAddressE>
-    4ee8:	10 92 8a 05 	sts	0x058A, r1	; 0x80058a <_ZN7TwoWire13txBufferIndexE>
-    4eec:	10 92 89 05 	sts	0x0589, r1	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
+    4ee0:	80 93 66 05 	sts	0x0566, r24	; 0x800566 <_ZN7TwoWire12transmittingE>
+    4ee4:	60 93 89 05 	sts	0x0589, r22	; 0x800589 <_ZN7TwoWire9txAddressE>
+    4ee8:	10 92 68 05 	sts	0x0568, r1	; 0x800568 <_ZN7TwoWire13txBufferIndexE>
+    4eec:	10 92 67 05 	sts	0x0567, r1	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
     4ef0:	08 95       	ret
 
 00004ef2 <_ZN7TwoWire15endTransmissionEh>:
     4ef2:	0f 93       	push	r16
-    4ef4:	40 91 89 05 	lds	r20, 0x0589	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
+    4ef4:	40 91 67 05 	lds	r20, 0x0567	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
     4ef8:	06 2f       	mov	r16, r22
     4efa:	21 e0       	ldi	r18, 0x01	; 1
-    4efc:	6b e8       	ldi	r22, 0x8B	; 139
+    4efc:	69 e6       	ldi	r22, 0x69	; 105
     4efe:	75 e0       	ldi	r23, 0x05	; 5
-    4f00:	80 91 ab 05 	lds	r24, 0x05AB	; 0x8005ab <_ZN7TwoWire9txAddressE>
+    4f00:	80 91 89 05 	lds	r24, 0x0589	; 0x800589 <_ZN7TwoWire9txAddressE>
     4f04:	0e 94 21 24 	call	0x4842	; 0x4842 <twi_writeTo>
-    4f08:	10 92 8a 05 	sts	0x058A, r1	; 0x80058a <_ZN7TwoWire13txBufferIndexE>
-    4f0c:	10 92 89 05 	sts	0x0589, r1	; 0x800589 <_ZN7TwoWire14txBufferLengthE>
-    4f10:	10 92 88 05 	sts	0x0588, r1	; 0x800588 <_ZN7TwoWire12transmittingE>
+    4f08:	10 92 68 05 	sts	0x0568, r1	; 0x800568 <_ZN7TwoWire13txBufferIndexE>
+    4f0c:	10 92 67 05 	sts	0x0567, r1	; 0x800567 <_ZN7TwoWire14txBufferLengthE>
+    4f10:	10 92 66 05 	sts	0x0566, r1	; 0x800566 <_ZN7TwoWire12transmittingE>
     4f14:	0f 91       	pop	r16
     4f16:	08 95       	ret
 
@@ -12702,8 +12705,8 @@ TwoWire Wire = TwoWire();
     53dc:	10 f4       	brcc	.+4      	; 0x53e2 <malloc+0x12>
     53de:	82 e0       	ldi	r24, 0x02	; 2
     53e0:	90 e0       	ldi	r25, 0x00	; 0
-    53e2:	e0 91 d0 05 	lds	r30, 0x05D0	; 0x8005d0 <__flp>
-    53e6:	f0 91 d1 05 	lds	r31, 0x05D1	; 0x8005d1 <__flp+0x1>
+    53e2:	e0 91 ae 05 	lds	r30, 0x05AE	; 0x8005ae <__flp>
+    53e6:	f0 91 af 05 	lds	r31, 0x05AF	; 0x8005af <__flp+0x1>
     53ea:	20 e0       	ldi	r18, 0x00	; 0
     53ec:	30 e0       	ldi	r19, 0x00	; 0
     53ee:	a0 e0       	ldi	r26, 0x00	; 0
@@ -12728,8 +12731,8 @@ TwoWire Wire = TwoWire();
     5414:	13 96       	adiw	r26, 0x03	; 3
     5416:	1c 93       	st	X, r17
     5418:	27 c0       	rjmp	.+78     	; 0x5468 <malloc+0x98>
-    541a:	00 93 d0 05 	sts	0x05D0, r16	; 0x8005d0 <__flp>
-    541e:	10 93 d1 05 	sts	0x05D1, r17	; 0x8005d1 <__flp+0x1>
+    541a:	00 93 ae 05 	sts	0x05AE, r16	; 0x8005ae <__flp>
+    541e:	10 93 af 05 	sts	0x05AF, r17	; 0x8005af <__flp+0x1>
     5422:	22 c0       	rjmp	.+68     	; 0x5468 <malloc+0x98>
     5424:	21 15       	cp	r18, r1
     5426:	31 05       	cpc	r19, r1
@@ -12760,8 +12763,8 @@ TwoWire Wire = TwoWire();
     5458:	93 83       	std	Z+3, r25	; 0x03
     545a:	82 83       	std	Z+2, r24	; 0x02
     545c:	04 c0       	rjmp	.+8      	; 0x5466 <malloc+0x96>
-    545e:	90 93 d1 05 	sts	0x05D1, r25	; 0x8005d1 <__flp+0x1>
-    5462:	80 93 d0 05 	sts	0x05D0, r24	; 0x8005d0 <__flp>
+    545e:	90 93 af 05 	sts	0x05AF, r25	; 0x8005af <__flp+0x1>
+    5462:	80 93 ae 05 	sts	0x05AE, r24	; 0x8005ae <__flp>
     5466:	fe 01       	movw	r30, r28
     5468:	32 96       	adiw	r30, 0x02	; 2
     546a:	44 c0       	rjmp	.+136    	; 0x54f4 <malloc+0x124>
@@ -12775,14 +12778,14 @@ TwoWire Wire = TwoWire();
     547a:	39 83       	std	Y+1, r19	; 0x01
     547c:	28 83       	st	Y, r18
     547e:	3a c0       	rjmp	.+116    	; 0x54f4 <malloc+0x124>
-    5480:	20 91 ce 05 	lds	r18, 0x05CE	; 0x8005ce <__brkval>
-    5484:	30 91 cf 05 	lds	r19, 0x05CF	; 0x8005cf <__brkval+0x1>
+    5480:	20 91 ac 05 	lds	r18, 0x05AC	; 0x8005ac <__brkval>
+    5484:	30 91 ad 05 	lds	r19, 0x05AD	; 0x8005ad <__brkval+0x1>
     5488:	23 2b       	or	r18, r19
     548a:	41 f4       	brne	.+16     	; 0x549c <malloc+0xcc>
     548c:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <__malloc_heap_start>
     5490:	30 91 03 01 	lds	r19, 0x0103	; 0x800103 <__malloc_heap_start+0x1>
-    5494:	30 93 cf 05 	sts	0x05CF, r19	; 0x8005cf <__brkval+0x1>
-    5498:	20 93 ce 05 	sts	0x05CE, r18	; 0x8005ce <__brkval>
+    5494:	30 93 ad 05 	sts	0x05AD, r19	; 0x8005ad <__brkval+0x1>
+    5498:	20 93 ac 05 	sts	0x05AC, r18	; 0x8005ac <__brkval>
     549c:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
     54a0:	30 91 01 01 	lds	r19, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
     54a4:	21 15       	cp	r18, r1
@@ -12794,8 +12797,8 @@ TwoWire Wire = TwoWire();
     54b2:	50 91 05 01 	lds	r21, 0x0105	; 0x800105 <__malloc_margin+0x1>
     54b6:	24 1b       	sub	r18, r20
     54b8:	35 0b       	sbc	r19, r21
-    54ba:	e0 91 ce 05 	lds	r30, 0x05CE	; 0x8005ce <__brkval>
-    54be:	f0 91 cf 05 	lds	r31, 0x05CF	; 0x8005cf <__brkval+0x1>
+    54ba:	e0 91 ac 05 	lds	r30, 0x05AC	; 0x8005ac <__brkval>
+    54be:	f0 91 ad 05 	lds	r31, 0x05AD	; 0x8005ad <__brkval+0x1>
     54c2:	e2 17       	cp	r30, r18
     54c4:	f3 07       	cpc	r31, r19
     54c6:	a0 f4       	brcc	.+40     	; 0x54f0 <malloc+0x120>
@@ -12812,8 +12815,8 @@ TwoWire Wire = TwoWire();
     54dc:	48 f0       	brcs	.+18     	; 0x54f0 <malloc+0x120>
     54de:	4e 0f       	add	r20, r30
     54e0:	5f 1f       	adc	r21, r31
-    54e2:	50 93 cf 05 	sts	0x05CF, r21	; 0x8005cf <__brkval+0x1>
-    54e6:	40 93 ce 05 	sts	0x05CE, r20	; 0x8005ce <__brkval>
+    54e2:	50 93 ad 05 	sts	0x05AD, r21	; 0x8005ad <__brkval+0x1>
+    54e6:	40 93 ac 05 	sts	0x05AC, r20	; 0x8005ac <__brkval>
     54ea:	81 93       	st	Z+, r24
     54ec:	91 93       	st	Z+, r25
     54ee:	02 c0       	rjmp	.+4      	; 0x54f4 <malloc+0x124>
@@ -12836,21 +12839,21 @@ TwoWire Wire = TwoWire();
     550c:	32 97       	sbiw	r30, 0x02	; 2
     550e:	13 82       	std	Z+3, r1	; 0x03
     5510:	12 82       	std	Z+2, r1	; 0x02
-    5512:	a0 91 d0 05 	lds	r26, 0x05D0	; 0x8005d0 <__flp>
-    5516:	b0 91 d1 05 	lds	r27, 0x05D1	; 0x8005d1 <__flp+0x1>
+    5512:	a0 91 ae 05 	lds	r26, 0x05AE	; 0x8005ae <__flp>
+    5516:	b0 91 af 05 	lds	r27, 0x05AF	; 0x8005af <__flp+0x1>
     551a:	10 97       	sbiw	r26, 0x00	; 0
     551c:	81 f4       	brne	.+32     	; 0x553e <free+0x3e>
     551e:	20 81       	ld	r18, Z
     5520:	31 81       	ldd	r19, Z+1	; 0x01
     5522:	82 0f       	add	r24, r18
     5524:	93 1f       	adc	r25, r19
-    5526:	20 91 ce 05 	lds	r18, 0x05CE	; 0x8005ce <__brkval>
-    552a:	30 91 cf 05 	lds	r19, 0x05CF	; 0x8005cf <__brkval+0x1>
+    5526:	20 91 ac 05 	lds	r18, 0x05AC	; 0x8005ac <__brkval>
+    552a:	30 91 ad 05 	lds	r19, 0x05AD	; 0x8005ad <__brkval+0x1>
     552e:	28 17       	cp	r18, r24
     5530:	39 07       	cpc	r19, r25
     5532:	51 f5       	brne	.+84     	; 0x5588 <free+0x88>
-    5534:	f0 93 cf 05 	sts	0x05CF, r31	; 0x8005cf <__brkval+0x1>
-    5538:	e0 93 ce 05 	sts	0x05CE, r30	; 0x8005ce <__brkval>
+    5534:	f0 93 ad 05 	sts	0x05AD, r31	; 0x8005ad <__brkval+0x1>
+    5538:	e0 93 ac 05 	sts	0x05AC, r30	; 0x8005ac <__brkval>
     553c:	67 c0       	rjmp	.+206    	; 0x560c <free+0x10c>
     553e:	ed 01       	movw	r28, r26
     5540:	20 e0       	ldi	r18, 0x00	; 0
@@ -12889,8 +12892,8 @@ TwoWire Wire = TwoWire();
     5582:	21 15       	cp	r18, r1
     5584:	31 05       	cpc	r19, r1
     5586:	29 f4       	brne	.+10     	; 0x5592 <free+0x92>
-    5588:	f0 93 d1 05 	sts	0x05D1, r31	; 0x8005d1 <__flp+0x1>
-    558c:	e0 93 d0 05 	sts	0x05D0, r30	; 0x8005d0 <__flp>
+    5588:	f0 93 af 05 	sts	0x05AF, r31	; 0x8005af <__flp+0x1>
+    558c:	e0 93 ae 05 	sts	0x05AE, r30	; 0x8005ae <__flp>
     5590:	3d c0       	rjmp	.+122    	; 0x560c <free+0x10c>
     5592:	e9 01       	movw	r28, r18
     5594:	fb 83       	std	Y+3, r31	; 0x03
@@ -12933,20 +12936,20 @@ TwoWire Wire = TwoWire();
     55de:	3f 4f       	sbci	r19, 0xFF	; 255
     55e0:	82 0f       	add	r24, r18
     55e2:	93 1f       	adc	r25, r19
-    55e4:	20 91 ce 05 	lds	r18, 0x05CE	; 0x8005ce <__brkval>
-    55e8:	30 91 cf 05 	lds	r19, 0x05CF	; 0x8005cf <__brkval+0x1>
+    55e4:	20 91 ac 05 	lds	r18, 0x05AC	; 0x8005ac <__brkval>
+    55e8:	30 91 ad 05 	lds	r19, 0x05AD	; 0x8005ad <__brkval+0x1>
     55ec:	28 17       	cp	r18, r24
     55ee:	39 07       	cpc	r19, r25
     55f0:	69 f4       	brne	.+26     	; 0x560c <free+0x10c>
     55f2:	30 97       	sbiw	r30, 0x00	; 0
     55f4:	29 f4       	brne	.+10     	; 0x5600 <free+0x100>
-    55f6:	10 92 d1 05 	sts	0x05D1, r1	; 0x8005d1 <__flp+0x1>
-    55fa:	10 92 d0 05 	sts	0x05D0, r1	; 0x8005d0 <__flp>
+    55f6:	10 92 af 05 	sts	0x05AF, r1	; 0x8005af <__flp+0x1>
+    55fa:	10 92 ae 05 	sts	0x05AE, r1	; 0x8005ae <__flp>
     55fe:	02 c0       	rjmp	.+4      	; 0x5604 <free+0x104>
     5600:	13 82       	std	Z+3, r1	; 0x03
     5602:	12 82       	std	Z+2, r1	; 0x02
-    5604:	b0 93 cf 05 	sts	0x05CF, r27	; 0x8005cf <__brkval+0x1>
-    5608:	a0 93 ce 05 	sts	0x05CE, r26	; 0x8005ce <__brkval>
+    5604:	b0 93 ad 05 	sts	0x05AD, r27	; 0x8005ad <__brkval+0x1>
+    5608:	a0 93 ac 05 	sts	0x05AC, r26	; 0x8005ac <__brkval>
     560c:	df 91       	pop	r29
     560e:	cf 91       	pop	r28
     5610:	08 95       	ret
