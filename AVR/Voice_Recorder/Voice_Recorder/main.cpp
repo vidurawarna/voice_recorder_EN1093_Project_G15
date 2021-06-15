@@ -15,6 +15,10 @@
 #include <Wire.h>
 #include <LCDScreen.h>
 
+//>----------- PIN  CONFIGURATIONS -------------<
+
+#define mic 0b0000
+#define sdcard 10
 
 //>----------------- CALCULATIONS -----------------<
 
@@ -22,29 +26,7 @@
 #define higher_Byte(w) ((uint8_t) ((w) >> 8))
 #define sbi(port,bit) port |= 1<<bit
 
-//>----------- PIN  CONFIGURATIONS -------------<
-
-/*
- SD card attached to SPI bus as follows:
-	+-------------+----------------------+------------+  
-	| Connection  | Arduino Uno/Nano pin | ATmega328p |
-	+-------------+----------------------+------------+
-    | MOSI        | pin 11               | PB3        |
-	+-------------+----------------------+------------+
-    | MISO        | pin 12               | PB4        |
-	+-------------+----------------------+------------+
-    | CLK         | pin 13               | PB5        |
-	+-------------+----------------------+------------+
-    | CS          | pin 10               | PB2        |
-	+-------------+----------------------+------------+
-*/
-
-#define mic 0b0000
-//#define ScalePOT 0b0011
-//#define shiftEnhancePOT 0b0001
-#define sdcard 10
-
-//>-------------- common values ----------------<
+//>-------------- common values -------------------<
 
 //Audio file attributes
 #define sampleRate 12500
@@ -126,11 +108,9 @@ int main(void)
 	
 	//CONFIGURING PINS FOR ANALOG INPUT
 	DDRC &= 0b11111110;	
-	//analogRead_config();
 	
 	//CONFIGURING SPEAKER FOR OUTPUT
 	DDRB |= (1<<DDB1);
-	//analogWrite_config();
 	OCR1A = 0;
 	
 	//BEGIN THE LCD
@@ -228,13 +208,12 @@ int main(void)
 			{
 						  //This mode deletes the track loaded in payer
 						  clrDisplay("Delete?");
-						  //secondLine("DELETE");
+						  secondLine("DELETE NO(Play)");
 						  while (true)
 						  {
 							  char key = keyInput();
 							  if (key && key == 'd')
 							  {
-								  //SD.remove(fname_temp);
 								  deleteTrack();
 								  clrDisplay("Deleted");
 								  getTrackList();
@@ -464,10 +443,10 @@ void checkChanges() {
   */
 	clrDisplay("SCL M");
 	
-
-	char fsc =49;//= analog_in(ScalePOT);
-	char fshift='X'; //= analog_in(shiftEnhancePOT);
+	char fsc =49;
+	char fshift='X';
 	char row[6] = {' ',fsc,' ',' ',fshift};
+		
 	while(true){
 		char key_input = keyInput();
 		if (key_input=='p')
@@ -506,7 +485,6 @@ void checkChanges() {
 		  clrDisplay("Processing");
 		  pickFilter(fshift);
 	}
-
 }
 //END OF RECORD AND PLAY FUNCTIONS
 
@@ -581,6 +559,9 @@ void checkDuplicates() {
 }
 
 void deleteTrack(){
+	/*
+		Checks for depending files of the current file and delete them.
+	*/
 	SD.remove(fname_temp);
 
 	fname_temp[0] = 'S';fname_temp[1] = tracks[fcount];fname_temp[2] = '.';fname_temp[3] = 'W';fname_temp[4] = 'A';fname_temp[5] = 'V';
@@ -651,7 +632,7 @@ void finalizeWave(File sFile) {
 //END OF WAVE FILE CREATE FUNCTIONS
 
 
-//>--------------------------------------< FREQUENCY SHIFTING >--------------------------------------<
+//>--------------------------------------< FREQUENCY CHANGES >--------------------------------------<
 void sig_freqShift(char tempName[]) {
 		
 		File out = SD.open("temp.bin", FILE_WRITE);
@@ -698,8 +679,7 @@ void pickFilter(char M){
 			}
 			else{
 				convolve(filter,tempName,11,500);
-			}
-			
+			}			
 		}
 		
 		else if(M=='B'){
@@ -767,7 +747,7 @@ void convolve(int filter[],char tempName[],uint8_t filterlen,int divider) {
 			
 	if(SD.exists("temp.bin")){SD.remove("temp.bin");}	
 }
-//END OF FREQUENCY SHIFTING
+//END OF FREQUENCY CHANGES
 
 
 //>--------------------------------------< IO FUNCTIONS >--------------------------------------<
@@ -843,3 +823,4 @@ void initialize_Things()
 	// reconnected in Serial.begin()
 	UCSR0B = 0;
 }
+//END OF IO FUNCTIONS
