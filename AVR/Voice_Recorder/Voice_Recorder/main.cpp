@@ -276,7 +276,7 @@ char keyInput() {
   */
   char k = 0;
 
-  if (uint8_t m = ~PIND) {
+  while (uint8_t m = ~PIND) {
 
     switch (m) {
       case 1: k = '_'; break;
@@ -345,7 +345,8 @@ void record() {
 		  }
 
 		  test_File.write(pot_Read);
-		  _delay_us(16);
+		  //_delay_us(8);//16kHz
+		  _delay_us(28);// 12.5kHz
 
 		}
 		finalizeWave(test_File);
@@ -383,7 +384,7 @@ clrDisplay("Playing");
         OCR1A = test_File.read();
 		
         _delay_us(40);  //Use this delay for 12.5KHz play
-        //_delay_us(20);    //Use this delay for 16kHz play
+        //_delay_us(16);    //Use this delay for 16kHz play
         
 		//****Comment both of delays for 24kHz play*******
         
@@ -412,7 +413,7 @@ clrDisplay("Playing");
 		  OCR1A = test_File.read();
           
           _delay_us(40);  //Use this delay for 12.5KHz play
-          //_delay_us(20);    //Use this delay for 16kHz play
+          //_delay_us(16);    //Use this delay for 16kHz play
           //Comment both of delays for 24kHz play
 
         } else {

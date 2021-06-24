@@ -1683,7 +1683,7 @@ END GROUP
  .debug_abbrev  0x00003946      0x2a8 Wire/src/utility/twi.o
  .debug_abbrev  0x00003bee      0x503 Wire/src/Wire.o
 
-.debug_line     0x00000000     0x6b3e
+.debug_line     0x00000000     0x6b44
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000134       0xbb Core/abi.o
@@ -1691,15 +1691,15 @@ END GROUP
  .debug_line    0x0000094d      0x1b8 Core/time.o
  .debug_line    0x00000b05      0x27d Core/wiring_digital.o
  .debug_line    0x00000d82      0x47a LCDScreen/LCDScreen.o
- .debug_line    0x000011fc      0xdce main.o
- .debug_line    0x00001fca      0x614 SD/src/File.o
- .debug_line    0x000025de      0x903 SD/src/SD.o
- .debug_line    0x00002ee1      0xd5e SD/src/utility/Sd2Card.o
- .debug_line    0x00003c3f     0x16a4 SD/src/utility/SdFile.o
- .debug_line    0x000052e3      0x6a5 SD/src/utility/SdVolume.o
- .debug_line    0x00005988      0x31b SPI/src/SPI.o
- .debug_line    0x00005ca3      0x80c Wire/src/utility/twi.o
- .debug_line    0x000064af      0x68f Wire/src/Wire.o
+ .debug_line    0x000011fc      0xdd4 main.o
+ .debug_line    0x00001fd0      0x614 SD/src/File.o
+ .debug_line    0x000025e4      0x903 SD/src/SD.o
+ .debug_line    0x00002ee7      0xd5e SD/src/utility/Sd2Card.o
+ .debug_line    0x00003c45     0x16a4 SD/src/utility/SdFile.o
+ .debug_line    0x000052e9      0x6a5 SD/src/utility/SdVolume.o
+ .debug_line    0x0000598e      0x31b SPI/src/SPI.o
+ .debug_line    0x00005ca9      0x80c Wire/src/utility/twi.o
+ .debug_line    0x000064b5      0x68f Wire/src/Wire.o
 
 .debug_frame    0x00000000     0x20b8
  *(.debug_frame)
@@ -1750,21 +1750,21 @@ END GROUP
  .debug_str     0x000053db      0x521 Wire/src/Wire.o
                                0x1999 (size before relaxing)
 
-.debug_loc      0x00000000     0xd948
+.debug_loc      0x00000000     0xd8ef
  *(.debug_loc)
  .debug_loc     0x00000000     0x198d Core/Print.o
  .debug_loc     0x0000198d      0x185 Core/time.o
  .debug_loc     0x00001b12      0x53c Core/wiring_digital.o
  .debug_loc     0x0000204e      0x903 LCDScreen/LCDScreen.o
- .debug_loc     0x00002951     0x137d main.o
- .debug_loc     0x00003cce      0x9e8 SD/src/File.o
- .debug_loc     0x000046b6     0x17a9 SD/src/SD.o
- .debug_loc     0x00005e5f     0x1f25 SD/src/utility/Sd2Card.o
- .debug_loc     0x00007d84     0x3616 SD/src/utility/SdFile.o
- .debug_loc     0x0000b39a      0xff5 SD/src/utility/SdVolume.o
- .debug_loc     0x0000c38f      0x1e4 SPI/src/SPI.o
- .debug_loc     0x0000c573      0x7a4 Wire/src/utility/twi.o
- .debug_loc     0x0000cd17      0xc31 Wire/src/Wire.o
+ .debug_loc     0x00002951     0x1324 main.o
+ .debug_loc     0x00003c75      0x9e8 SD/src/File.o
+ .debug_loc     0x0000465d     0x17a9 SD/src/SD.o
+ .debug_loc     0x00005e06     0x1f25 SD/src/utility/Sd2Card.o
+ .debug_loc     0x00007d2b     0x3616 SD/src/utility/SdFile.o
+ .debug_loc     0x0000b341      0xff5 SD/src/utility/SdVolume.o
+ .debug_loc     0x0000c336      0x1e4 SPI/src/SPI.o
+ .debug_loc     0x0000c51a      0x7a4 Wire/src/utility/twi.o
+ .debug_loc     0x0000ccbe      0xc31 Wire/src/Wire.o
 
 .debug_macinfo
  *(.debug_macinfo)

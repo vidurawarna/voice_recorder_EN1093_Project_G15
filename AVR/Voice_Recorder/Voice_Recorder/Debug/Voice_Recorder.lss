@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 000040f1  00000000  00000000  00025d0c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00006b3e  00000000  00000000  00029dfd  2**0
+  8 .debug_line   00006b44  00000000  00000000  00029dfd  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000020b8  00000000  00000000  0003093c  2**2
+  9 .debug_frame  000020b8  00000000  00000000  00030944  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000058fc  00000000  00000000  000329f4  2**0
+ 10 .debug_str    000058fc  00000000  00000000  000329fc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000d948  00000000  00000000  000382f0  2**0
+ 11 .debug_loc    0000d8ef  00000000  00000000  000382f8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000009e8  00000000  00000000  00045c38  2**0
+ 12 .debug_ranges 000009e8  00000000  00000000  00045be7  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1399,54 +1399,54 @@ void firstLine(const char *msg) {
      7f4:	08 95       	ret
 
 000007f6 <_Z8keyInputv>:
-     7f6:	89 b1       	in	r24, 0x09	; 9
-     7f8:	80 95       	com	r24
-     7fa:	61 f1       	breq	.+88     	; 0x854 <__DATA_REGION_LENGTH__+0x54>
-     7fc:	88 30       	cpi	r24, 0x08	; 8
-     7fe:	99 f0       	breq	.+38     	; 0x826 <__DATA_REGION_LENGTH__+0x26>
-     800:	38 f4       	brcc	.+14     	; 0x810 <__DATA_REGION_LENGTH__+0x10>
-     802:	82 30       	cpi	r24, 0x02	; 2
-     804:	d1 f0       	breq	.+52     	; 0x83a <__DATA_REGION_LENGTH__+0x3a>
-     806:	84 30       	cpi	r24, 0x04	; 4
-     808:	61 f0       	breq	.+24     	; 0x822 <__DATA_REGION_LENGTH__+0x22>
-     80a:	81 30       	cpi	r24, 0x01	; 1
-     80c:	a1 f4       	brne	.+40     	; 0x836 <__DATA_REGION_LENGTH__+0x36>
-     80e:	07 c0       	rjmp	.+14     	; 0x81e <__DATA_REGION_LENGTH__+0x1e>
-     810:	80 34       	cpi	r24, 0x40	; 64
-     812:	69 f0       	breq	.+26     	; 0x82e <__DATA_REGION_LENGTH__+0x2e>
-     814:	80 38       	cpi	r24, 0x80	; 128
-     816:	69 f0       	breq	.+26     	; 0x832 <__DATA_REGION_LENGTH__+0x32>
-     818:	80 32       	cpi	r24, 0x20	; 32
-     81a:	69 f4       	brne	.+26     	; 0x836 <__DATA_REGION_LENGTH__+0x36>
-     81c:	06 c0       	rjmp	.+12     	; 0x82a <__DATA_REGION_LENGTH__+0x2a>
-     81e:	8f e5       	ldi	r24, 0x5F	; 95
-     820:	0d c0       	rjmp	.+26     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     822:	83 e7       	ldi	r24, 0x73	; 115
-     824:	0b c0       	rjmp	.+22     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     826:	8c e3       	ldi	r24, 0x3C	; 60
-     828:	09 c0       	rjmp	.+18     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     82a:	80 e7       	ldi	r24, 0x70	; 112
-     82c:	07 c0       	rjmp	.+14     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     82e:	8e e3       	ldi	r24, 0x3E	; 62
-     830:	05 c0       	rjmp	.+10     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     832:	84 e6       	ldi	r24, 0x64	; 100
-     834:	03 c0       	rjmp	.+6      	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     836:	80 e0       	ldi	r24, 0x00	; 0
-     838:	01 c0       	rjmp	.+2      	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
-     83a:	8a e2       	ldi	r24, 0x2A	; 42
-     83c:	2f ef       	ldi	r18, 0xFF	; 255
-     83e:	35 ea       	ldi	r19, 0xA5	; 165
-     840:	9e e0       	ldi	r25, 0x0E	; 14
-     842:	21 50       	subi	r18, 0x01	; 1
-     844:	30 40       	sbci	r19, 0x00	; 0
-     846:	90 40       	sbci	r25, 0x00	; 0
-     848:	e1 f7       	brne	.-8      	; 0x842 <__DATA_REGION_LENGTH__+0x42>
-     84a:	00 c0       	rjmp	.+0      	; 0x84c <__DATA_REGION_LENGTH__+0x4c>
-     84c:	00 00       	nop
-     84e:	9f ef       	ldi	r25, 0xFF	; 255
-     850:	9b b9       	out	0x0b, r25	; 11
-     852:	08 95       	ret
-     854:	80 e0       	ldi	r24, 0x00	; 0
+     7f6:	80 e0       	ldi	r24, 0x00	; 0
+     7f8:	99 b1       	in	r25, 0x09	; 9
+     7fa:	90 95       	com	r25
+     7fc:	61 f1       	breq	.+88     	; 0x856 <__DATA_REGION_LENGTH__+0x56>
+     7fe:	98 30       	cpi	r25, 0x08	; 8
+     800:	99 f0       	breq	.+38     	; 0x828 <__DATA_REGION_LENGTH__+0x28>
+     802:	38 f4       	brcc	.+14     	; 0x812 <__DATA_REGION_LENGTH__+0x12>
+     804:	92 30       	cpi	r25, 0x02	; 2
+     806:	d1 f0       	breq	.+52     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
+     808:	94 30       	cpi	r25, 0x04	; 4
+     80a:	61 f0       	breq	.+24     	; 0x824 <__DATA_REGION_LENGTH__+0x24>
+     80c:	91 30       	cpi	r25, 0x01	; 1
+     80e:	a1 f4       	brne	.+40     	; 0x838 <__DATA_REGION_LENGTH__+0x38>
+     810:	07 c0       	rjmp	.+14     	; 0x820 <__DATA_REGION_LENGTH__+0x20>
+     812:	90 34       	cpi	r25, 0x40	; 64
+     814:	69 f0       	breq	.+26     	; 0x830 <__DATA_REGION_LENGTH__+0x30>
+     816:	90 38       	cpi	r25, 0x80	; 128
+     818:	69 f0       	breq	.+26     	; 0x834 <__DATA_REGION_LENGTH__+0x34>
+     81a:	90 32       	cpi	r25, 0x20	; 32
+     81c:	69 f4       	brne	.+26     	; 0x838 <__DATA_REGION_LENGTH__+0x38>
+     81e:	06 c0       	rjmp	.+12     	; 0x82c <__DATA_REGION_LENGTH__+0x2c>
+     820:	8f e5       	ldi	r24, 0x5F	; 95
+     822:	0d c0       	rjmp	.+26     	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     824:	83 e7       	ldi	r24, 0x73	; 115
+     826:	0b c0       	rjmp	.+22     	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     828:	8c e3       	ldi	r24, 0x3C	; 60
+     82a:	09 c0       	rjmp	.+18     	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     82c:	80 e7       	ldi	r24, 0x70	; 112
+     82e:	07 c0       	rjmp	.+14     	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     830:	8e e3       	ldi	r24, 0x3E	; 62
+     832:	05 c0       	rjmp	.+10     	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     834:	84 e6       	ldi	r24, 0x64	; 100
+     836:	03 c0       	rjmp	.+6      	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     838:	80 e0       	ldi	r24, 0x00	; 0
+     83a:	01 c0       	rjmp	.+2      	; 0x83e <__DATA_REGION_LENGTH__+0x3e>
+     83c:	8a e2       	ldi	r24, 0x2A	; 42
+     83e:	2f ef       	ldi	r18, 0xFF	; 255
+     840:	35 ea       	ldi	r19, 0xA5	; 165
+     842:	9e e0       	ldi	r25, 0x0E	; 14
+     844:	21 50       	subi	r18, 0x01	; 1
+     846:	30 40       	sbci	r19, 0x00	; 0
+     848:	90 40       	sbci	r25, 0x00	; 0
+     84a:	e1 f7       	brne	.-8      	; 0x844 <__DATA_REGION_LENGTH__+0x44>
+     84c:	00 c0       	rjmp	.+0      	; 0x84e <__DATA_REGION_LENGTH__+0x4e>
+     84e:	00 00       	nop
+     850:	9f ef       	ldi	r25, 0xFF	; 255
+     852:	9b b9       	out	0x0b, r25	; 11
+     854:	d1 cf       	rjmp	.-94     	; 0x7f8 <_Z8keyInputv+0x2>
      856:	08 95       	ret
 
 00000858 <_Z10clrDisplayPKc>:
@@ -3550,7 +3550,7 @@ clrDisplay("Playing");
     14fa:	f1 f7       	brne	.-4      	; 0x14f8 <_Z9playTrackv+0x9a>
     14fc:	00 00       	nop
         _delay_us(40);  //Use this delay for 12.5KHz play
-        //_delay_us(20);    //Use this delay for 16kHz play
+        //_delay_us(16);    //Use this delay for 16kHz play
         
 		//****Comment both of delays for 24kHz play*******
         
@@ -3605,7 +3605,7 @@ clrDisplay("Playing");
     153c:	00 00       	nop
     153e:	04 c0       	rjmp	.+8      	; 0x1548 <_Z9playTrackv+0xea>
           _delay_us(40);  //Use this delay for 12.5KHz play
-          //_delay_us(20);    //Use this delay for 16kHz play
+          //_delay_us(16);    //Use this delay for 16kHz play
           //Comment both of delays for 24kHz play
 
         } else {
@@ -3853,7 +3853,7 @@ void record() {
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-    16b0:	25 e5       	ldi	r18, 0x55	; 85
+    16b0:	25 e9       	ldi	r18, 0x95	; 149
     16b2:	2a 95       	dec	r18
     16b4:	f1 f7       	brne	.-4      	; 0x16b2 <_Z6recordv+0xc6>
     16b6:	00 00       	nop
@@ -3900,7 +3900,8 @@ void record() {
     1708:	62 97       	sbiw	r28, 0x12	; 18
     170a:	9b 8f       	std	Y+27, r25	; 0x1b
     170c:	8a 8f       	std	Y+26, r24	; 0x1a
-		  _delay_us(16);
+		  //_delay_us(8);//16kHz
+		  _delay_us(28);// 12.5kHz
 
 		}
 		finalizeWave(test_File);
