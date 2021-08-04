@@ -1,0 +1,46 @@
+Removed Pin From Net: NetName=GND Pin=D1-2
+Change Component Footprint: Designator=D1 Old Footprint=LED-2P-2.54-3MM_V New Footprint=AVAG-HLMP-3301-2
+Change Component Comment : Designator=D1 Old Comment=HLMP-1790 New Comment=HLMP-3301
+Change Managed Component Library Link : Designator=D1 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID=B3CDD38D-A748-41CA-A137-EB0C3DD5D3DF New ItemGUID=5255C169-9FF1-478A-B79E-ADABA017B12E Old RevisionGUID=4BF843DA-8D5E-48AC-8862-8731F52558AF New RevisionGUID=4D52AE75-8B10-4303-8818-36E3BEB8F422
+Change component parameters: Designator = "D1" ("D1"); Footprint = "LED-2P-2.54-3MM_V"; UniqueID = "\OVGUHOSM" ("\OVGUHOSM")
+Change component parameters (AddParameter): Name = "Chip Material"; Value = "GaP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Datasheet URL"; Value = "http://www.avagotech.com/docs/AV02-1558EN"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Datasheet Version"; Value = "03/2015"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DELETED"; Value = "Compliant"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Dominant Wave Length"; Value = "626nm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Emitting Color"; Value = "Red"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Forward Current"; Value = "25mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.4V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "High Brightness"; Value = "No"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Lens Dimensions"; Value = "5.08x5.08x8.3mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Lens Type"; Value = "ColoredDiffused"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Lum Intensity"; Value = "5.4mcd"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Luminous Intensity"; Value = "5.4mcd"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Main Category"; Value = "StandardLED"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Avago"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer URL"; Value = "http://www.avagotech.com/"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting"; Value = "ThroughHole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "ThroughHole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Number of  Elements"; Value = "1"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating Temp Range"; Value = "-40Cto100C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating Temperature Classification"; Value = "Industrial"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package Description"; Value = "2-Pin Through Hole LED, Dia 5.85 mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package Reference"; Value = "HLMP-3301"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package Type"; Value = "T-13/4"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Packaging"; Value = "TapeandReel"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Peak Wavelength"; Value = "635nm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pin Count"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "85W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Product Depth (mm)"; Value = "6.1mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Product Height (mm)"; Value = "9.19mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Product Length (mm)"; Value = "6.1mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Rad Hardened"; Value = "No"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Shape Type"; Value = "Circular"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Test Current (It)"; Value = "10mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Type"; Value = "Uni-Color"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Viewing Angle"; Value = "60deg"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=D1-1
+Added Pin To Net: NetName=NetD1_2 Pin=D1-2
+Added Pin To Net: NetName=NetD1_2 Pin=R1-2
+Added Net: Name=NetD1_2

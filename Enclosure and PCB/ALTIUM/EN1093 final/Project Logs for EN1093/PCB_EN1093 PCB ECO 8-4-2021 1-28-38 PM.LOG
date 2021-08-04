@@ -1,0 +1,44 @@
+Removed Pin From Net: NetName=GND Pin=C6-1
+Change Component Footprint: Designator=C6 Old Footprint=RAD-0.3 New Footprint=PNSC-EECS0HD_H-2
+Change Component Comment : Designator=C6 Old Comment=22pF New Comment=EEC-S0HD223H
+Change Managed Component Library Link : Designator=C6 Old VaultGUID= New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID= New ItemGUID=C319F779-7FC9-42D6-9A00-3F2FFF5FC196 Old RevisionGUID= New RevisionGUID=7D2D6F1E-9D56-4D5C-BB9C-380C84F5829F
+Change component parameters: Designator = "C6" ("C6"); Footprint = "RAD-0.3"; UniqueID = "\XDTSHTAF" ("\XDTSHTAF")
+Change component parameters (AddParameter): Name = "Body Diameter"; Value = "10.5mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Capacitance"; Value = "22000µF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Capacitance Tolerance"; Value = "+80%,-20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Capacitance Tolerance ±"; Value = "+80%,-20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Capacitor Case Style"; Value = "Coin"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Capacitor Mounting"; Value = "ThroughHole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Capacitor Terminals"; Value = "RadialLeaded"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Datasheet URL"; Value = "https://datasheet.ciiva.com/11790/0900766b80bed1b1-11790074.pdf"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Datasheet Version"; Value = "01/2008"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "External Length / Height"; Value = "5.5mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Height"; Value = "5.5mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Lead Cross-section Width"; Value = "0.8mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Lead Length"; Value = "3mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Lead Spacing"; Value = "10mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Panasonic"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer URL"; Value = "http://www.panasonic.com/"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "ThroughHole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "No. of Pins"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating life Time"; Value = "1000h"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating Lifetime"; Value = "1000h"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating Temperature Max"; Value = "70°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating Temperature Min"; Value = "-25°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Operating Temperature Range"; Value = "-25°Cto+70°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package Description"; Value = "2-Leads Capacitor, Dia 10.5 mm, Pitch 10 mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package Reference"; Value = "EEC-S0HD223H"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Packaging"; Value = "Each"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Product Range"; Value = "PANASONIC-SDSeries"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Series"; Value = "SD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SVHC"; Value = "NoSVHC(16-Dec-2013)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Terminal Type"; Value = "PCBPins"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance +"; Value = "80%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance -"; Value = "20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating"; Value = "5.5V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating V DC"; Value = "5.5V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C6-2
+Added Pin To Net: NetName=NetC6_1 Pin=C6-1
+Added Pin To Net: NetName=NetC6_1 Pin=U2-9
+Added Pin To Net: NetName=NetC6_1 Pin=Y1-2
+Added Net: Name=NetC6_1

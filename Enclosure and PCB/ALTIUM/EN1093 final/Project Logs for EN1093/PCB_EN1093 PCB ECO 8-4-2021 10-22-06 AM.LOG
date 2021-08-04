@@ -1,0 +1,17 @@
+Removed Pin From Net: NetName=GND Pin=D1-1
+Change Component Footprint: Designator=D1 Old Footprint=AVAG-HLMP-3301-2 New Footprint=3.5X2.8X1.9
+Change Component Comment : Designator=D1 Old Comment=HLMP-3301 New Comment=LED3
+Change Managed Component Library Link : Designator=D1 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID= Old ItemGUID=5255C169-9FF1-478A-B79E-ADABA017B12E New ItemGUID= Old RevisionGUID=4D52AE75-8B10-4303-8818-36E3BEB8F422 New RevisionGUID=
+Change component parameters: Designator = "D1" ("D1"); Footprint = "AVAG-HLMP-3301-2"; UniqueID = "\YVFFEQKU" ("\YVFFEQKU")
+Change component parameters (AddParameter): Name = "DatasheetVersion"; Value = "16-Apr-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Dec-2003"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "PCB Footprint replaced."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "SM LED; 2 C-Bend Leads; Body 3.5 x 2.8 x 1.9 mm, inc leads (LxWxH typ)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "3.5X2.8X1.9"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageVersion"; Value = "16-Apr-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=D1-2
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=R1-2
+Added Net: Name=NetD1_1
