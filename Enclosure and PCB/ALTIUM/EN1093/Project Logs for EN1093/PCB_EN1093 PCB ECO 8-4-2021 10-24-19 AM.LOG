@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=GND Pin=D1-1
+Change Component Footprint: Designator=D1 Old Footprint=AVAG-HLMP-3301-2 New Footprint=3.5X2.8X1.9
+Change Component Comment : Designator=D1 Old Comment=HLMP-3301 New Comment=LED3
+Added Pin To Net: NetName=GND Pin=D1-2
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=R1-2
+Added Net: Name=NetD1_1

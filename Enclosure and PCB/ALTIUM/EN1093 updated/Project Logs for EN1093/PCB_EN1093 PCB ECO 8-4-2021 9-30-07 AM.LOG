@@ -1,0 +1,42 @@
+Removed Pin From Net: NetName=GND Pin=SW1-1
+Removed Pin From Net: NetName=GND Pin=SW1-2
+Removed Pin From Net: NetName=RCRD Pin=SW1-3
+Removed Pin From Net: NetName=RCRD Pin=SW1-4
+Removed Pin From Net: NetName=GND Pin=SW2-1
+Removed Pin From Net: NetName=GND Pin=SW2-2
+Removed Pin From Net: NetName=PRVS Pin=SW2-3
+Removed Pin From Net: NetName=PRVS Pin=SW2-4
+Removed Pin From Net: NetName=GND Pin=SW3-1
+Removed Pin From Net: NetName=GND Pin=SW3-2
+Removed Pin From Net: NetName=PLY Pin=SW3-3
+Removed Pin From Net: NetName=PLY Pin=SW3-4
+Removed Pin From Net: NetName=GND Pin=SW5-1
+Removed Pin From Net: NetName=GND Pin=SW5-2
+Removed Pin From Net: NetName=DLT Pin=SW5-3
+Removed Pin From Net: NetName=DLT Pin=SW5-4
+Change Component Footprint: Designator=SW1 Old Footprint=FP-B3FS-4052P-MFG New Footprint=FP-FSM100-MFG
+Change Component Footprint: Designator=SW2 Old Footprint=FP-B3FS-4052P-MFG New Footprint=FP-FSM100-MFG
+Change Component Footprint: Designator=SW3 Old Footprint=FP-B3FS-4052P-MFG New Footprint=FP-FSM100-MFG
+Change Component Footprint: Designator=SW5 Old Footprint=FP-B3FS-4052P-MFG New Footprint=FP-FSM100-MFG
+Change Component Comment : Designator=SW1 Old Comment=B3FS-4052P New Comment=FSM100
+Change Component Comment : Designator=SW2 Old Comment=B3FS-4052P New Comment=FSM100
+Change Component Comment : Designator=SW3 Old Comment=B3FS-4052P New Comment=FSM100
+Change Component Comment : Designator=SW5 Old Comment=B3FS-4052P New Comment=FSM100
+Added Pin To Net: NetName=RCRD Pin=SW1-1
+Added Pin To Net: NetName=RCRD Pin=SW1-2
+Added Pin To Net: NetName=GND Pin=SW1-3
+Added Pin To Net: NetName=GND Pin=SW1-4
+Added Pin To Net: NetName=PRVS Pin=SW2-1
+Added Pin To Net: NetName=PRVS Pin=SW2-2
+Added Pin To Net: NetName=GND Pin=SW2-3
+Added Pin To Net: NetName=GND Pin=SW2-4
+Added Pin To Net: NetName=PLY Pin=SW3-1
+Added Pin To Net: NetName=PLY Pin=SW3-2
+Added Pin To Net: NetName=GND Pin=SW3-3
+Added Pin To Net: NetName=GND Pin=SW3-4
+Added Pin To Net: NetName=DLT Pin=SW5-1
+Added Pin To Net: NetName=DLT Pin=SW5-2
+Added Pin To Net: NetName=GND Pin=SW5-3
+Added Pin To Net: NetName=GND Pin=SW5-4
+Added Member To Class: ClassName=Sheet1 Member=Component P1 620104131822
+Added Member To Class: ClassName=Sheet1 Member=Component P2 620104131822
