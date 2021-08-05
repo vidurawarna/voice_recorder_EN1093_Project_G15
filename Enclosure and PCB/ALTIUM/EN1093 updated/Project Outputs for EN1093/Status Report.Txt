@@ -1,0 +1,18 @@
+Output: Gerber X2 Files
+Type  : GerberX2
+From  : Project [EN1093.PrjPcb]
+   Generated File[PCB_EN1093_Copper_Signal_Top.gbr]
+   Generated File[PCB_EN1093_Copper_Signal_Bot.gbr]
+   Generated File[PCB_EN1093_Legend_Bot.gbr]
+   Generated File[PCB_EN1093_Soldermask_Bot.gbr]
+   Generated File[PCB_EN1093_Legend_Top.gbr]
+   Generated File[PCB_EN1093_Soldermask_Top.gbr]
+   Generated File[PCB_EN1093.RUL]
+   Generated File[PCB_EN1093.EXTREP]
+   Generated File[PCB_EN1093.REP]
+
+
+Files Generated   : 9
+Documents Printed : 0
+
+Finished Output Generation At 6:45:54 PM On 8/5/2021

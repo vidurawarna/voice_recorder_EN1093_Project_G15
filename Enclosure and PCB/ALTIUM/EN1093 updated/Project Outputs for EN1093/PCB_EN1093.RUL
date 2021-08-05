@@ -1,0 +1,6 @@
+DRC Rules Export File for PCB: C:\Users\ASUS\voice_recorder_EN1093_Project_G15\Enclosure and PCB\ALTIUM\EN1093 updated\PCB_EN1093.PcbDoc
+RuleKind=Width|RuleName=Width_1|Scope=Board|Minimum=15.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=15.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
