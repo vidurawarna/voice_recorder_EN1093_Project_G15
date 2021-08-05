@@ -1,0 +1,155 @@
+
+/*
+ * instructions.txt
+ *
+ * Created: 6/15/2021 8:06:09 AM
+ *  Author: Vidura
+ */ 
+
+[#] Conections:
+ 																													
++-------------+----------------------+------------+			
+| Connection  | Arduino Uno/Nano pin | ATmega328p |		
++-------------+----------------------+------------+				
+| MOSI (SD)   | pin 11               | PB3        |				
++-------------+----------------------+------------+				
+| MISO (SD)   | pin 12               | PB4        |			
++-------------+----------------------+------------+			
+| CLK (SD)    | pin 13               | PB5        |				
++-------------+----------------------+------------+				
+| CS (SD)     | pin 10               | PB2        |				
++-------------+----------------------+------------+																																	
+| Mic         | pin A0               | PC0        |
++-------------+----------------------+------------+
+| Speaker     | pin 9                | PB1        |	
++-------------+----------------------+------------+	
+| LCD SCL     | pin A5               | PC5        |
++-------------+----------------------+------------+
+| LCD SDA     | pin A4               | PC4        |
++-------------+----------------------+------------+
+| Record      | pin 2                | PD2        |
++-------------+----------------------+------------+
+| Play        | pin 5                | PD5        |
++-------------+----------------------+------------+
+| Next        | pin 6                | PD6        |
++-------------+----------------------+------------+
+| Previous    | pin 3                | PD3        |
++-------------+----------------------+------------+
+| Delete	  |	pin 7				 | PD7        |
++-------------+----------------------+------------+
+
+[#] Interface:
+
+							                +-----+
+							                |	  |<------------------/* Record/Stop
+							                |     |					  \* Exit from player mode
+							                +-----+
+					                +-----+ +-----+ +-----+
+					                |	  | |	  | |	  |<-----------/* Next
+                  Previous * \----->|     | |  <-\| |     |			   \* Select spectral change 
+Change the frequency scale * /		+-----+ +-----+\+-----+
+			    			                +-----+ \-------------------/* Play/Stop
+							                |	  |						\* 'No' in delete mode
+							                |     |<----\
+							                +-----+      \--------------- * Delete
+
+[#] How it works:
+
+>>> When the device is powered up the screen looks like this. This is the pause state. No actions will happen. 
+	+----------------+
+	|Voice Recorder  |
+	|                |
+	+----------------+
+	>> If SD card is not inserted the device won't work. There will be a error message.
+		+----------------+
+		|Error           |
+		|                |
+		+----------------+
+	>> Insert the SD card and power it up again.
+
+>>> When in the pause state press 'Record' to start recording.
+	+----------------+
+	|Recording       |
+	|                |
+	+----------------+
+	>> Press 'Recording' again to stop recording.
+	+----------------+
+	|saved           |
+	|                |
+	+----------------+
+
+>>> When in the pause state press 'Play'. That will guide you to play mode.
+	+----------------+
+	|Ready to Play   |
+	|A.WAV           |
+	+----------------+
+
+	>> If there are no valid recordings in the SD card It will give you a message and will go back to pause mode.
+		(Valid means this device accepts recording names like A.WAV, B.WAV, ..., Z.WAV) 
+
+		+----------------+
+		|No Tracks       |
+		|                |
+		+----------------+
+
+	>> Press 'Next' and 'Previous' to toggle between recordings. (Recordings will be in alphabatic order ie. A.WAV, B.WAV, ....)
+	( Player holds only 15 recordings )
+
+	>> Then press 'Play' again. It will bring you to the frequency change requirement checking mode.
+	+----------------+
+	|SCL  M          |
+	| 1   X          |
+	+----------------+
+
+	>> Press 'Next' button to change 'M'(H, L, B, S, X) and press 'Previous' to change 'SCL'(1, 2, 3)
+		> SCL - Frequency scale (Default = 1)
+			* 1 - normal frequency
+			* 2 - 2x frequency
+			* 3 - 3x frequency
+		> M - Filtering method (Default = 'X')
+			* X - No filtering
+			* H - High pass (cut off = 1000Hz)
+			* L - Low pass (cut off = 500Hz)
+			* B - Band pass (1000Hz - 2000Hz)
+			* S - Frequency shift (1000Hz)
+
+	>> After selecting frequency changes press 'Play' again.
+		> If you didn't select any filters (M = X), the recording will play as you click play.
+		> If You select value for M it will take some time to process the recording. After processing it will play.
+			(Processed recording will be named by adding a prefix to the original wav file name. Prefixes- M values)
+
+		+----------------+							+----------------+
+		|Processing      |							|Playing         |
+		|		         |							|A.WAV		     |
+		+----------------+							+----------------+
+		If 'M' is selected						    Playing the recording
+
+		> If the device fails to open the file specified, it will give an error. 
+			(Possible reasons will be SD card is removed before playing or unknown malfunction in firmware)
+			+----------------+
+			|Error           |
+			|                |
+			+----------------+
+
+		> At the end of playing it will display a message. (Or you can press 'Play' when playing the recording to stop the play.)
+		+----------------+
+		|playing         |
+		|End of Play     |
+		+----------------+
+
+	>>  When you are in the play mode you can delete the recording if you want. Press 'Delete' to proceeed. It will give you a prompt.
+	+----------------+
+	|Delete?         |
+	|DELETE NO(Play) |
+	+----------------+
+		> Press 'Delete' again to preoceed.
+		+----------------+
+		|Deleted         |
+		|                |
+		+----------------+
+		> Press 'Play' to avoid deleting.
+		+----------------+
+		|Not Deleted     |
+		|                |
+		+----------------+
+

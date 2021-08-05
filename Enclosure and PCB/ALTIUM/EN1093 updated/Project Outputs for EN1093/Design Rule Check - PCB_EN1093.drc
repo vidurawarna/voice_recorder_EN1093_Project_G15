@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
-PCB File : C:\Users\Nushad\Documents\TEMP - VR Lab project\voice_recorder_EN1093_Project_G15\Enclosure and PCB\ALTIUM\EN1093 updated\PCB_EN1093.PcbDoc
-Date     : 8/4/2021
-Time     : 1:58:48 PM
+PCB File : C:\Users\ASUS\voice_recorder_EN1093_Project_G15\Enclosure and PCB\ALTIUM\EN1093 updated\PCB_EN1093.PcbDoc
+Date     : 8/5/2021
+Time     : 6:34:57 PM
 
 Processing Rule : Clearance Constraint (Gap=0.381mm) (All),(All)
 Rule Violations :0
@@ -15,10 +15,10 @@ Rule Violations :0
 Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
 Rule Violations :0
 
-Processing Rule : Width Constraint (Min=0.254mm) (Max=0.508mm) (Preferred=0.381mm) (All)
+Processing Rule : Width Constraint (Min=0.381mm) (Max=0.635mm) (Preferred=0.508mm) (InNet('+5') or InNet('GND'))
 Rule Violations :0
 
-Processing Rule : Width Constraint (Min=0.381mm) (Max=0.635mm) (Preferred=0.508mm) (InNet('+5') or InNet('GND'))
+Processing Rule : Width Constraint (Min=0.254mm) (Max=0.508mm) (Preferred=0.381mm) (All)
 Rule Violations :0
 
 Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
@@ -37,54 +37,15 @@ Processing Rule : Silk To Solder Mask (Clearance=0.254mm) (Disabled)(IsPad),(All
 Rule Violations :0
 
 Processing Rule : Silk to Silk (Clearance=0.254mm) (All),(All)
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Arc (27.472mm,22.147mm) on Top Overlay And Text "SW3" (23.876mm,20.523mm) on Top Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Arc (60.237mm,51.387mm) on Bottom Overlay And Text "P4" (60.1mm,53.213mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Arc (60.579mm,53.496mm) on Bottom Overlay And Text "C5" (60.985mm,53.823mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (0.179mm < 0.254mm) Between Arc (60.579mm,53.496mm) on Bottom Overlay And Text "P4" (60.1mm,53.213mm) on Bottom Overlay Silk Text to Silk Clearance [0.179mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Text "C5" (60.985mm,53.823mm) on Bottom Overlay And Track (59.139mm,53.921mm)(59.139mm,59.871mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Text "C5" (60.985mm,53.823mm) on Bottom Overlay And Track (59.139mm,53.921mm)(64.559mm,53.921mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Text "C6" (68.478mm,53.823mm) on Bottom Overlay And Track (66.676mm,53.718mm)(66.676mm,57.788mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Text "C6" (68.478mm,53.823mm) on Bottom Overlay And Track (66.676mm,53.718mm)(73.786mm,53.718mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Text "R2" (48.362mm,10.871mm) on Bottom Overlay And Text "U1" (52.426mm,8.661mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-   Violation between Silk To Silk Clearance Constraint: (Collision < 0.254mm) Between Text "U2" (68.453mm,3.683mm) on Bottom Overlay And Track (67.818mm,2.921mm)(72.898mm,2.921mm) on Bottom Overlay Silk Text to Silk Clearance [0mm]
-Rule Violations :10
+Rule Violations :0
 
 Processing Rule : Net Antennae (Tolerance=0mm) (All)
 Rule Violations :0
-
-Processing Rule : Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1'))
-   Violation between Room Definition: Between Component SW1-FSM100 (29.972mm,48.133mm) on Top Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between Component SW2-FSM100 (12.7mm,29.972mm) on Top Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between Component SW3-FSM100 (29.972mm,12.319mm) on Top Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between Component SW4-FSM100 (47.625mm,29.972mm) on Top Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between Component SW5-FSM100 (29.972mm,29.972mm) on Top Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between Component SW7-EVQ-PAG07K (6.314mm,7.187mm) on Top Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between DIP Component U2-ATmega328P-PU (70.231mm,22.352mm) on Bottom Layer And Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And SIP Component P1-640456-4 (16.764mm,4.445mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And SIP Component P2-640456-4 (58.928mm,34.671mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And SIP Component P3-66200611122 (59.818mm,13.709mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And SIP Component P5-640456-5 (14.986mm,17.145mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C1-330uF (48.641mm,53.848mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C2-330uF (13.462mm,49.022mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C3-330uF (48.768mm,46.863mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C4-=value (70.231mm,55.753mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C5-C330C105M5U5TA (60.198mm,47.244mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C6-C330C105M5U5TA (67.691mm,47.244mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component C7-C330C105M5U5TA (75.184mm,46.99mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component D1-HLMP-1719 (43.942mm,13.843mm) on Top Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component P4-61900211121 (61.849mm,56.896mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component R1-330 (32.893mm,2.413mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component R2-5K (50.292mm,16.256mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component R3-1K (5.715mm,49.53mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component R4-10K (70.358mm,2.159mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component U1-L7805CV (47.371mm,4.953mm) on Bottom Layer 
-   Violation between Room Definition: Between Room Sheet1 (Bounding Region = (0mm, 0mm, 50.8mm, 25.4mm) (InComponentClass('Sheet1')) And Small Component Y1-XTAL (77.597mm,16.764mm) on Bottom Layer 
-Rule Violations :26
 
 Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
 Rule Violations :0
 
 
-Violations Detected : 36
+Violations Detected : 0
 Waived Violations : 0
-Time Elapsed        : 00:00:02
+Time Elapsed        : 00:00:01

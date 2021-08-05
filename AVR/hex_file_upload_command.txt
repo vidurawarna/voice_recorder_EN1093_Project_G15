@@ -1,7 +1,14 @@
 C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:C:\Users\Vidura\Documents\Projects\voice_recorder_EN1093_Project_G15\AVR\Voice_Recorder\Voice_Recorder\Debug\Voice_Recorder.hex:i 
-C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:Desktop\Voice_Recorder.hex:i 
+C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:C:\Users\Vidura\Desktop\Voice_Recorder.hex:i 
 
 uno:
 
 C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -carduino -PCOM5 -b115200 -D -Uflash:w:C:\Users\Vidura\Documents\Projects\voice_recorder_EN1093_Project_G15\AVR\Voice_Recorder\Voice_Recorder\Debug\Voice_Recorder.hex:i 
 
+OLED:
+C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:C:\Users\Vidura\Documents\Projects\Lab_project_side_work\Adding OLED\Voice_Recorder\Voice_Recorder\Debug\Voice_Recorder.hex:i 
+
+using isp programmer:
+C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -cstk500v1 -PCOM5 -b19200 -Uflash:w:C:\Users\Vidura\AppData\Local\Temp\arduino_build_929121/AVR_in_arduino.ino.hex:i 
+
+C:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/bin/avrdude -CC:\Users\Vidura\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17/etc/avrdude.conf -v -patmega328p -cstk500v1 -PCOM5 -b19200 -Uflash:w:C:\Users\Vidura\Documents\Projects\Lab_project_side_work\Adding_OLED\Voice_Recorder\Voice_Recorder\Debug\Voice_Recorder.hex:i 
