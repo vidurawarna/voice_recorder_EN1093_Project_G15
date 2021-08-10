@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=+5 Pin=P3-1
+Removed Pin From Net: NetName=SS Pin=P3-2
+Removed Pin From Net: NetName=MOSI Pin=P3-3
+Removed Pin From Net: NetName=MISO Pin=P3-4
+Removed Pin From Net: NetName=SCK Pin=P3-5
+Removed Pin From Net: NetName=GND Pin=P3-6
+Removed Member From Class: ClassName=Sheet1 Member=P?
+Change Component Designator: OldDesignator=P? NewDesignator=P3
+Added Pin To Net: NetName=+5 Pin=P3-1
+Added Pin To Net: NetName=SS Pin=P3-2
+Added Pin To Net: NetName=MOSI Pin=P3-3
+Added Pin To Net: NetName=MISO Pin=P3-4
+Added Pin To Net: NetName=SCK Pin=P3-5
+Added Pin To Net: NetName=GND Pin=P3-6
+Added Room: Name=Sheet1

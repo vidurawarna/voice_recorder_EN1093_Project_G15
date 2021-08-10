@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
-PCB File : C:\Users\Nushad\Documents\LAB project - voice recorder 2021 (sem 2)\voice_recorder_EN1093_Project_G15\Enclosure and PCB\ALTIUM\EN1093 final\PCB_EN1093.PcbDoc
-Date     : 8/9/2021
-Time     : 9:20:43 PM
+PCB File : C:\Users\Nushad\Documents\TEMP - VR Lab project\voice_recorder_EN1093_Project_G15\Enclosure and PCB\ALTIUM\EN1093 final\PCB_EN1093.PcbDoc
+Date     : 8/10/2021
+Time     : 7:17:07 PM
 
 Processing Rule : Clearance Constraint (Gap=0.381mm) (All),(All)
 Rule Violations :0
@@ -48,4 +48,4 @@ Rule Violations :0
 
 Violations Detected : 0
 Waived Violations : 0
-Time Elapsed        : 00:00:02
+Time Elapsed        : 00:00:01
