@@ -13,7 +13,7 @@ Show_Frequency(Signal, length(Signal), Fs, "Original Signal Frequency Spectrum")
 a = input("Enter Scaling Coefficient: ");
 at = linspace(0, (length(Signal)-1)/(a*Fs), length(Signal));
 fft_coef = abs(fft(Signal)/length(Signal))/abs(a);
-f_a = linspace(-length(Signal)/(2*abs(a)),length(Signal)/(2*abs(a))-1,length(Signal));
+f_a = linspace(-length(Signal)/2,length(Signal)/2-1,length(Signal))*Fs*abs(a)/length(Signal);
 
 for i = 2:a:size(Signal)
     Signal(i) = 0;
