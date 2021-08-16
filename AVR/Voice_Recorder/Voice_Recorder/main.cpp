@@ -33,7 +33,7 @@
 #define byteRate (sampleRate/8)*monoStereo*8
 #define monoStereo 1
 #define maxFiles 15
-#define lcdAddr 0x27 //Change this to 0x20 for proteus simulation,0x27 for real application
+#define lcdAddr 0x20 //Change this to 0x20 for proteus simulation,0x27 for real application
 
 //for filters
 #define bufflen 26

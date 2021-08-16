@@ -1392,7 +1392,7 @@ void firstLine(const char *msg) {
      7e4:	6f 3f       	cpi	r22, 0xFF	; 255
      7e6:	7f 4f       	sbci	r23, 0xFF	; 255
      7e8:	29 f4       	brne	.+10     	; 0x7f4 <_Z41__static_initialization_and_destruction_0ii+0x14>
-     7ea:	67 e2       	ldi	r22, 0x27	; 39
+     7ea:	60 e2       	ldi	r22, 0x20	; 32
      7ec:	89 e7       	ldi	r24, 0x79	; 121
      7ee:	92 e0       	ldi	r25, 0x02	; 2
      7f0:	0e 94 d3 02 	call	0x5a6	; 0x5a6 <_ZN9LCDScreenC1Eh>

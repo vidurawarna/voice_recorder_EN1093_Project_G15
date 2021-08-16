@@ -18,7 +18,7 @@
 | CLK (SD)    | pin 13               | PB5        |				
 +-------------+----------------------+------------+				
 | CS (SD)     | pin 10               | PB2        |				
-+-------------+----------------------+------------+																																	
++-------------+----------------------+------------+
 | Mic         | pin A0               | PC0        |
 +-------------+----------------------+------------+
 | Speaker     | pin 9                | PB1        |	
@@ -42,14 +42,14 @@
 
 							                +-----+
 							                |	  |<------------------/* Record/Stop
-							                |     |					  \* Exit from player mode
+							                |     |					  \* Exit player
 							                +-----+
 					                +-----+ +-----+ +-----+
 					                |	  | |	  | |	  |<-----------/* Next
-                  Previous * \----->|     | |  <-\| |     |			   \* Select spectral change 
+                  Previous * \----->|     | |  <-\| |     |			   \* Filter 
 Change the frequency scale * /		+-----+ +-----+\+-----+
 			    			                +-----+ \-------------------/* Play/Stop
-							                |	  |						\* 'No' in delete mode
+							                |	  |						\* 'No'
 							                |     |<----\
 							                +-----+      \--------------- * Delete
 
@@ -59,13 +59,14 @@ Change the frequency scale * /		+-----+ +-----+\+-----+
 	+----------------+
 	|Voice Recorder  |
 	|                |
-	+----------------+
+	+----------------+	
 	>> If SD card is not inserted the device won't work. There will be a error message.
 		+----------------+
 		|Error           |
 		|                |
 		+----------------+
 	>> Insert the SD card and power it up again.
+	
 
 >>> When in the pause state press 'Record' to start recording.
 	+----------------+
@@ -142,7 +143,7 @@ Change the frequency scale * /		+-----+ +-----+\+-----+
 	|Delete?         |
 	|DELETE NO(Play) |
 	+----------------+
-		> Press 'Delete' again to preoceed.
+		> Press 'Delete' again to proceed.
 		+----------------+
 		|Deleted         |
 		|                |
